@@ -17,6 +17,8 @@ import project.breakout.view.LighthouseView;
  * This class represents the main class of the breakout game. It takes a Canvas
  * from the BreakoutView-class and draws it on the drawing area. It is
  * controlled by the controller it initializes.
+ * 
+ * It can be foud on GitHub via https://github.com/TiKo98/BreakoutProject
  */
 public class BreakoutModel extends GraphicsProgram {
 	private static int paddleWidth = 100;
