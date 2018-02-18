@@ -19,7 +19,6 @@ import project.breakout.view.LighthouseView;
  * controlled by the controller it initializes.
  * 
  * It can be foud on GitHub via https://github.com/TiKo98/BreakoutProject
- * test
  */
 public class BreakoutModel extends GraphicsProgram {
 	private static int paddleWidth = 100;
