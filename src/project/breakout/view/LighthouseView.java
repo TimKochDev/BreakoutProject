@@ -5,8 +5,8 @@ import java.io.IOException;
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
 public class LighthouseView {
-	private static String USERNAME = "stu206956";
-	private static String PASSWORD = "API-TOK_golQ-95nk-Gm5r-Yn+C-aHC/";
+	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
+	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
 	private static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD);
 	private static boolean isConnected = false;
 	private static byte[] data = new byte[14 * 28 * 3];;
