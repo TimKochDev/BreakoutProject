@@ -12,7 +12,7 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
-// hi Cecile
+// lass den scheiß!
 
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
