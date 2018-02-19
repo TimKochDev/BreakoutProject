@@ -12,8 +12,6 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
-// lass den scheiß!
-
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
  * from the BreakoutView-class and draws it on the drawing area. It is
