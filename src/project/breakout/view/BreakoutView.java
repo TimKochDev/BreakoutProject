@@ -11,13 +11,12 @@ import acm.graphics.GRect;
  * canvas which is drawn by the {@code BreakoutModel} and controlled by the
  * {@code BreakoutController}.
  */
+@SuppressWarnings("serial")
 public class BreakoutView extends GCanvas {
 
 	private GRect paddle = new GRect(0, 0);
 	private BreakoutBall ball = new BreakoutBall(0);
 	private GLabel infoLabel = new GLabel("", 0, 10);
-
-	private Color standardColor = Color.YELLOW;
 
 	public BreakoutView(int canvasWidth, int canvasHeight) {
 		paddle.setFilled(true);

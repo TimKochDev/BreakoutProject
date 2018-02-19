@@ -3,8 +3,6 @@ package project.breakout.controller;
 import project.breakout.model.BreakoutModel;
 import project.breakout.view.BreakoutBrick;
 
-import java.awt.Point;
-
 import project.breakout.controller.CollisionWith;
 
 public class CollisionController {
@@ -14,6 +12,7 @@ public class CollisionController {
 	 * {@code CollisionWith}.
 	 */
 	private CollisionWith lastCollisionWith;
+	@SuppressWarnings("unused")
 	private BreakoutBrick lastBrickCollided = new BreakoutBrick(0, 0);
 	/**
 	 * The distance between the bricks wall to the end of the zone within the brick

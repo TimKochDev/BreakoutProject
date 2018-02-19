@@ -19,6 +19,7 @@ import project.breakout.view.LighthouseView;
  * 
  * It can be found on GitHub via https://github.com/TiKo98/BreakoutProject
  */
+@SuppressWarnings("serial")
 public class BreakoutModel extends GraphicsProgram {
 	private static int paddleWidth = 100;
 	private static int paddleHeight = 10;
@@ -38,6 +39,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static BreakoutView view;
 	private static BreakoutTimer timer;
 	private static CollisionController collisionControl;
+	@SuppressWarnings("unused")
 	private static BreakoutController controller;
 	Thread timerThread;
 
