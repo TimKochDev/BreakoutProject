@@ -17,7 +17,7 @@ import project.breakout.view.LighthouseView;
  * from the BreakoutView-class and draws it on the drawing area. It is
  * controlled by the controller it initializes.
  * 
- * It can be foud on GitHub via https://github.com/TiKo98/BreakoutProject
+ * It can be found on GitHub via https://github.com/TiKo98/BreakoutProject
  */
 public class BreakoutModel extends GraphicsProgram {
 	private static int paddleWidth = 100;
