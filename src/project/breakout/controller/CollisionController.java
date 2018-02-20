@@ -116,10 +116,10 @@ public class CollisionController {
 		double ballMiddleY = ballY + ballRadius;
 
 		// get information about the paddle
-		double paddleX = model.getPaddleX();
-		double paddleY = model.getPaddleY();
-		double paddleMiddleX = paddleX + model.getPaddleWidth() / 2;
-		double paddleMiddleY = paddleY + model.getPaddleHeight() / 2;
+		double paddleX = BreakoutModel.getPaddleX();
+		double paddleY = BreakoutModel.getPaddleY();
+		double paddleMiddleX = paddleX + BreakoutModel.getPaddleWidth() / 2;
+		double paddleMiddleY = paddleY + BreakoutModel.getPaddleHeight() / 2;
 
 		// in case the collision is detected multiple times
 		if (lastCollisionWith == CollisionWith.PADDLE) {
@@ -131,8 +131,8 @@ public class CollisionController {
 		double ballPaddleDistanceY = Math.abs(paddleMiddleY - ballMiddleY) - ballRadius;
 
 		// see distance as percentage of paddle size
-		double relativeDistanceX = ballPaddleDistanceX / (model.getPaddleWidth() / 2);
-		double relativeDistanceY = ballPaddleDistanceY / (model.getPaddleHeight() / 2);
+		double relativeDistanceX = ballPaddleDistanceX / (BreakoutModel.getPaddleWidth() / 2);
+		double relativeDistanceY = ballPaddleDistanceY / (BreakoutModel.getPaddleHeight() / 2);
 
 		assert relativeDistanceX + ballRadius > 0 : "the relative distanceX should be > 0, but was "
 				+ relativeDistanceX;
