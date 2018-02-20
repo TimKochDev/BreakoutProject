@@ -13,6 +13,8 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
+// TODO think about static or non-static use of this class!
+
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
  * from the BreakoutView-class and draws it on the drawing area. It is
@@ -39,9 +41,8 @@ public class BreakoutModel extends GraphicsProgram {
 	private static int pixelsPerSecond = 100;
 
 	private static BreakoutView view;
-	private static Timer timer;
-	private BreakoutTimer timerTask = new BreakoutTimer(this, framesPerSecond);
 	private static CollisionController collisionControl;
+	private Timer timer;
 	@SuppressWarnings("unused")
 	private static BreakoutController controller;
 	Thread timerThread;
@@ -66,7 +67,6 @@ public class BreakoutModel extends GraphicsProgram {
 	private void initController() {
 		collisionControl = new CollisionController();
 		controller = new BreakoutController(this, view);
-		timer = new Timer();
 	}
 
 	/**
@@ -239,6 +239,21 @@ public class BreakoutModel extends GraphicsProgram {
 		return ballDirection;
 	}
 
+	/**
+	 * Deletes a brick from the brickArray and updates the view.
+	 * 
+	 * @param lastBrickCollided
+	 *            The {@code BreakoutBrick} which collided with the ball.
+	 */
+	public void deleteBrickAfterCollision(BreakoutBrick lastBrickCollided) {
+		for (int i = 0; i < brickArray.length; i++) {
+			if (brickArray[i] != null && brickArray[i].equals(lastBrickCollided)) {
+				brickArray[i] = null;
+			}
+		}
+		view.removeBrick(lastBrickCollided);
+	}
+
 	// ----------------game states methods------------------
 	/**
 	 * This method is called by the controller when the user starts the game.
@@ -249,6 +264,8 @@ public class BreakoutModel extends GraphicsProgram {
 	public boolean startGame() {
 		if (!gameStarted) {
 			// frameTime means time between each frame in the game in milliseconds
+			timer = new Timer();
+			BreakoutTimer timerTask = new BreakoutTimer(this, framesPerSecond);
 			timer.schedule(timerTask, 0, frameTime);
 			gameStarted = true;
 			return true;
@@ -264,16 +281,11 @@ public class BreakoutModel extends GraphicsProgram {
 		gameStarted = false;
 
 		// stop timer
-		try {
-			timerThread.join();
-		} catch (InterruptedException e) {
-		}
+		timer.cancel();
 
-		// Re-init ball
-		ballX = paddleX + paddleWidth / 2;
-		ballY = paddleY - 3 * ballRadius;
-		view.setBallsPosition(ballX, ballY);
-		view.setBallsRadius(ballRadius);
+		// Re-init view and controllers
+		initView();
+		initController();
 
 		ballDirection = RandomGenerator.getInstance().nextInt(10) * 100 - 50;
 	}

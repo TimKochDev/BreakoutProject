@@ -75,20 +75,34 @@ public class BreakoutView extends GCanvas {
 	// ------------Brick methods-------------------------
 	public void updateBricks(BreakoutBrick[] bricks) {
 		for (BreakoutBrick brick : bricks) {
-			brick.setFilled(true);
-			add(brick);
+			if (brick != null) {
+				brick.setFilled(true);
+				add(brick);
+			}
 		}
 	}
-	
+
+	/**
+	 * Removes a brick from the view
+	 * 
+	 * @param brick
+	 *            The {@code BreakoutBrick} to be removed.
+	 */
+	public void removeBrick(BreakoutBrick brick) {
+		remove(brick);
+		
+		// TODO evtl mit Animation? Viel Spaﬂ, CÈcile ;-)
+	}
+
 	// ----------infoLabel methods--------------------
 	public void setInfoText(String text) {
 		infoLabel.setLabel(text);
 	}
-	
+
 	public void showInfoText(boolean show) {
 		infoLabel.setVisible(show);
 	}
-	
+
 	public boolean isInfoVisible() {
 		return infoLabel.isVisible();
 	}

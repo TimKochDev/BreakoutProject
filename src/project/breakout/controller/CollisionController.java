@@ -11,9 +11,10 @@ public class CollisionController {
 	 * Saves where the last collision of the ball was as an enum of type
 	 * {@code CollisionWith}.
 	 */
-	private CollisionWith lastCollisionWith;
+	private CollisionWith lastCollisionWith = CollisionWith.PADDLE;
 	@SuppressWarnings("unused")
 	private BreakoutBrick lastBrickCollided = new BreakoutBrick(0, 0);
+
 	/**
 	 * The distance between the bricks wall to the end of the zone within the brick
 	 * which is seen as a collision.
@@ -75,32 +76,35 @@ public class CollisionController {
 
 		// iterate over bricks
 		for (BreakoutBrick brick : bricks) {
-			// get middle of the brick
-			double brickMiddleX = brick.getX() + brick.getWidth() / 2;
-			double brickMiddleY = brick.getY() + brick.getHeight() / 2;
+			if (brick != null) {
+				// get middle of the brick
+				double brickMiddleX = brick.getX() + brick.getWidth() / 2;
+				double brickMiddleY = brick.getY() + brick.getHeight() / 2;
 
-			// calculate balls distances to the brick middle
-			double ballBrickDistanceX = Math.abs(brickMiddleX - ballMiddleX) - ballRadius;
-			double ballBrickDistanceY = Math.abs(brickMiddleY - ballMiddleY) - ballRadius;
+				// calculate balls distances to the brick middle
+				double ballBrickDistanceX = Math.abs(brickMiddleX - ballMiddleX) - ballRadius;
+				double ballBrickDistanceY = Math.abs(brickMiddleY - ballMiddleY) - ballRadius;
 
-			// see distance as percentage of brick size
-			double relativeDistanceX = ballBrickDistanceX / (brick.getWidth() / 2);
-			double relativeDistanceY = ballBrickDistanceY / (brick.getHeight() / 2);
+				// see distance as percentage of brick size
+				double relativeDistanceX = ballBrickDistanceX / (brick.getWidth() / 2);
+				double relativeDistanceY = ballBrickDistanceY / (brick.getHeight() / 2);
 
-			assert relativeDistanceX + ballRadius > 0 : "the relative distanceX should be > 0, but was "
-					+ relativeDistanceX;
-			assert relativeDistanceY + ballRadius > 0 : "the relative distanceY should be > 0, but was "
-					+ relativeDistanceY;
+				assert relativeDistanceX + ballRadius > 0 : "the relative distanceX should be > 0, but was "
+						+ relativeDistanceX;
+				assert relativeDistanceY + ballRadius > 0 : "the relative distanceY should be > 0, but was "
+						+ relativeDistanceY;
 
-			// check if ball hits brick
-			if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
-				// brick has hit the brick, collision happened on the side where the relative
-				// distance of the ball to the brick middle is minimal.
+				// check if ball hits brick
+				if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
+					// brick has hit the brick, collision happened on the side where the relative
+					// distance of the ball to the brick middle is minimal.
 
-				lastBrickCollided = brick;
-				lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
-						: CollisionWith.BRICK_Y_AXIS;
-				return true;
+					lastBrickCollided = brick;
+					lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
+							: CollisionWith.BRICK_Y_AXIS;
+					model.deleteBrickAfterCollision(lastBrickCollided);
+					return true;
+				}
 			}
 		}
 
