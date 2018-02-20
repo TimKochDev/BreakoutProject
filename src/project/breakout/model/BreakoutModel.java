@@ -1,6 +1,7 @@
 package project.breakout.model;
 
 import java.awt.Point;
+import java.util.Timer;
 
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
@@ -34,10 +35,12 @@ public class BreakoutModel extends GraphicsProgram {
 	BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 60;
-	private static int pixelsPerSecond = 200;
+	private static long frameTime = (long) 1000 / framesPerSecond;
+	private static int pixelsPerSecond = 100;
 
 	private static BreakoutView view;
-	private static BreakoutTimer timer;
+	private static Timer timer;
+	private BreakoutTimer timerTask = new BreakoutTimer(this, framesPerSecond);
 	private static CollisionController collisionControl;
 	@SuppressWarnings("unused")
 	private static BreakoutController controller;
@@ -63,6 +66,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private void initController() {
 		collisionControl = new CollisionController();
 		controller = new BreakoutController(this, view);
+		timer = new Timer();
 	}
 
 	/**
@@ -138,24 +142,6 @@ public class BreakoutModel extends GraphicsProgram {
 		view.setPaddleLocation(paddleX, paddleY);
 	}
 
-	/**
-	 * This method is called by the controller when the user starts the game.
-	 *
-	 * @return {@code true} if game was started successfully, {@code false} if game
-	 *         is running yet.
-	 */
-	public boolean startGame() {
-		if (!gameStarted) {
-			timer = new BreakoutTimer(this, framesPerSecond);
-			timerThread = new Thread(timer);
-			timerThread.start();
-			gameStarted = true;
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	// --------------------game control methods----------------------------
 
 	/**
@@ -169,6 +155,11 @@ public class BreakoutModel extends GraphicsProgram {
 		ballX += xMovedBy;
 		ballY += yMovedBy;
 
+		// The distance the ball moved is a^2 + b^2 = c^2
+		double ballMoveDistance = Math.sqrt(Math.pow(xMovedBy, 2) + Math.pow(yMovedBy, 2));
+		double pixelsPerFrametime = pixelsPerSecond * frameTime;
+		assert ballMoveDistance <= pixelsPerFrametime + 0.01 : "Ball moves faster than pixelsPerSecond allows to!";
+
 		// if there's a collision in the model NOW
 		if (collisionControl.isWallCollisionInModel(this) || collisionControl.isBrickCollisionInModel(this)
 				|| collisionControl.isPaddleCollisionInModel(this)) {
@@ -178,7 +169,7 @@ public class BreakoutModel extends GraphicsProgram {
 			ballDirection = (ballDirection > 360) ? ballDirection - 360 : ballDirection;
 			ballDirection = (ballDirection < 0) ? ballDirection + 360 : ballDirection;
 
-			// go back to non collision state
+			// go back to non-collision-state
 			ballX -= xMovedBy;
 			ballY -= yMovedBy;
 
@@ -193,7 +184,8 @@ public class BreakoutModel extends GraphicsProgram {
 			// show infoText
 			assert collisionControl
 					.getLastCollisionWith() != null : "lastCollisionWith is null and should be displayed -> NullPointerException";
-			// view.setInfoText("Last Thing collided: " + collisionControl.getLastCollisionWith().toString());
+			// view.setInfoText("Last Thing collided: " +
+			// collisionControl.getLastCollisionWith().toString());
 		}
 
 		view.setBallsPosition(ballX, ballY);
@@ -249,13 +241,29 @@ public class BreakoutModel extends GraphicsProgram {
 
 	// ----------------game states methods------------------
 	/**
+	 * This method is called by the controller when the user starts the game.
+	 *
+	 * @return {@code true} if game was started successfully, {@code false} if game
+	 *         is running yet.
+	 */
+	public boolean startGame() {
+		if (!gameStarted) {
+			// frameTime means time between each frame in the game in milliseconds
+			timer.schedule(timerTask, 0, frameTime);
+			gameStarted = true;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Sets the game to the beginning state.
 	 */
 	private void restartGame() {
 		gameStarted = false;
-		
+
 		// stop timer
-		timer.go = false;
 		try {
 			timerThread.join();
 		} catch (InterruptedException e) {
@@ -271,11 +279,11 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	public void pauseGame() {
-		timerThread.interrupt();
+		// TODO implement with new timer
 	}
 
 	public void continueGame() {
-		timerThread.start();
+		// TODO implement with new timer
 	}
 
 	// ---------Getters-------------------------
