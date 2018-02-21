@@ -180,12 +180,15 @@ public class BreakoutModel extends GraphicsProgram {
 			// update ball's position
 			ballX += xMovedBy;
 			ballY += yMovedBy;
+			
+			if (collisionControl.allBricksDestroyed(brickArray)) {
+				levelDone();
+			}
 
 			// show infoText
 			assert collisionControl
 					.getLastCollisionWith() != null : "lastCollisionWith is null and should be displayed -> NullPointerException";
-			// view.setInfoText("Last Thing collided: " +
-			// collisionControl.getLastCollisionWith().toString());
+			view.setInfoText("Last Thing collided: " + collisionControl.getLastCollisionWith().toString());
 		}
 
 		view.setBallsPosition(ballX, ballY);
@@ -287,11 +290,19 @@ public class BreakoutModel extends GraphicsProgram {
 		initView();
 		initController();
 
-		ballDirection = RandomGenerator.getInstance().nextInt(10) * 100 - 50;
+		ballDirection = RandomGenerator.getInstance().nextInt(10) * 10 - 50;
+	}
+
+	/**
+	 * This method handles it, when a level is completed by the player.
+	 */
+	public void levelDone() {
+		view.levelDone();
 	}
 
 	public void pauseGame() {
 		// TODO implement with new timer
+		restartGame();
 	}
 
 	public void continueGame() {

@@ -43,6 +43,8 @@ public class CollisionController {
 			lastCollisionWith = CollisionWith.UPPERWALL;
 			return true;
 		}
+
+		// bottom wall
 		if (ballY + 2 * ballRadius >= model.getHeight() && lastCollisionWith != CollisionWith.BOTTOMWALL) {
 			lastCollisionWith = CollisionWith.BOTTOMWALL;
 			return true;
@@ -153,6 +155,23 @@ public class CollisionController {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Checks if all bricks in the game are destroyed by the ball.
+	 * 
+	 * @param brickArray
+	 *            The array of bricks used in the level.
+	 * @return {@code true} if there is no brick left on the screen, {@code false}
+	 *         if there is at least one.
+	 */
+	public boolean allBricksDestroyed(BreakoutBrick[] brickArray) {
+		for (BreakoutBrick brick : brickArray) {
+			if (brick != null) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
