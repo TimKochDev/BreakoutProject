@@ -36,7 +36,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static int brickHeight = 15;
 	BreakoutBrick[] brickArray;
 
-	private static int framesPerSecond = 30;
+	private static int framesPerSecond = 40;
 	private static int pixelsPerSecond = 200;
 	private long lastFrameAtTime;
 
@@ -48,6 +48,7 @@ public class BreakoutModel extends GraphicsProgram {
 	Thread timerThread;
 
 	private static boolean gameStarted = false;
+	private boolean gamePaused = false;
 
 	/**
 	 * RUN METHOD - HERE STARTS EVERYTHING!!!
@@ -149,15 +150,13 @@ public class BreakoutModel extends GraphicsProgram {
 	 * {@code pixelsPerSecond} and the time gone by since the last frame.
 	 */
 	public void updateBallsPosition() {
-		// move ball in last known direction
+		// compute time since the last frame was created
 		double frameTime = (double) (System.currentTimeMillis() - lastFrameAtTime);
+		view.setInfoText(String.valueOf(frameTime));
 		frameTime /= 1000.0;
 		lastFrameAtTime = System.currentTimeMillis();
 
-		// TODO delete after Testing
-		// frameTime = (double) 1 / framesPerSecond;
-		// TODO delete after Testing
-
+		// move ball in last known direction
 		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
 		double yMovedBy = -pixelsPerSecond * frameTime * Math.cos(Math.toRadians(ballDirection));
 		ballX += xMovedBy;
@@ -274,8 +273,9 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	public boolean startGame() {
 		if (!gameStarted) {
-			
-			// set up a new timer which updates the ball's position depending on the frame rate
+
+			// set up a new timer which updates the ball's position depending on the frame
+			// rate
 			timer = new Timer();
 			BreakoutTimer timerTask = new BreakoutTimer(this);
 			lastFrameAtTime = System.currentTimeMillis();
@@ -305,19 +305,27 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * This method handles it, when a level is completed by the player.
+	 * This method handles when a level is completed by the player.
 	 */
 	public void levelDone() {
 		view.levelDone();
 	}
 
 	public void pauseGame() {
-		// TODO implement with new timer
-		restartGame();
+		timer.cancel();
+		gamePaused = true;
 	}
 
 	public void continueGame() {
-		// TODO implement with new timer
+		// set up a new timer which updates the ball's position depending on the frame
+		// rate
+		timer = new Timer();
+		BreakoutTimer timerTask = new BreakoutTimer(this);
+		lastFrameAtTime = System.currentTimeMillis();
+		long frameTime = 1000 / framesPerSecond;
+		timer.schedule(timerTask, 0, frameTime);
+		gamePaused = false;
+		gameStarted = true;
 	}
 
 	// ---------Getters-------------------------
@@ -375,5 +383,12 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	public static int getPaddleY() {
 		return paddleY;
+	}
+
+	/**
+	 * @return {@code true} if game is paused, {@code false} if not.
+	 */
+	public boolean isGamePaused() {
+		return gamePaused;
 	}
 }
