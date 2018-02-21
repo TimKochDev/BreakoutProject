@@ -92,14 +92,14 @@ public class BreakoutView extends GCanvas {
 	public void removeBrick(BreakoutBrick brick) {
 		remove(brick);
 
-		// TODO evtl mit Animation? Viel Spaﬂ, CÈcile ;-)
+		// TODO evtl mit Animation? Viel Spass, Cecile ;-)
 	}
 
 	/**
 	 * This method handles it, if the level is completed by the player.
 	 */
 	public void levelDone() {
-		// TODO viel Spaﬂ, CÈcile ;-)
+		// TODO viel Spass, Cecile ;-)
 		GLabel winnerLabel = new GLabel("Winner!", getWidth()/2, getHeight()/2);
 		winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
 		winnerLabel.setColor(Color.red);
