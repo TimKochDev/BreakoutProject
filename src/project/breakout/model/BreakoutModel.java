@@ -36,9 +36,9 @@ public class BreakoutModel extends GraphicsProgram {
 	private static int brickHeight = 15;
 	BreakoutBrick[] brickArray;
 
-	private static int framesPerSecond = 60;
-	private static long frameTime = (long) 1000 / framesPerSecond;
-	private static int pixelsPerSecond = 100;
+	private static int framesPerSecond = 30;
+	private static int pixelsPerSecond = 200;
+	private long lastFrameAtTime;
 
 	private static BreakoutView view;
 	private static CollisionController collisionControl;
@@ -146,10 +146,18 @@ public class BreakoutModel extends GraphicsProgram {
 
 	/**
 	 * Called by the timer. Updates the ball position depending on
-	 * {@code pixelsPerSecond} and {@code framesPerSecond}.
+	 * {@code pixelsPerSecond} and the time gone by since the last frame.
 	 */
-	public void updateBallsPosition(double frameTime) {
+	public void updateBallsPosition() {
 		// move ball in last known direction
+		double frameTime = (double) (System.currentTimeMillis() - lastFrameAtTime);
+		frameTime /= 1000.0;
+		lastFrameAtTime = System.currentTimeMillis();
+
+		// TODO delete after Testing
+		// frameTime = (double) 1 / framesPerSecond;
+		// TODO delete after Testing
+
 		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
 		double yMovedBy = -pixelsPerSecond * frameTime * Math.cos(Math.toRadians(ballDirection));
 		ballX += xMovedBy;
@@ -180,7 +188,7 @@ public class BreakoutModel extends GraphicsProgram {
 			// update ball's position
 			ballX += xMovedBy;
 			ballY += yMovedBy;
-			
+
 			if (collisionControl.allBricksDestroyed(brickArray)) {
 				levelDone();
 			}
@@ -266,9 +274,12 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	public boolean startGame() {
 		if (!gameStarted) {
-			// frameTime means time between each frame in the game in milliseconds
+			
+			// set up a new timer which updates the ball's position depending on the frame rate
 			timer = new Timer();
-			BreakoutTimer timerTask = new BreakoutTimer(this, framesPerSecond);
+			BreakoutTimer timerTask = new BreakoutTimer(this);
+			lastFrameAtTime = System.currentTimeMillis();
+			long frameTime = 1000 / framesPerSecond;
 			timer.schedule(timerTask, 0, frameTime);
 			gameStarted = true;
 			return true;
