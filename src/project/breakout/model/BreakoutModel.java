@@ -135,7 +135,9 @@ public class BreakoutModel extends GraphicsProgram {
 	 * user.
 	 * 
 	 * @param width
+	 *            the new width of the window.
 	 * @param height
+	 *            the new height of the window.
 	 */
 	public void resizedView(int width, int height) {
 		paddleY = height - paddleHeight - 2;
@@ -146,8 +148,8 @@ public class BreakoutModel extends GraphicsProgram {
 	// --------------------game control methods----------------------------
 
 	/**
-	 * Called by the timer. Updates the ball position depending on
-	 * {@code pixelsPerSecond} and the time gone by since the last frame.
+	 * Called by the timer. Updates the ball position depending on { @code
+	 * pixelsPerSecond} and the time gone by since the last frame.
 	 */
 	public void updateBallsPosition() {
 		// compute time since the last frame was created
@@ -204,7 +206,10 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * @return The direction of the ball after a collision.
+	 * Changes the direction of the ball after a collision with the paddle, upper,
+	 * left or right wall. When the ball hits the bottom wall the game restarts.
+	 * 
+	 * @return the new direction of the ball.
 	 */
 	private int directionAfterCollision() {
 		CollisionWith lastCollisionWith = collisionControl.getLastCollisionWith();
@@ -227,7 +232,10 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * @return The direction of the ball after it hit the paddle.
+	 * Changes the direction of the ball after it hit the paddle. The new ball
+	 * direction depends on where the ball hits the paddle.
+	 * 
+	 * @return ballDirection, the new direction of the ball.
 	 */
 	private int directionAfterPaddleCollision() {
 		double paddleHalfX = paddleX + paddleWidth / 2;
@@ -265,11 +273,13 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	// ----------------game states methods------------------
+
 	/**
-	 * This method is called by the controller when the user starts the game.
+	 * Starting a new Game. This method is called by the controller when the user
+	 * starts the game.
 	 *
-	 * @return {@code true} if game was started successfully, {@code false} if game
-	 *         is running yet.
+	 * @return {@code true} if game was started successfully, {@code false} if the
+	 *         game is already running.
 	 */
 	public boolean startGame() {
 		if (!gameStarted) {
@@ -305,17 +315,23 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * This method handles when a level is completed by the player.
+	 * Handles when a level is completed by the player.
 	 */
 	public void levelDone() {
 		view.levelDone();
 	}
 
+	/**
+	 * Pauses the game and the timer.
+	 */
 	public void pauseGame() {
 		timer.cancel();
 		gamePaused = true;
 	}
 
+	/**
+	 * Continues the game and the timer starts running.
+	 */
 	public void continueGame() {
 		// set up a new timer which updates the ball's position depending on the frame
 		// rate
@@ -330,41 +346,51 @@ public class BreakoutModel extends GraphicsProgram {
 
 	// ---------Getters-------------------------
 	/**
-	 * @return the ballRadius
+	 * Returns the ball radius.
+	 * 
+	 * @return ballRadius, the radius of the ball.
 	 */
 	public int getBallRadius() {
 		return ballRadius;
 	}
 
 	/**
-	 * @return the ballX
+	 * Returns the ball's x-Position.
+	 * 
+	 * @return ballX, the x-Position of the ball.
 	 */
 	public double getBallX() {
 		return ballX;
 	}
 
 	/**
-	 * @return the ballY
+	 * Returns the ball's y-Position.
+	 * 
+	 * @return ballY, the y-Position of the ball.
 	 */
 	public double getBallY() {
 		return ballY;
 	}
 
 	/**
-	 * @return the brickArray
+	 * Returns the array where the bricks are saved in.
+	 * 
+	 * @return brickArray
 	 */
 	public BreakoutBrick[] getBrickArray() {
 		return brickArray;
 	}
 
 	/**
-	 * @return the paddleWidth
+	 * Returns the width of the paddle.
+	 * @return paddleWidth
 	 */
 	public static int getPaddleWidth() {
 		return paddleWidth;
 	}
 
-	/**
+	/** 
+	 * Returns the height of the paddle.
 	 * @return the paddleHeight
 	 */
 	public static int getPaddleHeight() {
@@ -372,20 +398,23 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * @return the paddleX
+	 * Returns the paddle's x-Position.
+	 * @return paddleX
 	 */
 	public static int getPaddleX() {
 		return paddleX;
 	}
 
 	/**
-	 * @return the paddleY
+	 * Returns the paddle's y-Position.
+	 * @return paddleY
 	 */
 	public static int getPaddleY() {
 		return paddleY;
 	}
 
 	/**
+	 * Returns if the game is paused or not.
 	 * @return {@code true} if game is paused, {@code false} if not.
 	 */
 	public boolean isGamePaused() {
