@@ -38,7 +38,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	private static int framesPerSecond = 40;
 	private static int pixelsPerSecond = 200;
-	private long lastFrameAtTime;
+	private static long lastFrameAtTime;
 
 	private static BreakoutView view;
 	private static CollisionController collisionControl;
@@ -330,7 +330,11 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * Causes the model to continue the game.
+=======
 	 * Continues the game and the timer starts running.
+>>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 	 */
 	public void continueGame() {
 		// set up a new timer which updates the ball's position depending on the frame
