@@ -322,11 +322,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Causes a pause in the model.
-=======
 	 * Pauses the game and the timer.
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 	 */
 	public void pauseGame() {
 		timer.cancel();
@@ -334,11 +330,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Causes the model to continue the game.
-=======
 	 * Continues the game and the timer starts running.
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 	 */
 	public void continueGame() {
 		// set up a new timer which updates the ball's position depending on the frame
