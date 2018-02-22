@@ -1,6 +1,7 @@
 package project.breakout.view;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import acm.graphics.GCanvas;
 import acm.graphics.GLabel;
@@ -75,20 +76,45 @@ public class BreakoutView extends GCanvas {
 	// ------------Brick methods-------------------------
 	public void updateBricks(BreakoutBrick[] bricks) {
 		for (BreakoutBrick brick : bricks) {
-			brick.setFilled(true);
-			add(brick);
+			if (brick != null) {
+				brick.setFilled(true);
+				add(brick);
+			}
 		}
 	}
-	
+
+	/**
+	 * Removes a brick from the view
+	 * 
+	 * @param brick
+	 *            The {@code BreakoutBrick} to be removed.
+	 */
+	public void removeBrick(BreakoutBrick brick) {
+		remove(brick);
+
+		// TODO evtl mit Animation? Viel Spaﬂ, CÈcile ;-)
+	}
+
+	/**
+	 * This method handles it, if the level is completed by the player.
+	 */
+	public void levelDone() {
+		// TODO viel Spaﬂ, CÈcile ;-)
+		GLabel winnerLabel = new GLabel("Winner!", getWidth()/2, getHeight()/2);
+		winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
+		winnerLabel.setColor(Color.red);
+		add(winnerLabel);
+	}
+
 	// ----------infoLabel methods--------------------
 	public void setInfoText(String text) {
 		infoLabel.setLabel(text);
 	}
-	
+
 	public void showInfoText(boolean show) {
 		infoLabel.setVisible(show);
 	}
-	
+
 	public boolean isInfoVisible() {
 		return infoLabel.isVisible();
 	}

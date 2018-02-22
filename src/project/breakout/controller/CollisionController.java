@@ -11,9 +11,10 @@ public class CollisionController {
 	 * Saves where the last collision of the ball was as an enum of type
 	 * {@code CollisionWith}.
 	 */
-	private CollisionWith lastCollisionWith;
+	private CollisionWith lastCollisionWith = CollisionWith.PADDLE;
 	@SuppressWarnings("unused")
 	private BreakoutBrick lastBrickCollided = new BreakoutBrick(0, 0);
+
 	/**
 	 * The distance between the bricks wall to the end of the zone within the brick
 	 * which is seen as a collision.
@@ -42,6 +43,8 @@ public class CollisionController {
 			lastCollisionWith = CollisionWith.UPPERWALL;
 			return true;
 		}
+
+		// bottom wall
 		if (ballY + 2 * ballRadius >= model.getHeight() && lastCollisionWith != CollisionWith.BOTTOMWALL) {
 			lastCollisionWith = CollisionWith.BOTTOMWALL;
 			return true;
@@ -75,32 +78,35 @@ public class CollisionController {
 
 		// iterate over bricks
 		for (BreakoutBrick brick : bricks) {
-			// get middle of the brick
-			double brickMiddleX = brick.getX() + brick.getWidth() / 2;
-			double brickMiddleY = brick.getY() + brick.getHeight() / 2;
+			if (brick != null) {
+				// get middle of the brick
+				double brickMiddleX = brick.getX() + brick.getWidth() / 2;
+				double brickMiddleY = brick.getY() + brick.getHeight() / 2;
 
-			// calculate balls distances to the brick middle
-			double ballBrickDistanceX = Math.abs(brickMiddleX - ballMiddleX) - ballRadius;
-			double ballBrickDistanceY = Math.abs(brickMiddleY - ballMiddleY) - ballRadius;
+				// calculate balls distances to the brick middle
+				double ballBrickDistanceX = Math.abs(brickMiddleX - ballMiddleX) - ballRadius;
+				double ballBrickDistanceY = Math.abs(brickMiddleY - ballMiddleY) - ballRadius;
 
-			// see distance as percentage of brick size
-			double relativeDistanceX = ballBrickDistanceX / (brick.getWidth() / 2);
-			double relativeDistanceY = ballBrickDistanceY / (brick.getHeight() / 2);
+				// see distance as percentage of brick size
+				double relativeDistanceX = ballBrickDistanceX / (brick.getWidth() / 2);
+				double relativeDistanceY = ballBrickDistanceY / (brick.getHeight() / 2);
 
-			assert relativeDistanceX + ballRadius > 0 : "the relative distanceX should be > 0, but was "
-					+ relativeDistanceX;
-			assert relativeDistanceY + ballRadius > 0 : "the relative distanceY should be > 0, but was "
-					+ relativeDistanceY;
+				assert relativeDistanceX + ballRadius > 0 : "the relative distanceX should be > 0, but was "
+						+ relativeDistanceX;
+				assert relativeDistanceY + ballRadius > 0 : "the relative distanceY should be > 0, but was "
+						+ relativeDistanceY;
 
-			// check if ball hits brick
-			if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
-				// brick has hit the brick, collision happened on the side where the relative
-				// distance of the ball to the brick middle is minimal.
+				// check if ball hits brick
+				if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
+					// brick has hit the brick, collision happened on the side where the relative
+					// distance of the ball to the brick middle is minimal.
 
-				lastBrickCollided = brick;
-				lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
-						: CollisionWith.BRICK_Y_AXIS;
-				return true;
+					lastBrickCollided = brick;
+					lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
+							: CollisionWith.BRICK_Y_AXIS;
+					model.deleteBrickAfterCollision(lastBrickCollided);
+					return true;
+				}
 			}
 		}
 
@@ -116,10 +122,10 @@ public class CollisionController {
 		double ballMiddleY = ballY + ballRadius;
 
 		// get information about the paddle
-		double paddleX = model.getPaddleX();
-		double paddleY = model.getPaddleY();
-		double paddleMiddleX = paddleX + model.getPaddleWidth() / 2;
-		double paddleMiddleY = paddleY + model.getPaddleHeight() / 2;
+		double paddleX = BreakoutModel.getPaddleX();
+		double paddleY = BreakoutModel.getPaddleY();
+		double paddleMiddleX = paddleX + BreakoutModel.getPaddleWidth() / 2;
+		double paddleMiddleY = paddleY + BreakoutModel.getPaddleHeight() / 2;
 
 		// in case the collision is detected multiple times
 		if (lastCollisionWith == CollisionWith.PADDLE) {
@@ -131,8 +137,8 @@ public class CollisionController {
 		double ballPaddleDistanceY = Math.abs(paddleMiddleY - ballMiddleY) - ballRadius;
 
 		// see distance as percentage of paddle size
-		double relativeDistanceX = ballPaddleDistanceX / (model.getPaddleWidth() / 2);
-		double relativeDistanceY = ballPaddleDistanceY / (model.getPaddleHeight() / 2);
+		double relativeDistanceX = ballPaddleDistanceX / (BreakoutModel.getPaddleWidth() / 2);
+		double relativeDistanceY = ballPaddleDistanceY / (BreakoutModel.getPaddleHeight() / 2);
 
 		assert relativeDistanceX + ballRadius > 0 : "the relative distanceX should be > 0, but was "
 				+ relativeDistanceX;
@@ -149,6 +155,23 @@ public class CollisionController {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Checks if all bricks in the game are destroyed by the ball.
+	 * 
+	 * @param brickArray
+	 *            The array of bricks used in the level.
+	 * @return {@code true} if there is no brick left on the screen, {@code false}
+	 *         if there is at least one.
+	 */
+	public boolean allBricksDestroyed(BreakoutBrick[] brickArray) {
+		for (BreakoutBrick brick : brickArray) {
+			if (brick != null) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**

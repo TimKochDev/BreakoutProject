@@ -5,8 +5,7 @@ import java.io.IOException;
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
 public class LighthouseView {
-	// test
-	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
+	private static final String USERNAME = Messages.getString("LighthouseView.0");  //$NON-NLS-1$
 	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
 	private static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD);
 	private static boolean isConnected = false;
@@ -23,7 +22,7 @@ public class LighthouseView {
 			isConnected = true;
 			return true;
 		} catch (Exception e) {
-			System.out.println("Connection failed: " + e.getMessage());
+			System.out.println("Connection failed: " + e.getMessage()); //$NON-NLS-1$
 			e.printStackTrace();
 			return false;
 		}
@@ -47,7 +46,7 @@ public class LighthouseView {
 			display.send(data);
 			return true;
 		} catch (IOException e) {
-			System.out.println("Data sending failed: " + e.getMessage());
+			System.out.println("Data sending failed: " + e.getMessage()); //$NON-NLS-1$
 			e.printStackTrace();
 			return false;
 		}
