@@ -110,13 +110,21 @@ public class BreakoutController {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (e.getKeyChar() == 'i') {
+				switch (e.getKeyChar()) {
+				case 'i':
+					// toggle info text / overlay in the view
 					if (view.isInfoVisible()) {
 						view.showInfoText(false);
 					} else {
 						view.showInfoText(true);
 					}
-				}
+				case 'p':
+					if (!model.isGamePaused()) {
+						model.pauseGame();
+					} else {
+						model.continueGame();
+					}
+				}				
 			}
 
 			@Override

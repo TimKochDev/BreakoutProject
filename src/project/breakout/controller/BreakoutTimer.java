@@ -5,7 +5,6 @@ import java.util.TimerTask;
 import project.breakout.model.BreakoutModel;
 
 public class BreakoutTimer extends TimerTask {
-
 	private BreakoutModel model;
 
 	/**
