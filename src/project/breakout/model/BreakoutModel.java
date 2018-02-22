@@ -28,13 +28,13 @@ public class BreakoutModel extends GraphicsProgram {
 	private static int paddleHeight = 10;
 	private static int paddleX, paddleY;
 
-	private int ballRadius = 3;
-	private double ballX, ballY;
+	private static int ballRadius = 3;
+	private static double ballX, ballY;
 	private static int ballDirection = 290;
 
 	private static int brickWidth = 40;
 	private static int brickHeight = 15;
-	BreakoutBrick[] brickArray;
+	private static BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 40;
 	private static int pixelsPerSecond = 200;
@@ -311,11 +311,17 @@ public class BreakoutModel extends GraphicsProgram {
 		view.levelDone();
 	}
 
+	/**
+	 * Causes a pause in the model.
+	 */
 	public void pauseGame() {
 		timer.cancel();
 		gamePaused = true;
 	}
 
+	/**
+	 * Causes the model to continue the game.
+	 */
 	public void continueGame() {
 		// set up a new timer which updates the ball's position depending on the frame
 		// rate
