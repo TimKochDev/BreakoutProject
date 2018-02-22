@@ -5,10 +5,9 @@ import java.io.IOException;
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
 public class LighthouseView {
-	private static final String USERNAME = Messages.getString("LighthouseView.0");  //$NON-NLS-1$
+	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
 	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
 	private static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD);
-	private static boolean isConnected = false;
 	private static byte[] data = new byte[14 * 28 * 3];;
 
 	/**
@@ -19,7 +18,11 @@ public class LighthouseView {
 	public static boolean connectToLighthouse() {
 		try {
 			display.connect();
-			isConnected = true;
+			if (display.isConnected()) {
+				System.out.println("connection successfull!");
+			} else {
+				System.out.println("connection failed!");
+			}
 			return true;
 		} catch (Exception e) {
 			System.out.println("Connection failed: " + e.getMessage()); //$NON-NLS-1$
@@ -30,7 +33,7 @@ public class LighthouseView {
 
 	public static void setBallsPosition(double ballX, double ballY) {
 		// TODO This is just a test yet.
-		for (int i = 0; i < data.length; i+=2) {
+		for (int i = 0; i < data.length; i += 2) {
 			data[i] = 100;
 		}
 		updateLighthouseView();
@@ -58,6 +61,10 @@ public class LighthouseView {
 	 * @return {@code true} if LighthouseView is connected, {@code false} if not.
 	 */
 	public static boolean isConnected() {
-		return isConnected;
+		if (display != null) {
+			return display.isConnected();
+		} else {
+			return false;
+		}
 	}
 }
