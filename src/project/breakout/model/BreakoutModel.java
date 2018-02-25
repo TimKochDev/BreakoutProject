@@ -350,7 +350,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	// ---------Getters-------------------------
 	/**
-	 * Returns the ball radius.
+	 * Gets the ball radius.
 	 * 
 	 * @return ballRadius, the radius of the ball.
 	 */
@@ -359,7 +359,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * Returns the ball's x-Position.
+	 * Gets the ball's x-Position.
 	 * 
 	 * @return ballX, the x-Position of the ball.
 	 */
@@ -368,7 +368,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * Returns the ball's y-Position.
+	 * Gets the ball's y-Position.
 	 * 
 	 * @return ballY, the y-Position of the ball.
 	 */
@@ -377,7 +377,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * Returns the array where the bricks are saved in.
+	 * Gets the array where the bricks are saved in.
 	 * 
 	 * @return brickArray
 	 */
@@ -386,7 +386,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * Returns the width of the paddle.
+	 * Gets the width of the paddle.
 	 * @return paddleWidth
 	 */
 	public static int getPaddleWidth() {
@@ -394,7 +394,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/** 
-	 * Returns the height of the paddle.
+	 * Gets the height of the paddle.
 	 * @return the paddleHeight
 	 */
 	public static int getPaddleHeight() {
@@ -402,7 +402,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * Returns the paddle's x-Position.
+	 * Gets the paddle's x-Position.
 	 * @return paddleX
 	 */
 	public static int getPaddleX() {
@@ -410,7 +410,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * Returns the paddle's y-Position.
+	 * Gets the paddle's y-Position.
 	 * @return paddleY
 	 */
 	public static int getPaddleY() {
@@ -418,7 +418,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * Returns if the game is paused or not.
+	 * Gets if the game is paused or not.
 	 * @return {@code true} if game is paused, {@code false} if not.
 	 */
 	public boolean isGamePaused() {
