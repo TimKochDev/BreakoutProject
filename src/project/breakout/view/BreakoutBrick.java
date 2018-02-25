@@ -9,4 +9,8 @@ public class BreakoutBrick extends GRect{
 		super(width, height);
 	}
 
+	public BreakoutBrick() {
+		super(0,0);
+	}
+
 }
