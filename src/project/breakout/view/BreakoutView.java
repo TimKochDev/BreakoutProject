@@ -37,7 +37,9 @@ public class BreakoutView extends GCanvas {
 	 * Sets the paddle location in the view.
 	 * 
 	 * @param xCoord
+	 *            the x coordinate of the paddle.
 	 * @param yCoord
+	 *            the y coordinate of the paddle.
 	 */
 	public void setPaddleLocation(int xCoord, int yCoord) {
 		paddle.setLocation(xCoord, yCoord);
@@ -47,7 +49,9 @@ public class BreakoutView extends GCanvas {
 	 * Sets the paddle size in the view.
 	 * 
 	 * @param width
+	 *            the width of the paddle.
 	 * @param height
+	 *            the height of the paddle.
 	 */
 	public void setPaddleSize(int width, int height) {
 		paddle.setSize(width, height);
@@ -55,9 +59,10 @@ public class BreakoutView extends GCanvas {
 
 	// ----------ball methods-------------------------
 	/**
-	 * Sets the ball radius in the view
+	 * Sets the ball radius in the view.
 	 * 
 	 * @param radius
+	 *            the radius of the ball.
 	 */
 	public void setBallsRadius(int radius) {
 		ball.setSize(radius * 2, radius * 2);
@@ -67,13 +72,19 @@ public class BreakoutView extends GCanvas {
 	 * Sets the position of the ball in the view.
 	 * 
 	 * @param x
+	 *            the x coordinate of the ball.
 	 * @param y
+	 *            the y coordinate of the ball.
 	 */
 	public void setBallsPosition(double x, double y) {
 		ball.setLocation((int) x, (int) y);
 	}
 
 	// ------------Brick methods-------------------------
+	/**
+	 * 
+	 * @param bricks
+	 */
 	public void updateBricks(BreakoutBrick[] bricks) {
 		for (BreakoutBrick brick : bricks) {
 			if (brick != null) {
@@ -84,7 +95,7 @@ public class BreakoutView extends GCanvas {
 	}
 
 	/**
-	 * Removes a brick from the view
+	 * Removes a brick from the view.
 	 * 
 	 * @param brick
 	 *            The {@code BreakoutBrick} to be removed.
@@ -100,21 +111,39 @@ public class BreakoutView extends GCanvas {
 	 */
 	public void levelDone() {
 		// TODO viel Spass, Cecile ;-)
-		GLabel winnerLabel = new GLabel("Winner!", getWidth()/2, getHeight()/2);
+		GLabel winnerLabel = new GLabel("Winner!", getWidth() / 2, getHeight() / 2);
 		winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		winnerLabel.setColor(Color.red);
+		winnerLabel.setColor(Color.green);
 		add(winnerLabel);
 	}
 
 	// ----------infoLabel methods--------------------
+	/**
+	 * Sets a new information text in the view.
+	 * 
+	 * @param text
+	 *            the added text.
+	 */
 	public void setInfoText(String text) {
 		infoLabel.setLabel(text);
 	}
 
+	/**
+	 * Sets the information text visible or invisible.
+	 * 
+	 * @param show
+	 *            {@code true} if the information text is visible {@code false} if
+	 *            not.
+	 */
 	public void showInfoText(boolean show) {
 		infoLabel.setVisible(show);
 	}
 
+	/**
+	 * Checks if the information text is visible.
+	 * 
+	 * @return {@code true} if the information text is visible {@code false} if not.
+	 */
 	public boolean isInfoVisible() {
 		return infoLabel.isVisible();
 	}

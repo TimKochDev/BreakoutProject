@@ -21,6 +21,14 @@ public class CollisionController {
 	 */
 	double colTolerance;
 
+	/**
+	 * Checks if there is a collision with a wall in the game.
+	 * 
+	 * @param model
+	 *            The breakout model.
+	 * @return {@code true} if there is a collision with a wall in the model,
+	 *         {@code false} if not.
+	 */
 	public boolean isWallCollisionInModel(BreakoutModel model) {
 		double ballX = model.getBallX();
 		double ballY = model.getBallY();
@@ -96,9 +104,9 @@ public class CollisionController {
 				assert relativeDistanceY + ballRadius > 0 : "the relative distanceY should be > 0, but was "
 						+ relativeDistanceY;
 
-				// check if ball hits brick
+				// check if ball hits the brick
 				if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
-					// brick has hit the brick, collision happened on the side where the relative
+					// ball has hit the brick, collision happened on the side where the relative
 					// distance of the ball to the brick middle is minimal.
 
 					lastBrickCollided = brick;
@@ -145,10 +153,10 @@ public class CollisionController {
 		assert relativeDistanceY + ballRadius > 0 : "the relative distanceY should be > 0, but was "
 				+ relativeDistanceY;
 
-		// check if ball hits brick
+		// check if ball hits the paddle
 		if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
-			// brick has hit the brick, collision happened on the side where the relative
-			// distance of the ball to the brick middle is minimal.
+			// ball has hit the paddle, collision happened on the side where the relative
+			// distance of the ball to the paddle middle is minimal.
 
 			lastCollisionWith = CollisionWith.PADDLE;
 			return true;
@@ -175,7 +183,10 @@ public class CollisionController {
 	}
 
 	/**
-	 * @return the lastCollisionWith
+	 * Get the last collision of the ball with an object.
+	 * 
+	 * @return lastCollisionWith, the last object that the ball collided with.
+	 * 
 	 */
 	public CollisionWith getLastCollisionWith() {
 		return lastCollisionWith;

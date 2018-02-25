@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
+/**
+ * 
+ *
+ */
 public class LighthouseView {
 	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
 	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
@@ -58,6 +62,8 @@ public class LighthouseView {
 	// ---------Getter-------------------------------------
 
 	/**
+	 * Checks if there in a connection to the lighthouse.
+	 * 
 	 * @return {@code true} if LighthouseView is connected, {@code false} if not.
 	 */
 	public static boolean isConnected() {

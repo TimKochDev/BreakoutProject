@@ -8,15 +8,19 @@ public class BreakoutTimer extends TimerTask {
 	private BreakoutModel model;
 
 	/**
+	 * Constructs the breakout model.
+	 * 
 	 * @param model
 	 *            The current BreakoutModel.
-	 * 
 	 */
 	public BreakoutTimer(BreakoutModel model) {
 		this.model = model;
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void run() {
 		// create new frame
