@@ -111,6 +111,9 @@ public class BreakoutModel extends GraphicsProgram {
 		view.updateBricks(brickArray);
 	}
 
+	/**
+	 * Initializes the connection to the lighthouse.
+	 */
 	private void initLighthouse() {
 		LighthouseView.connectToLighthouse();
 		while (!LighthouseView.isConnected()) {

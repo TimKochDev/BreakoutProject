@@ -70,6 +70,11 @@ public class CollisionController {
 		int ballRadius = model.getBallRadius();
 		double ballMiddleX = ballX + ballRadius;
 		double ballMiddleY = ballY + ballRadius;
+		
+		// no collision if no bricks there
+		if (bricks == null) {
+			return false;
+		}
 
 		// check if lastCollidedBrick is still the last collided THING in the view
 		if (lastCollisionWith != CollisionWith.BRICK_X_AXIS && lastCollisionWith != CollisionWith.BRICK_Y_AXIS) {
