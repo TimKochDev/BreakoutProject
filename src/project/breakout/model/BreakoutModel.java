@@ -104,6 +104,15 @@ public class BreakoutModel extends GraphicsProgram {
 
 	private void initLighthouse() {
 		LighthouseView.connectToLighthouse();
+		while (!LighthouseView.isConnected()) {
+			System.out.println("wait for connection");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		LighthouseView.setBallsPosition(0, 0);
 		view.setInfoText("connected");
 	}
@@ -154,7 +163,7 @@ public class BreakoutModel extends GraphicsProgram {
 	public void updateBallsPosition() {
 		// compute time since the last frame was created
 		double frameTime = (double) (System.currentTimeMillis() - lastFrameAtTime);
-		view.setInfoText(String.valueOf(frameTime));
+		// view.setInfoText(String.valueOf(frameTime));
 		frameTime /= 1000.0;
 		lastFrameAtTime = System.currentTimeMillis();
 
@@ -172,6 +181,8 @@ public class BreakoutModel extends GraphicsProgram {
 		// if there's a collision in the model NOW
 		if (collisionControl.isWallCollisionInModel(this) || collisionControl.isBrickCollisionInModel(this)
 				|| collisionControl.isPaddleCollisionInModel(this)) {
+			
+			// compute new direction of the ball
 			ballDirection = directionAfterCollision();
 
 			// clear up the ball direction although it works with directions > 360 and < 0.
@@ -190,14 +201,11 @@ public class BreakoutModel extends GraphicsProgram {
 			ballX += xMovedBy;
 			ballY += yMovedBy;
 
-			if (collisionControl.allBricksDestroyed(brickArray)) {
-				levelDone();
-			}
-
 			// show infoText
 			assert collisionControl
 					.getLastCollisionWith() != null : "lastCollisionWith is null and should be displayed -> NullPointerException";
-			view.setInfoText("Last Thing collided: " + collisionControl.getLastCollisionWith().toString());
+			// view.setInfoText("Last Thing collided: " +
+			// collisionControl.getLastCollisionWith().toString());
 		}
 
 		view.setBallsPosition(ballX, ballY);
@@ -330,11 +338,9 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Causes the model to continue the game.
-=======
-	 * Continues the game and the timer starts running.
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
+	 * <<<<<<< HEAD Causes the model to continue the game. ======= Continues the
+	 * game and the timer starts running. >>>>>>> branch 'master' of
+	 * https://github.com/TiKo98/BreakoutProject
 	 */
 	public void continueGame() {
 		// set up a new timer which updates the ball's position depending on the frame
@@ -387,14 +393,16 @@ public class BreakoutModel extends GraphicsProgram {
 
 	/**
 	 * Returns the width of the paddle.
+	 * 
 	 * @return paddleWidth
 	 */
 	public static int getPaddleWidth() {
 		return paddleWidth;
 	}
 
-	/** 
+	/**
 	 * Returns the height of the paddle.
+	 * 
 	 * @return the paddleHeight
 	 */
 	public static int getPaddleHeight() {
@@ -403,6 +411,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	/**
 	 * Returns the paddle's x-Position.
+	 * 
 	 * @return paddleX
 	 */
 	public static int getPaddleX() {
@@ -411,6 +420,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	/**
 	 * Returns the paddle's y-Position.
+	 * 
 	 * @return paddleY
 	 */
 	public static int getPaddleY() {
@@ -419,6 +429,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	/**
 	 * Returns if the game is paused or not.
+	 * 
 	 * @return {@code true} if game is paused, {@code false} if not.
 	 */
 	public boolean isGamePaused() {

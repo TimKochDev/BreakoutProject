@@ -99,12 +99,18 @@ public class CollisionController {
 				// check if ball hits brick
 				if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
 					// brick has hit the brick, collision happened on the side where the relative
-					// distance of the ball to the brick middle is minimal.
-
-					lastBrickCollided = brick;
+					// distance of the ball to the brick middle is minimal.					
 					lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
 							: CollisionWith.BRICK_Y_AXIS;
+					
+					
+					lastBrickCollided = brick;
 					model.deleteBrickAfterCollision(lastBrickCollided);
+					
+					// check if this was the last brick in the level
+					if (allBricksDestroyed(model.getBrickArray())) {
+						model.levelDone();
+					}
 					return true;
 				}
 			}
