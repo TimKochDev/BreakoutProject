@@ -45,8 +45,21 @@ public class BricksConfig {
 			brickArray[i].setFillColor(Color.RED);
 		}
 		return brickArray;
-		
+
 		// TODO Use the .properties file to make this class useful!
+	}
+
+	private static BreakoutBrick getBrickFromFile(int brickNumber) {
+		// if brick doesn't exist return null
+		if (!keyExists(brickNumber + "x")) {
+			return null;
+		}
+
+		BreakoutBrick brick = new BreakoutBrick();
+
+		// TODO implement brick request
+
+		return brick;
 	}
 
 	private static String getString(String key) {
@@ -54,6 +67,22 @@ public class BricksConfig {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
 			return '!' + key + '!';
+		}
+	}
+
+	/**
+	 * Checks whether key exists in bricksConfig.properties.
+	 * 
+	 * @param key
+	 *            The key which shall be proved.
+	 * @return {@code true} if key exists, {@code false} if not.
+	 */
+	private static boolean keyExists(String key) {
+		try {
+			String test = RESOURCE_BUNDLE.getString(key);
+			return true;
+		} catch (MissingResourceException e) {
+			return false;
 		}
 	}
 }
