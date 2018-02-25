@@ -78,6 +78,11 @@ public class CollisionController {
 		int ballRadius = model.getBallRadius();
 		double ballMiddleX = ballX + ballRadius;
 		double ballMiddleY = ballY + ballRadius;
+		
+		// no collision if no bricks there
+		if (bricks == null) {
+			return false;
+		}
 
 		// check if lastCollidedBrick is still the last collided THING in the view
 		if (lastCollisionWith != CollisionWith.BRICK_X_AXIS && lastCollisionWith != CollisionWith.BRICK_Y_AXIS) {
@@ -106,13 +111,26 @@ public class CollisionController {
 
 				// check if ball hits the brick
 				if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
+<<<<<<< HEAD
 					// ball has hit the brick, collision happened on the side where the relative
 					// distance of the ball to the brick middle is minimal.
 
 					lastBrickCollided = brick;
+=======
+					// brick has hit the brick, collision happened on the side where the relative
+					// distance of the ball to the brick middle is minimal.					
+>>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 					lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
 							: CollisionWith.BRICK_Y_AXIS;
+					
+					
+					lastBrickCollided = brick;
 					model.deleteBrickAfterCollision(lastBrickCollided);
+					
+					// check if this was the last brick in the level
+					if (allBricksDestroyed(model.getBrickArray())) {
+						model.levelDone();
+					}
 					return true;
 				}
 			}

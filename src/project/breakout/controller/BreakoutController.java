@@ -118,12 +118,14 @@ public class BreakoutController {
 					} else {
 						view.showInfoText(true);
 					}
+					break;
 				case 'p':
 					if (!model.isGamePaused()) {
 						model.pauseGame();
 					} else {
 						model.continueGame();
 					}
+					break;
 				}				
 			}
 
@@ -135,12 +137,7 @@ public class BreakoutController {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				int code = e.getKeyCode();
-				if (code == KeyEvent.VK_ESCAPE) {
-					view.setForeground(Color.red);
-					model.setSize(500, 500);
-				}
-
+				
 			}
 		});
 
