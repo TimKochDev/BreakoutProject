@@ -32,8 +32,6 @@ public class BreakoutModel extends GraphicsProgram {
 	private static double ballX, ballY;
 	private static int ballDirection = 290;
 
-	private static int brickWidth = 40;
-	private static int brickHeight = 15;
 	private static BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 40;
@@ -45,7 +43,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private Timer timer;
 	@SuppressWarnings("unused")
 	private static BreakoutController controller;
-	Thread timerThread;
+	private Thread timerThread;
 
 	private static boolean gameStarted = false;
 	private boolean gamePaused = false;
@@ -89,17 +87,28 @@ public class BreakoutModel extends GraphicsProgram {
 		view.setBallsPosition(ballX, ballY);
 		view.setBallsRadius(ballRadius);
 
-		// init bricks
-		brickArray = new BreakoutBrick[3];
-		for (int i = 0; i < brickArray.length; i++) {
-			brickArray[i] = new BreakoutBrick(brickWidth, brickHeight);
-			brickArray[i].setLocation(10 + i * (brickWidth + 10), 50);
-		}
-		view.updateBricks(brickArray);
+		initBricks(1);
 
 		// init view
 		removeAll();
 		add(view, 0, 0);
+	}
+
+	/**
+	 * Initializes the brick array with the standard configuration.
+	 */
+	private void initBricks() {
+		brickArray = BricksConfig.getTestBrickArray();
+		view.updateBricks(brickArray);
+	}
+
+	/**
+	 * Initializes the brick array with the configuration for the
+	 * {@code levelNumber}.
+	 */
+	private void initBricks(int levelNumber) {
+		brickArray = BricksConfig.getBrickArray(levelNumber);
+		view.updateBricks(brickArray);
 	}
 
 	private void initLighthouse() {
@@ -181,7 +190,7 @@ public class BreakoutModel extends GraphicsProgram {
 		// if there's a collision in the model NOW
 		if (collisionControl.isWallCollisionInModel(this) || collisionControl.isBrickCollisionInModel(this)
 				|| collisionControl.isPaddleCollisionInModel(this)) {
-			
+
 			// compute new direction of the ball
 			ballDirection = directionAfterCollision();
 
