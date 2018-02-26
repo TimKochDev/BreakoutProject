@@ -123,7 +123,9 @@ public class BreakoutView extends GCanvas {
 	 * unnecessary things from the view such as winner signs.
 	 */
 	public void levelStarted() {
-		remove(winnerLabel);
+		if (winnerLabel != null) {
+			remove(winnerLabel);
+		}
 	}
 
 	// ----------infoLabel methods--------------------
