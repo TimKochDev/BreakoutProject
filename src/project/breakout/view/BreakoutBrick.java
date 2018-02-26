@@ -1,6 +1,7 @@
 package project.breakout.view;
 
 import acm.graphics.GRect;
+import javafx.scene.paint.Color;
 
 @SuppressWarnings("serial")
 
@@ -44,5 +45,13 @@ public class BreakoutBrick extends GRect {
 	 */
 	public void setBrickType(BrickType brickType) {
 		this.brickType = brickType;
+		
+		// set brickColor to violet if it is brickOfLove
+		if (brickType == BrickType.BRICK_OF_LOVE) {
+			setFillColor(new java.awt.Color((float) Color.VIOLET.getRed(),
+                    (float) Color.VIOLET.getGreen(),
+                    (float) Color.VIOLET.getBlue(),
+                    (float) Color.VIOLET.getOpacity()));
+		}
 	}
 }
