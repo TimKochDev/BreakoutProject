@@ -5,6 +5,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import project.breakout.view.BreakoutBrick;
+
 /**
  * 
  *
@@ -16,8 +17,8 @@ public class BricksConfig {
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-	private BricksConfig() {
-	}
+	// private BricksConfig() {
+	// }
 
 	/**
 	 * Returns a simple brick array for testing.
@@ -64,12 +65,12 @@ public class BricksConfig {
 
 		return brick;
 	}
-	
-/**
- * 
- * @param key
- * @return
- */
+
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
 	private static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
