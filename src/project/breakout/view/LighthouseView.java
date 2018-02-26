@@ -40,6 +40,7 @@ public class LighthouseView {
 		for (int i = 0; i < data.length; i += 2) {
 			data[i] = 100;
 		}
+		System.out.println("send test data");
 		updateLighthouseView();
 	}
 
