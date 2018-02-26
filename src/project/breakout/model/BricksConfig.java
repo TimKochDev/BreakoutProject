@@ -13,22 +13,19 @@ import project.breakout.view.BrickType;
 
 /**
  * This class specifies the access to the bricksConfig.properties. It is used to
- * get a brickArray for a specific level. The structure of the properties should look like the following:
- * 1x = (x-coordinate in pixels)
- * 1y = (y-coordinate in pixels)
- * 1width = (brick width in pixels)
- * 1height = (brick height in pixels)
- * 1color = (name of color as string, eg "yellow")
- * 1type = (String with value of BrickType-enum, eg "STANDARD", "SPARKLE_BRICK", "BRICK_OF_LOVE")
+ * get a brickArray for a specific level. The structure of the properties should
+ * look like the following: 1x = (x-coordinate in pixels) 1y = (y-coordinate in
+ * pixels) 1width = (brick width in pixels) 1height = (brick height in pixels)
+ * 1color = (name of color as string, eg "yellow") 1type = (String with value of
+ * BrickType-enum, eg "STANDARD", "SPARKLE_BRICK", "BRICK_OF_LOVE")
  * 
- * 2x ...
- * 2y...
+ * 2x ... 2y...
  */
 public class BricksConfig {
 	private static int brickWidth = 40;
 	private static int brickHeight = 15;
 	private static String BUNDLE_NAME = "project.breakout.model.bricksConfig"; //$NON-NLS-1$
-	
+
 	private static final String XCOORD = "x";
 	private static final String YCOORD = "y";
 	private static final String BRICKWIDTH = "width";
@@ -66,7 +63,6 @@ public class BricksConfig {
 			System.out.println("could not load brick config for level " + levelNumber);
 			return null;
 		}
-		
 
 		// create arrayList with all breakoutBricks in the configuration file
 		ArrayList<BreakoutBrick> brickList = new ArrayList<>();
@@ -77,7 +73,7 @@ public class BricksConfig {
 		// clear up the list in order to remove null elements
 		brickList.removeAll(Collections.singleton(null));
 		assert brickList.indexOf(null) == -1;
-		
+
 		// return brickList as array of BreakoutBricks
 		BreakoutBrick[] brickArray = new BreakoutBrick[brickList.size()];
 		brickArray = brickList.toArray(brickArray);
@@ -112,7 +108,7 @@ public class BricksConfig {
 					"BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + " was initialized with standard size");
 			brick.setSize(brickWidth, brickHeight);
 		}
-		
+
 		// get color of the brick
 		try {
 			String brickColor = getString(brickNumber + BRICKCOLOR);
@@ -124,13 +120,13 @@ public class BricksConfig {
 					"BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + " was initialized with standard color");
 			brick.setColor(Color.BLACK);
 		}
-		
+
 		// get type of brick
 		try {
 			String brickTypeString = getString(brickNumber + BRICKTYPE);
 			BrickType brickTypeEnum = BrickType.valueOf(brickTypeString);
 			brick.setBrickType(brickTypeEnum);
-		} catch (Exception e) {			
+		} catch (Exception e) {
 		}
 
 		return brick;
@@ -141,22 +137,6 @@ public class BricksConfig {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
 			return '!' + key + '!';
-		}
-	}
-
-	/**
-	 * Checks whether key exists in bricksConfig.properties.
-	 * 
-	 * @param key
-	 *            The key which shall be proved.
-	 * @return {@code true} if key exists, {@code false} if not.
-	 */
-	private static boolean keyExists(String key) {
-		try {
-			String test = RESOURCE_BUNDLE.getString(key);
-			return true;
-		} catch (MissingResourceException e) {
-			return false;
 		}
 	}
 
