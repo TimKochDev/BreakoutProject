@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import jdk.nashorn.internal.ir.TernaryNode;
 import project.breakout.view.BreakoutBrick;
+import project.breakout.view.BrickType;
 
 /**
  * This class specifies the access to the bricksConfig.properties. It is used to
@@ -17,7 +19,10 @@ import project.breakout.view.BreakoutBrick;
  * 1width = (brick width in pixels)
  * 1height = (brick height in pixels)
  * 1color = (name of color as string, eg "yellow")
- *
+ * 1type = (String with value of BrickType-enum, eg "STANDARD", "SPARKLE_BRICK", "BRICK_OF_LOVE")
+ * 
+ * 2x ...
+ * 2y...
  */
 public class BricksConfig {
 	private static int brickWidth = 40;
@@ -29,6 +34,7 @@ public class BricksConfig {
 	private static final String BRICKWIDTH = "width";
 	private static final String BRICKHEIGHT = "height";
 	private static final String BRICKCOLOR = "color";
+	private static final String BRICKTYPE = "type";
 
 	private static ResourceBundle RESOURCE_BUNDLE;
 
@@ -117,6 +123,14 @@ public class BricksConfig {
 			System.out.println(
 					"BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + " was initialized with standard color");
 			brick.setColor(Color.BLACK);
+		}
+		
+		// get type of brick
+		try {
+			String brickTypeString = getString(brickNumber + BRICKTYPE);
+			BrickType brickTypeEnum = BrickType.valueOf(brickTypeString);
+			brick.setBrickType(brickTypeEnum);
+		} catch (Exception e) {			
 		}
 
 		return brick;
