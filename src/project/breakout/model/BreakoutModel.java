@@ -1,5 +1,6 @@
 package project.breakout.model;
 
+import java.awt.List;
 import java.awt.Point;
 import java.util.Timer;
 
@@ -395,8 +396,12 @@ public class BreakoutModel extends GraphicsProgram {
 
 	// ---------After game methods---------------
 	public static void playersNameTyped(String text) {
-		System.out.println("say hi");
-
+		HighscoreOperator hio = new HighscoreOperator();
+		if (hio.readingSuccessful()) {
+			List highscorersNames = hio.getNamesList();
+			List highscorersValue = hio.getHighscoreValues();
+			view.showHighscoreRanking(highscorersNames, highscorersValue);
+		}
 	}
 
 	// ---------Getters-------------------------
