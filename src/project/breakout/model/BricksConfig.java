@@ -14,12 +14,16 @@ import project.breakout.view.BrickType;
 /**
  * This class specifies the access to the bricksConfig.properties. It is used to
  * get a brickArray for a specific level. The structure of the properties should
- * look like the following: 1x = (x-coordinate in pixels) 1y = (y-coordinate in
- * pixels) 1width = (brick width in pixels) 1height = (brick height in pixels)
- * 1color = (name of color as string, eg "yellow") 1type = (String with value of
- * BrickType-enum, eg "STANDARD", "SPARKLE_BRICK", "BRICK_OF_LOVE")
+ * look like the following: 
+ * 1x = (x-coordinate in pixels) 
+ * 1y = (y-coordinate in * pixels) 
+ * 1width = (brick width in pixels) 
+ * 1height = (brick height in pixels)
+ * 1color = (name of color as string, eg "yellow") 
+ * 1type = (String with value of * BrickType-enum, eg "STANDARD", "SPARKLE_BRICK", "BRICK_OF_LOVE")
  * 
- * 2x ... 2y...
+ * 2x ... 
+ * 2y...
  */
 public class BricksConfig {
 	private static int brickWidth = 40;
