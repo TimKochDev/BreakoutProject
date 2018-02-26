@@ -13,7 +13,6 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
-// TODO think about static or non-static use of this class!
 
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
