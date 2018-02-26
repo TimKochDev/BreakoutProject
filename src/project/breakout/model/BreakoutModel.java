@@ -45,7 +45,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	private static boolean gameStarted = false;
 	private static boolean gamePaused = false;
-	private static int currentLevel = 0;
+	private static int currentLevel = 2;
 
 	/**
 	 * RUN METHOD - HERE STARTS EVERYTHING!!!
@@ -276,7 +276,7 @@ public class BreakoutModel extends GraphicsProgram {
 		// specify the angles in which the ball is allowed to bounce away
 		int maxRightAngle = 70;
 		int minLeftAngle = 290;
-		
+
 		// make sure that the ball jumps upwards after hitting the paddle
 		ballDirection = (ballDirection >= maxRightAngle && ballDirection < 180) ? maxRightAngle : ballDirection;
 		ballDirection = (ballDirection <= minLeftAngle && ballDirection >= 180) ? minLeftAngle : ballDirection;
@@ -361,6 +361,8 @@ public class BreakoutModel extends GraphicsProgram {
 			currentLevel++;
 			brickArray = BricksConfig.getBrickArray(currentLevel);
 			view.updateBricks(brickArray);
+		} else {
+			view.showPlayersNameDialog();
 		}
 	}
 
@@ -368,7 +370,9 @@ public class BreakoutModel extends GraphicsProgram {
 	 * Pauses the game and the timer.
 	 */
 	public void pauseGame() {
-		timer.cancel();
+		if (timer != null) {
+			timer.cancel();
+		}
 		gamePaused = true;
 	}
 
@@ -385,6 +389,12 @@ public class BreakoutModel extends GraphicsProgram {
 		timer.schedule(timerTask, 0, frameTime);
 		gamePaused = false;
 		gameStarted = true;
+	}
+
+	// ---------After game methods---------------
+	public static void playersNameTyped(String text) {
+		System.out.println("say hi");
+
 	}
 
 	// ---------Getters-------------------------
@@ -468,4 +478,5 @@ public class BreakoutModel extends GraphicsProgram {
 	public boolean isGamePaused() {
 		return gamePaused;
 	}
+
 }
