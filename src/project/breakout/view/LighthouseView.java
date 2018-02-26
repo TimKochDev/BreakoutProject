@@ -10,7 +10,7 @@ import de.cau.infprogoo.lighthouse.LighthouseDisplay;
  */
 public class LighthouseView {
 	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
-	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
+	private static final String PASSWORD = Messages.getString("LighthouseView.1");  //$NON-NLS-1$
 	private static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD);
 	private static byte[] data = new byte[14 * 28 * 3];;
 
@@ -23,9 +23,9 @@ public class LighthouseView {
 		try {
 			display.connect();
 			if (display.isConnected()) {
-				System.out.println("connection successfull!");
+				System.out.println("connection successfull!"); //$NON-NLS-1$
 			} else {
-				System.out.println("connection failed!");
+				System.out.println("connection failed!"); //$NON-NLS-1$
 			}
 			return true;
 		} catch (Exception e) {
