@@ -121,10 +121,10 @@ public class BreakoutModel extends GraphicsProgram {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		System.out.println("connected");
 		LighthouseView.setBallsPosition(0, 0);
 		view.setInfoText("connected");
 	}
