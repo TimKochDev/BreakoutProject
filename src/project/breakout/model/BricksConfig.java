@@ -1,17 +1,36 @@
 package project.breakout.model;
 
 import java.awt.Color;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import project.breakout.view.BreakoutBrick;
 
+/**
+ * This class specifies the access to the bricksConfig.properties. It is used to
+ * get a brickArray for a specific level. The structure of the properties should look like the following:
+ * 1x = (x-coordinate in pixels)
+ * 1y = (y-coordinate in pixels)
+ * 1width = (brick width in pixels)
+ * 1height = (brick height in pixels)
+ * 1color = (name of color as string, eg "yellow")
+ *
+ */
 public class BricksConfig {
 	private static int brickWidth = 40;
 	private static int brickHeight = 15;
-	private static final String BUNDLE_NAME = "project.breakout.model.bricksConfig"; //$NON-NLS-1$
+	private static String BUNDLE_NAME = "project.breakout.model.bricksConfig"; //$NON-NLS-1$
+	
+	private static final String XCOORD = "x";
+	private static final String YCOORD = "y";
+	private static final String BRICKWIDTH = "width";
+	private static final String BRICKHEIGHT = "height";
+	private static final String BRICKCOLOR = "color";
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+	private static ResourceBundle RESOURCE_BUNDLE;
 
 	private BricksConfig() {
 	}
@@ -22,12 +41,7 @@ public class BricksConfig {
 	 * @return brick array with three bricks in a line.
 	 */
 	public static BreakoutBrick[] getTestBrickArray() {
-		BreakoutBrick[] brickArray = new BreakoutBrick[3];
-		for (int i = 0; i < brickArray.length; i++) {
-			brickArray[i] = new BreakoutBrick(brickWidth, brickHeight);
-			brickArray[i].setLocation(10 + i * (brickWidth + 10), 50);
-		}
-		return brickArray;
+		return getBrickArray(0);
 	}
 
 	/**
@@ -38,26 +52,72 @@ public class BricksConfig {
 	 * @return A brickArray representing the level.
 	 */
 	public static BreakoutBrick[] getBrickArray(int levelNumber) {
-		BreakoutBrick[] brickArray = new BreakoutBrick[3];
-		for (int i = 0; i < brickArray.length; i++) {
-			brickArray[i] = new BreakoutBrick(brickWidth, brickHeight);
-			brickArray[i].setLocation(10 + i * (brickWidth + 10), 50);
-			brickArray[i].setFillColor(Color.RED);
+		// Set resource file to level specification
+		try {
+			BUNDLE_NAME = "project.breakout.model.level" + levelNumber;
+			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+		} catch (Exception e) {
+			System.out.println("could not load brick config for level " + levelNumber);
+			return null;
 		}
-		return brickArray;
+		
 
-		// TODO Use the .properties file to make this class useful!
+		// create arrayList with all breakoutBricks in the configuration file
+		ArrayList<BreakoutBrick> brickList = new ArrayList<>();
+		for (int i = 1; brickExistsInFile(i); i++) {
+			brickList.add(getBrickFromFile(i));
+		}
+
+		// clear up the list in order to remove null elements
+		brickList.removeAll(Collections.singleton(null));
+		assert brickList.indexOf(null) == -1;
+		
+		// return brickList as array of BreakoutBricks
+		BreakoutBrick[] brickArray = new BreakoutBrick[brickList.size()];
+		brickArray = brickList.toArray(brickArray);
+		return brickArray;
 	}
 
 	private static BreakoutBrick getBrickFromFile(int brickNumber) {
 		// if brick doesn't exist return null
-		if (!keyExists(brickNumber + "x")) {
+		if (!brickExistsInFile(brickNumber)) {
 			return null;
 		}
 
 		BreakoutBrick brick = new BreakoutBrick();
 
-		// TODO implement brick request
+		// get location of the brick
+		try {
+			double brickX = Double.parseDouble(getString(brickNumber + XCOORD));
+			double brickY = Double.parseDouble(getString(brickNumber + YCOORD));
+			brick.setLocation(brickX, brickY);
+		} catch (Exception e) {
+			System.out.println("BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + "has no x- or y-coordinate");
+			return null;
+		}
+
+		// get size of the brick
+		try {
+			double brickWidth = Double.parseDouble(getString(brickNumber + BRICKWIDTH));
+			double brickHeight = Double.parseDouble(getString(brickNumber + BRICKHEIGHT));
+			brick.setSize(brickWidth, brickHeight);
+		} catch (Exception e) {
+			System.out.println(
+					"BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + " was initialized with standard size");
+			brick.setSize(brickWidth, brickHeight);
+		}
+		
+		// get color of the brick
+		try {
+			String brickColor = getString(brickNumber + BRICKCOLOR);
+			Field field = Color.class.getField(brickColor);
+			Color color = (Color) field.get(null);
+			brick.setFillColor(color);
+		} catch (Exception e) {
+			System.out.println(
+					"BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + " was initialized with standard color");
+			brick.setColor(Color.BLACK);
+		}
 
 		return brick;
 	}
@@ -80,6 +140,22 @@ public class BricksConfig {
 	private static boolean keyExists(String key) {
 		try {
 			String test = RESOURCE_BUNDLE.getString(key);
+			return true;
+		} catch (MissingResourceException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Checks whether key exists in bricksConfig.properties.
+	 * 
+	 * @param key
+	 *            The key which shall be proved.
+	 * @return {@code true} if key exists, {@code false} if not.
+	 */
+	private static boolean brickExistsInFile(int brickNumber) {
+		try {
+			String test = RESOURCE_BUNDLE.getString(brickNumber + "x");
 			return true;
 		} catch (MissingResourceException e) {
 			return false;

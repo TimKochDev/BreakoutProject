@@ -13,7 +13,6 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
-
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
  * from the BreakoutView-class and draws it on the drawing area. It is
@@ -29,7 +28,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	private static int ballRadius = 3;
 	private static double ballX, ballY;
-	private static int ballDirection = 290;
+	private static int ballDirection = 320;
 
 	private static BreakoutBrick[] brickArray;
 
@@ -45,7 +44,8 @@ public class BreakoutModel extends GraphicsProgram {
 	private Thread timerThread;
 
 	private static boolean gameStarted = false;
-	private boolean gamePaused = false;
+	private static boolean gamePaused = false;
+	private static int currentLevel = 0;
 
 	/**
 	 * RUN METHOD - HERE STARTS EVERYTHING!!!
@@ -86,7 +86,8 @@ public class BreakoutModel extends GraphicsProgram {
 		view.setBallsPosition(ballX, ballY);
 		view.setBallsRadius(ballRadius);
 
-		initBricks(1);
+		// init bricks for level
+		initBricksForLevel(currentLevel);
 
 		// init view
 		removeAll();
@@ -98,6 +99,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	private void initBricks() {
 		brickArray = BricksConfig.getTestBrickArray();
+		assert brickArray != null : "Test-brickarray is null!";
 		view.updateBricks(brickArray);
 	}
 
@@ -105,9 +107,11 @@ public class BreakoutModel extends GraphicsProgram {
 	 * Initializes the brick array with the configuration for the
 	 * {@code levelNumber}.
 	 */
-	private void initBricks(int levelNumber) {
+	private void initBricksForLevel(int levelNumber) {
 		brickArray = BricksConfig.getBrickArray(levelNumber);
-		view.updateBricks(brickArray);
+		if (brickArray != null) {
+			view.updateBricks(brickArray);
+		}
 	}
 
 	/**
@@ -220,7 +224,7 @@ public class BreakoutModel extends GraphicsProgram {
 		}
 
 		view.setBallsPosition(ballX, ballY);
-		// view.setInfoText("Balldirection: " + ballDirection);
+		view.setInfoText("Balldirection: " + ballDirection);
 
 	}
 
@@ -270,8 +274,8 @@ public class BreakoutModel extends GraphicsProgram {
 		ballDirection = (ballDirection < 0) ? ballDirection + 360 : ballDirection;
 
 		// make sure that the ball jumps upwards after hitting the paddle
-		ballDirection = (ballDirection > 90 && ballDirection < 180) ? 80 : ballDirection;
-		ballDirection = (ballDirection < 270 && ballDirection >= 180) ? 280 : ballDirection;
+		ballDirection = (ballDirection > 90 && ballDirection < 180) ? 70 : ballDirection;
+		ballDirection = (ballDirection < 270 && ballDirection >= 180) ? 290 : ballDirection;
 
 		return ballDirection;
 	}
@@ -310,7 +314,9 @@ public class BreakoutModel extends GraphicsProgram {
 			lastFrameAtTime = System.currentTimeMillis();
 			long frameTime = 1000 / framesPerSecond;
 			timer.schedule(timerTask, 0, frameTime);
+			
 			gameStarted = true;
+			view.levelStarted();
 			return true;
 		} else {
 			return false;
@@ -338,6 +344,15 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	public void levelDone() {
 		view.levelDone();
+		gameStarted = false;
+		timer.cancel();
+
+		// start next level if there is one
+		if (BricksConfig.getBrickArray(currentLevel + 1) != null) {
+			currentLevel++;
+			brickArray = BricksConfig.getBrickArray(currentLevel);
+			view.updateBricks(brickArray);
+		}
 	}
 
 	/**

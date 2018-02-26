@@ -18,6 +18,7 @@ public class BreakoutView extends GCanvas {
 	private GRect paddle = new GRect(0, 0);
 	private BreakoutBall ball = new BreakoutBall(0);
 	private GLabel infoLabel = new GLabel("", 0, 10);
+	private GLabel winnerLabel;
 
 	public BreakoutView(int canvasWidth, int canvasHeight) {
 		paddle.setFilled(true);
@@ -111,10 +112,18 @@ public class BreakoutView extends GCanvas {
 	 */
 	public void levelDone() {
 		// TODO viel Spass, Cecile ;-)
-		GLabel winnerLabel = new GLabel("Winner!", getWidth() / 2, getHeight() / 2);
+		winnerLabel = new GLabel("Winner!", getWidth() / 2, getHeight() / 2);
 		winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
 		winnerLabel.setColor(Color.green);
 		add(winnerLabel);
+	}
+
+	/**
+	 * This method is called when a new level is started in order to remove
+	 * unnecessary things from the view such as winner signs.
+	 */
+	public void levelStarted() {
+		remove(winnerLabel);
 	}
 
 	// ----------infoLabel methods--------------------
