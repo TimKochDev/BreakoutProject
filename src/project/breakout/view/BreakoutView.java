@@ -3,6 +3,7 @@ package project.breakout.view;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -141,8 +142,18 @@ public class BreakoutView extends GCanvas {
 	/**
 	 * Causes the view to show a highscore Ranking
 	 */
-	public void showHighscoreRanking() {
+	public void showHighscoreRanking(List names, List values) {
+		removeAll();
+		for (int i = 0; i < 10; i++) {
+			GLabel name = new GLabel(names.getItem(i));
+			GLabel value = new GLabel(values.getItem(i));
 
+			name.setLocation(10, 10 + 15 * i);
+			value.setLocation(name.getX() + name.getWidth() + 20, 10 + 15 * i);
+			
+			add(name);
+			add(value);
+		}
 	}
 
 	/**
