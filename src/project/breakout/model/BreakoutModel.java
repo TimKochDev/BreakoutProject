@@ -30,7 +30,7 @@ public class BreakoutModel extends GraphicsProgram {
 
 	private static int ballRadius = 3;
 	private static double ballX, ballY;
-	private static int ballDirection = 290;
+	private static int ballDirection = 320;
 
 	private static BreakoutBrick[] brickArray;
 
@@ -46,7 +46,8 @@ public class BreakoutModel extends GraphicsProgram {
 	private Thread timerThread;
 
 	private static boolean gameStarted = false;
-	private boolean gamePaused = false;
+	private static boolean gamePaused = false;
+	private static int currentLevel = 2;
 
 	/**
 	 * RUN METHOD - HERE STARTS EVERYTHING!!!
@@ -87,7 +88,8 @@ public class BreakoutModel extends GraphicsProgram {
 		view.setBallsPosition(ballX, ballY);
 		view.setBallsRadius(ballRadius);
 
-		initBricks(1);
+		// init bricks for level
+		initBricksForLevel(currentLevel);
 
 		// init view
 		removeAll();
@@ -99,6 +101,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	private void initBricks() {
 		brickArray = BricksConfig.getTestBrickArray();
+		assert brickArray != null : "Test-brickarray is null!";
 		view.updateBricks(brickArray);
 	}
 
@@ -106,9 +109,11 @@ public class BreakoutModel extends GraphicsProgram {
 	 * Initializes the brick array with the configuration for the
 	 * {@code levelNumber}.
 	 */
-	private void initBricks(int levelNumber) {
+	private void initBricksForLevel(int levelNumber) {
 		brickArray = BricksConfig.getBrickArray(levelNumber);
-		view.updateBricks(brickArray);
+		if (brickArray != null) {
+			view.updateBricks(brickArray);
+		}
 	}
 
 	/**
@@ -221,7 +226,7 @@ public class BreakoutModel extends GraphicsProgram {
 		}
 
 		view.setBallsPosition(ballX, ballY);
-		// view.setInfoText("Balldirection: " + ballDirection);
+		view.setInfoText("Balldirection: " + ballDirection);
 
 	}
 
@@ -270,9 +275,18 @@ public class BreakoutModel extends GraphicsProgram {
 		ballDirection = (ballDirection > 360) ? ballDirection - 360 : ballDirection;
 		ballDirection = (ballDirection < 0) ? ballDirection + 360 : ballDirection;
 
+		// specify the angles in which the ball is allowed to bounce away
+		int maxRightAngle = 70;
+		int minLeftAngle = 290;
+
 		// make sure that the ball jumps upwards after hitting the paddle
-		ballDirection = (ballDirection > 90 && ballDirection < 180) ? 80 : ballDirection;
-		ballDirection = (ballDirection < 270 && ballDirection >= 180) ? 280 : ballDirection;
+		ballDirection = (ballDirection >= maxRightAngle && ballDirection < 180) ? maxRightAngle : ballDirection;
+		ballDirection = (ballDirection <= minLeftAngle && ballDirection >= 180) ? minLeftAngle : ballDirection;
+
+		// assertions
+		boolean ballDirection1 = ballDirection > 0 && ballDirection <= maxRightAngle;
+		boolean ballDirection2 = ballDirection < 360 && ballDirection >= minLeftAngle;
+		assert ballDirection1 || ballDirection2 : "BallDirection out of specified bounds. Was " + ballDirection;
 
 		return ballDirection;
 	}
@@ -311,7 +325,9 @@ public class BreakoutModel extends GraphicsProgram {
 			lastFrameAtTime = System.currentTimeMillis();
 			long frameTime = 1000 / framesPerSecond;
 			timer.schedule(timerTask, 0, frameTime);
+
 			gameStarted = true;
+			view.levelStarted();
 			return true;
 		} else {
 			return false;
@@ -339,13 +355,26 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	public void levelDone() {
 		view.levelDone();
+		gameStarted = false;
+		timer.cancel();
+
+		// start next level if there is one
+		if (BricksConfig.getBrickArray(currentLevel + 1) != null) {
+			currentLevel++;
+			brickArray = BricksConfig.getBrickArray(currentLevel);
+			view.updateBricks(brickArray);
+		} else {
+			view.showPlayersNameDialog();
+		}
 	}
 
 	/**
 	 * Pauses the game and the timer.
 	 */
 	public void pauseGame() {
-		timer.cancel();
+		if (timer != null) {
+			timer.cancel();
+		}
 		gamePaused = true;
 	}
 
@@ -362,6 +391,12 @@ public class BreakoutModel extends GraphicsProgram {
 		timer.schedule(timerTask, 0, frameTime);
 		gamePaused = false;
 		gameStarted = true;
+	}
+
+	// ---------After game methods---------------
+	public static void playersNameTyped(String text) {
+		System.out.println("say hi");
+
 	}
 
 	// ---------Getters-------------------------
@@ -445,4 +480,5 @@ public class BreakoutModel extends GraphicsProgram {
 	public boolean isGamePaused() {
 		return gamePaused;
 	}
+
 }

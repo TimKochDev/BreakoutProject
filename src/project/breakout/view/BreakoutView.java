@@ -1,11 +1,18 @@
 package project.breakout.view;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JTextField;
 
 import acm.graphics.GCanvas;
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
+import project.breakout.model.BreakoutModel;
 
 /**
  * This class represents the {@code BreakoutModel} as a game view. It provides a
@@ -18,6 +25,7 @@ public class BreakoutView extends GCanvas {
 	private GRect paddle = new GRect(0, 0);
 	private BreakoutBall ball = new BreakoutBall(0);
 	private GLabel infoLabel = new GLabel("", 0, 10);
+	private GLabel winnerLabel;
 
 	public BreakoutView(int canvasWidth, int canvasHeight) {
 		paddle.setFilled(true);
@@ -106,15 +114,64 @@ public class BreakoutView extends GCanvas {
 		// TODO evtl mit Animation? Viel Spass, Cecile ;-)
 	}
 
+	// ---------level methods--------------------------
+
 	/**
 	 * This method handles it, if the level is completed by the player.
 	 */
 	public void levelDone() {
 		// TODO viel Spass, Cecile ;-)
-		GLabel winnerLabel = new GLabel("Winner!", getWidth() / 2, getHeight() / 2);
+		winnerLabel = new GLabel("Winner!", getWidth() / 2, getHeight() / 2);
 		winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
 		winnerLabel.setColor(Color.green);
 		add(winnerLabel);
+	}
+
+	/**
+	 * This method is called when a new level is started in order to remove
+	 * unnecessary things from the view such as winner signs.
+	 */
+	public void levelStarted() {
+		if (winnerLabel != null) {
+			remove(winnerLabel);
+		}
+	}
+
+	// ---------Highscore methods-------------------
+	/**
+	 * Causes the view to show a highscore Ranking
+	 */
+	public void showHighscoreRanking() {
+
+	}
+
+	/**
+	 * Asks the user for his name and returns it as a String.
+	 * 
+	 */
+	public void showPlayersNameDialog() {
+		removeAll();
+
+		// Show textfield
+		JTextField txtField = new JTextField();
+		txtField.setSize(getWidth() / 2, txtField.getHeight());
+		txtField.setLocation(getWidth() / 2 - txtField.getWidth() / 2, (int) (getHeight() * 0.65));
+		add(txtField);
+
+		// Add OK Button
+		JButton okButton = new JButton("OK");
+		okButton.setText("OK");
+		okButton.setSize(100, txtField.getHeight() + 10);
+		okButton.setLocation(txtField.getX() + txtField.getWidth() / 2 - okButton.getWidth() / 2, txtField.getY() + 20);
+		okButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BreakoutModel.playersNameTyped(txtField.getText());
+
+			}
+		});
+		add(okButton);
 	}
 
 	// ----------infoLabel methods--------------------

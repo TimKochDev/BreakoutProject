@@ -13,7 +13,7 @@ public class LighthouseView {
 	private static final String PASSWORD = Messages.getString("LighthouseView.1");  //$NON-NLS-1$
 	private static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD,25);
 	private static byte[] data = new byte[14 * 28 * 3];
-
+	
 	/**
 	 * Sets up the connection of this class to the lighthouse.
 	 * 
@@ -43,6 +43,7 @@ public class LighthouseView {
 	
 		for (int i = 0; i < data.length; i += 2) {
 			data[i] = (byte) 255;
+			//data[i] = (byte) 100;
 		}
 		System.out.println("send test data");
 		updateLighthouseView();
