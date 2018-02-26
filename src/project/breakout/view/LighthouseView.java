@@ -22,11 +22,6 @@ public class LighthouseView {
 	public static boolean connectToLighthouse() {
 		try {
 			display.connect();
-			if (display.isConnected()) {
-				System.out.println("connection successfull!");
-			} else {
-				System.out.println("connection failed!");
-			}
 			return true;
 		} catch (Exception e) {
 			System.out.println("Connection failed: " + e.getMessage()); //$NON-NLS-1$
