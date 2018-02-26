@@ -111,15 +111,10 @@ public class CollisionController {
 
 				// check if ball hits the brick
 				if (relativeDistanceX <= 1 && relativeDistanceY <= 1) {
-<<<<<<< HEAD
 					// ball has hit the brick, collision happened on the side where the relative
 					// distance of the ball to the brick middle is minimal.
-
 					lastBrickCollided = brick;
-=======
-					// brick has hit the brick, collision happened on the side where the relative
-					// distance of the ball to the brick middle is minimal.					
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
+			
 					lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
 							: CollisionWith.BRICK_Y_AXIS;
 					

@@ -350,9 +350,7 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-	 * <<<<<<< HEAD Causes the model to continue the game. ======= Continues the
-	 * game and the timer starts running. >>>>>>> branch 'master' of
-	 * https://github.com/TiKo98/BreakoutProject
+	 * Continues the game and the timer starts running.
 	 */
 	public void continueGame() {
 		// set up a new timer which updates the ball's position depending on the frame
@@ -404,26 +402,17 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Gets the width of the paddle.
-=======
 	 * Returns the width of the paddle.
 	 * 
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 	 * @return paddleWidth
 	 */
 	public static int getPaddleWidth() {
 		return paddleWidth;
 	}
 
-<<<<<<< HEAD
-	/** 
-	 * Gets the height of the paddle.
-=======
 	/**
-	 * Returns the height of the paddle.
+	 * Gets the height of the paddle.
 	 * 
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 	 * @return the paddleHeight
 	 */
 	public static int getPaddleHeight() {
@@ -431,12 +420,8 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Gets the paddle's x-Position.
-=======
-	 * Returns the paddle's x-Position.
-	 * 
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
+	 *
 	 * @return paddleX
 	 */
 	public static int getPaddleX() {
@@ -444,12 +429,8 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Gets the paddle's y-Position.
-=======
-	 * Returns the paddle's y-Position.
 	 * 
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 	 * @return paddleY
 	 */
 	public static int getPaddleY() {
@@ -457,12 +438,8 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Gets if the game is paused or not.
-=======
-	 * Returns if the game is paused or not.
 	 * 
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
 	 * @return {@code true} if game is paused, {@code false} if not.
 	 */
 	public boolean isGamePaused() {
