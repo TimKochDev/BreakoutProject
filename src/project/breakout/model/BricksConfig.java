@@ -5,7 +5,10 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import project.breakout.view.BreakoutBrick;
-
+/**
+ * 
+ *
+ */
 public class BricksConfig {
 	private static int brickWidth = 40;
 	private static int brickHeight = 15;
@@ -61,7 +64,12 @@ public class BricksConfig {
 
 		return brick;
 	}
-
+	
+/**
+ * 
+ * @param key
+ * @return
+ */
 	private static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
