@@ -97,7 +97,7 @@ public class BricksConfig {
 			double brickY = Double.parseDouble(getString(brickNumber + YCOORD));
 			brick.setLocation(brickX, brickY);
 		} catch (Exception e) {
-			System.out.println("BrickNr " + brickNumber + " in resource " + BUNDLE_NAME + "has no x- or y-coordinate");
+			System.out.println("BrickNr " + brickNumber + " in resource " + BUNDLE_NAME + " has no x- or y-coordinate");
 			return null;
 		}
 
