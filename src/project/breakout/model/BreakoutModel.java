@@ -12,6 +12,7 @@ import project.breakout.controller.CollisionWith;
 import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
+import project.breakout.view.TestLightHouseView;
 
 // TODO think about static or non-static use of this class!
 
@@ -57,6 +58,7 @@ public class BreakoutModel extends GraphicsProgram {
 		initView();
 		initController();
 		initLighthouse();
+		//TestLightHouseView.initTestLighthouse();
 	}
 
 	// ------------------initializing methods----------------------------
@@ -115,12 +117,15 @@ public class BreakoutModel extends GraphicsProgram {
 			view.updateBricks(brickArray);
 		}
 	}
+	
+	
 
 	/**
 	 * Initializes the connection to the lighthouse.
 	 */
 	private void initLighthouse() {
 		LighthouseView.connectToLighthouse();
+		
 		while (!LighthouseView.isConnected()) {
 			System.out.println("wait for connection");
 			try {
@@ -129,9 +134,19 @@ public class BreakoutModel extends GraphicsProgram {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("connected");
-		LighthouseView.setBallsPosition(0, 0);
-		view.setInfoText("connected");
+
+		LighthouseView.setBallsPosition(13,12);
+		LighthouseView.setPaddlePosition(10,13);
+		LighthouseView.setBrick(0,0);
+		
+		System.out.println(LighthouseView.display.isConnected());
+		
+		if(LighthouseView.display.isConnected()) {
+			view.setInfoText("connected");
+		}
+		
+		
+	
 	}
 
 	// -------------methods for controller-----------
