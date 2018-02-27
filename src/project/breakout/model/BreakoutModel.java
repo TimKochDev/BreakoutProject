@@ -13,15 +13,9 @@ import project.breakout.controller.CollisionWith;
 import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
-<<<<<<< Upstream, based on origin/master
 
 // TODO think about static or non-static use of this class!
 
-=======
-
-// TODO think about static or non-static use of this class!
-
->>>>>>> abd6b69 merged hopefully last try
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
  * from the BreakoutView-class and draws it on the drawing area. It is
