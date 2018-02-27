@@ -22,6 +22,7 @@ import project.breakout.view.BrickType;
  * 
  * 2x ... 
  * 2y...
+ * test
  */
 public class BricksConfig {
 	private static int brickWidth = 40;
