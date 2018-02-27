@@ -22,7 +22,6 @@ import project.breakout.view.BrickType;
  * 
  * 2x ... 
  * 2y...
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
  */
 public class BricksConfig {
 	private static int brickWidth = 40;
