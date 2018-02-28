@@ -13,7 +13,7 @@ import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 public class LighthouseView {
 	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
 	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
-	public static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD, 2);
+	public static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD);
 
 	private final static int FLOORS = 14;
 	private final static int WINDOWS_PER_FLOOR = 28;
@@ -61,12 +61,16 @@ public class LighthouseView {
 
 	}
 
+	/**
+	 * 
+	 * @param ballX
+	 * @param ballY
+	 */
 	public static void setBallsPosition(double ballX, double ballY) {
 		assert ballX >= 0 && ballX <= WINDOWS_PER_FLOOR
 				- BALL_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
 		assert ballY >= 0 && ballY <= FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
-		// if (ballX <= WINDOWS_PER_FLOOR - BALL_LENGTH && ballY <= FLOORS -
-		// BALL_HEIGHT) {
+
 		for (int i = 0; i < BALL_LENGTH; i++) {
 			data[(int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
 		}
@@ -96,6 +100,13 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
+	
+	public static void setAllDark() {
+		for (int i = 0; i< data.length; i++) {
+			data[i] = (byte) 0;
+		}
+		updateLighthouseView();
+	}
 
 	/**
 	 * Removes a brick from the view.
@@ -116,12 +127,14 @@ public class LighthouseView {
 	private static void updateLighthouseView() {
 		try {
 			display.send(data);
-			System.out.println(Arrays.toString(data));
 		} catch (IOException e) {
 			System.out.println("Data sending failed: " + e.getMessage()); //$NON-NLS-1$
 			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			if (e.getMessage().contains("BLOCKING")) {
+				System.out.println("Connection overflow");
+			}
 		}
-		System.out.println(display.isConnected());
 	}
 
 	/**

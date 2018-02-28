@@ -14,7 +14,9 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
+
 // TODO think about static or non-static use of this class!
+
 
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
@@ -36,7 +38,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 40;
-	private static int pixelsPerSecond = 200;
+	private static int pixelsPerSecond = 20;
 	private static long lastFrameAtTime;
 
 	private static BreakoutView view;
@@ -46,6 +48,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static BreakoutController controller;
 	private Thread timerThread;
 
+	private static boolean lighthouseEnabled = false;
 	private static boolean gameStarted = false;
 	private static boolean gamePaused = false;
 	private static int currentLevel = 2;
@@ -125,7 +128,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	private void initLighthouse() {
 		LighthouseView.connectToLighthouse();
-		
+
 		while (!LighthouseView.isConnected()) {
 			System.out.println("wait for connection");
 			try {
@@ -135,18 +138,14 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 
-		LighthouseView.setBallsPosition(13,12);
-		LighthouseView.setPaddlePosition(10,13);
-		LighthouseView.setBrick(0,0);
-		
-		System.out.println(LighthouseView.display.isConnected());
-		
-		if(LighthouseView.display.isConnected()) {
+		LighthouseView.setBallsPosition(13, 12);
+		LighthouseView.setPaddlePosition(10, 13);
+		LighthouseView.setBrick(1, 1);
+
+		if (LighthouseView.display.isConnected()) {
 			view.setInfoText("connected");
 		}
-		
-		
-	
+
 	}
 
 	// -------------methods for controller-----------
@@ -198,6 +197,9 @@ public class BreakoutModel extends GraphicsProgram {
 		// view.setInfoText(String.valueOf(frameTime));
 		frameTime /= 1000.0;
 		lastFrameAtTime = System.currentTimeMillis();
+		
+		// TODO comment out when not debugging
+		frameTime = 0.3;
 
 		// move ball in last known direction
 		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
@@ -240,9 +242,25 @@ public class BreakoutModel extends GraphicsProgram {
 			// collisionControl.getLastCollisionWith().toString());
 		}
 
+		// apply changes
 		view.setBallsPosition(ballX, ballY);
 		view.setInfoText("Balldirection: " + ballDirection);
 
+		// TODO remove change from relative coordinates to window coordinates!
+		LighthouseView.setAllDark();
+		double relativeX = (ballX / getWidth());
+		double relativeY = (ballY / getHeight());
+		int windowX = (int) (27 * relativeX);
+		int windowY = (int) (13 * relativeY);
+		assert windowX < 14: "windowX out of range";
+		assert windowY < 28 : "windowY out of range";
+
+		try {
+			LighthouseView.setBallsPosition(windowX, windowY);
+			System.out.println("Set ball to window" + windowX + "/" + windowY);
+		} catch (Exception e) {
+			System.out.println("failes to set ball to " + windowX + "/" +  windowY);
+		}
 	}
 
 	/**
@@ -500,4 +518,26 @@ public class BreakoutModel extends GraphicsProgram {
 		return gamePaused;
 	}
 
+	/**
+	 * @return the lighthouseEnabled
+	 */
+	public boolean isLighthouseEnabled() {
+		return lighthouseEnabled;
+	}
+
+	/**
+	 * @param lighthouseEnabled
+	 *            the lighthouseEnabled to set
+	 */
+	public void setLighthouseEnabled(boolean lighthouseEnabled) {
+		BreakoutModel.lighthouseEnabled = lighthouseEnabled;
+
+		if (lighthouseEnabled) {
+			view.setInfoText("Connection to lighthouse started");
+			view.showInfoText(true);
+			if (!LighthouseView.isConnected()) {
+				initLighthouse();
+			}
+		}
+	}
 }

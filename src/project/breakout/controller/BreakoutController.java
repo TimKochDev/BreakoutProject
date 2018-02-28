@@ -126,6 +126,12 @@ public class BreakoutController {
 						model.continueGame();
 					}
 					break;
+				case 'l':
+					if (model.isLighthouseEnabled()) {
+						model.setLighthouseEnabled(false);
+					} else {
+						model.setLighthouseEnabled(true);
+					}
 				}				
 			}
 
