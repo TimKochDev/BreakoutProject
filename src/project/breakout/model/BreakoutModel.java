@@ -14,8 +14,6 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
-// TODO think about static or non-static use of this class!
-
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
  * from the BreakoutView-class and draws it on the drawing area. It is
@@ -46,6 +44,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static BreakoutController controller;
 	private Thread timerThread;
 
+	private static boolean lighthouseEnabled = false;
 	private static boolean gameStarted = false;
 	private static boolean gamePaused = false;
 	private static int currentLevel = 2;
@@ -122,7 +121,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	private void initLighthouse() {
 		LighthouseView.connectToLighthouse();
-		
+
 		while (!LighthouseView.isConnected()) {
 			System.out.println("wait for connection");
 			try {
@@ -132,18 +131,16 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 
-		LighthouseView.setBallsPosition(13,12);
-		LighthouseView.setPaddlePosition(10,13);
-		LighthouseView.setBrick(0,0);
-		
+		LighthouseView.setBallsPosition(13, 12);
+		LighthouseView.setPaddlePosition(10, 13);
+		LighthouseView.setBrick(1, 1);
+
 		System.out.println(LighthouseView.display.isConnected());
-		
-		if(LighthouseView.display.isConnected()) {
+
+		if (LighthouseView.display.isConnected()) {
 			view.setInfoText("connected");
 		}
-		
-		
-	
+
 	}
 
 	// -------------methods for controller-----------
@@ -237,9 +234,13 @@ public class BreakoutModel extends GraphicsProgram {
 			// collisionControl.getLastCollisionWith().toString());
 		}
 
+		// apply changes
 		view.setBallsPosition(ballX, ballY);
 		view.setInfoText("Balldirection: " + ballDirection);
-
+		
+		// TODO remove change from relative coordinates to window coordinates!
+		LighthouseView.setAllDark();
+		LighthouseView.setBallsPosition((int) 28 * (ballX / getWidth()), (int) 14 * (ballY / getHeight()));
 	}
 
 	/**
@@ -497,4 +498,17 @@ public class BreakoutModel extends GraphicsProgram {
 		return gamePaused;
 	}
 
+	/**
+	 * @return the lighthouseEnabled
+	 */
+	public static boolean isLighthouseEnabled() {
+		return lighthouseEnabled;
+	}
+
+	/**
+	 * @param lighthouseEnabled the lighthouseEnabled to set
+	 */
+	public static void setLighthouseEnabled(boolean lighthouseEnabled) {
+		BreakoutModel.lighthouseEnabled = lighthouseEnabled;
+	}	
 }

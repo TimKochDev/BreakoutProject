@@ -87,6 +87,13 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
+	
+	public static void setAllDark() {
+		for (int i = 0; i< data.length; i++) {
+			data[i] = (byte) 0;
+		}
+		updateLighthouseView();
+	}
 
 	/**
 	 * Removes a brick from the view.
