@@ -245,8 +245,6 @@ public class BreakoutModel extends GraphicsProgram {
 		double relativeY = (ballY / getHeight());
 		int windowX = (int) (27 * relativeX);
 		int windowY = (int) (13 * relativeY);
-		assert windowX < 14: "windowX out of range";
-		assert windowY < 28 : "windowY out of range";
 
 		try {
 			LighthouseView.setBallsPosition(windowX, windowY);
