@@ -13,7 +13,7 @@ import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 public class LighthouseView {
 	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
 	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
-	public static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD, 2);
+	public static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD);
 
 	private final static int FLOORS = 14;
 	private final static int WINDOWS_PER_FLOOR = 28;
@@ -114,12 +114,14 @@ public class LighthouseView {
 	private static void updateLighthouseView() {
 		try {
 			display.send(data);
-			System.out.println(Arrays.toString(data));
 		} catch (IOException e) {
 			System.out.println("Data sending failed: " + e.getMessage()); //$NON-NLS-1$
 			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			if (e.getMessage().contains("BLOCKING")) {
+				System.out.println("Connection overflow");
+			}
 		}
-		System.out.println(display.isConnected());
 	}
 	
 	/**

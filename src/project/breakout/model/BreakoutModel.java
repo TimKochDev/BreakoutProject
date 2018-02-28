@@ -34,7 +34,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 40;
-	private static int pixelsPerSecond = 200;
+	private static int pixelsPerSecond = 20;
 	private static long lastFrameAtTime;
 
 	private static BreakoutView view;
@@ -134,8 +134,6 @@ public class BreakoutModel extends GraphicsProgram {
 		LighthouseView.setBallsPosition(13, 12);
 		LighthouseView.setPaddlePosition(10, 13);
 		LighthouseView.setBrick(1, 1);
-
-		System.out.println(LighthouseView.display.isConnected());
 
 		if (LighthouseView.display.isConnected()) {
 			view.setInfoText("connected");
@@ -237,10 +235,17 @@ public class BreakoutModel extends GraphicsProgram {
 		// apply changes
 		view.setBallsPosition(ballX, ballY);
 		view.setInfoText("Balldirection: " + ballDirection);
-		
+
 		// TODO remove change from relative coordinates to window coordinates!
 		LighthouseView.setAllDark();
-		LighthouseView.setBallsPosition((int) 28 * (ballX / getWidth()), (int) 14 * (ballY / getHeight()));
+		double relativeX = (ballX / getWidth());
+		double relativeY = (ballY / getHeight());
+
+		try {
+			LighthouseView.setBallsPosition((int) 14 * relativeY, (int) 28 * relativeX);
+		} catch (Exception e) {
+			System.out.println("failes to set ball to " + (14 * relativeY) + "/" +  ((int) 28 * relativeX));
+		}
 	}
 
 	/**
@@ -501,14 +506,23 @@ public class BreakoutModel extends GraphicsProgram {
 	/**
 	 * @return the lighthouseEnabled
 	 */
-	public static boolean isLighthouseEnabled() {
+	public boolean isLighthouseEnabled() {
 		return lighthouseEnabled;
 	}
 
 	/**
-	 * @param lighthouseEnabled the lighthouseEnabled to set
+	 * @param lighthouseEnabled
+	 *            the lighthouseEnabled to set
 	 */
-	public static void setLighthouseEnabled(boolean lighthouseEnabled) {
+	public void setLighthouseEnabled(boolean lighthouseEnabled) {
 		BreakoutModel.lighthouseEnabled = lighthouseEnabled;
-	}	
+
+		if (lighthouseEnabled) {
+			view.setInfoText("Connection to lighthouse started");
+			view.showInfoText(true);
+			if (!LighthouseView.isConnected()) {
+				initLighthouse();
+			}
+		}
+	}
 }

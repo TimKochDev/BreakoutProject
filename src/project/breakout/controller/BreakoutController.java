@@ -127,10 +127,10 @@ public class BreakoutController {
 					}
 					break;
 				case 'l':
-					if (BreakoutModel.isLighthouseEnabled()) {
-						BreakoutModel.setLighthouseEnabled(false);
+					if (model.isLighthouseEnabled()) {
+						model.setLighthouseEnabled(false);
 					} else {
-						BreakoutModel.setLighthouseEnabled(true);
+						model.setLighthouseEnabled(true);
 					}
 				}				
 			}
