@@ -68,6 +68,7 @@ public class LighthouseView {
 	 * @param ballY
 	 */
 	public static void setBallsPosition(double ballX, double ballY) {
+<<<<<<< HEAD
 		assert ballX >= 0 && ballX < WINDOWS_PER_FLOOR
 				- BALL_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
 		assert ballY >= 0 && ballY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
