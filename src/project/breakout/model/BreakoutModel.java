@@ -135,7 +135,7 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 
-		LighthouseView.setBallsPosition(13,14);
+		LighthouseView.setBallsPosition(13,12);
 		LighthouseView.setPaddlePosition(10,13);
 		LighthouseView.setBrick(0,0);
 		

@@ -62,8 +62,8 @@ public class LighthouseView {
 	}
 
 	public static void setBallsPosition(double ballX, double ballY) {
-		assert ballX >= 0 && ballX <= WINDOWS_PER_FLOOR - BALL_LENGTH: "LighhouseView: ballX < 0";
-		assert ballY >= 0 && ballY <= FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > ";
+		assert ballX >= 0 && ballX <= WINDOWS_PER_FLOOR - BALL_LENGTH: "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
+		assert ballY >= 0 && ballY <= FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
 			//if (ballX <= WINDOWS_PER_FLOOR - BALL_LENGTH && ballY <= FLOORS - BALL_HEIGHT) {
 				for (int i = 0; i < BALL_LENGTH; i++) {
 					data[(int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
@@ -72,9 +72,9 @@ public class LighthouseView {
 	}
 
 	public static void setPaddlePosition(double paddleX, double paddleY) {
-		// exception paddleX >= WINDOWS_PER_FLOOR - PADDEL_LENGTH || paddleY != FLOORS -
-		// PADDEL_HEIGHT
-
+		assert paddleX <= WINDOWS_PER_FLOOR - BALL_LENGTH: "LighhouseView: paddleX < 0";
+		assert paddleY == FLOORS-1: "LighhouseView: paddleY != FLOORS";
+		
 		// red
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			data[(int) (((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
