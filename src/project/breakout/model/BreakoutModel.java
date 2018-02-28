@@ -122,6 +122,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 */
 	private void initLighthouse() {
 		LighthouseView.connectToLighthouse();
+		
 		while (!LighthouseView.isConnected()) {
 			System.out.println("wait for connection");
 			try {
@@ -130,9 +131,19 @@ public class BreakoutModel extends GraphicsProgram {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("connected");
-		LighthouseView.setBallsPosition(0, 0);
-		view.setInfoText("connected");
+
+		LighthouseView.setBallsPosition(13,12);
+		LighthouseView.setPaddlePosition(10,13);
+		LighthouseView.setBrick(0,0);
+		
+		System.out.println(LighthouseView.display.isConnected());
+		
+		if(LighthouseView.display.isConnected()) {
+			view.setInfoText("connected");
+		}
+		
+		
+	
 	}
 
 	// -------------methods for controller-----------
