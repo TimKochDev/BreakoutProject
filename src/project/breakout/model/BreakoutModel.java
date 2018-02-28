@@ -285,8 +285,8 @@ public class BreakoutModel extends GraphicsProgram {
 		ballDirection = (ballDirection <= minLeftAngle && ballDirection >= 180) ? minLeftAngle : ballDirection;
 
 		// assertions
-		boolean ballDirection1 = ballDirection > 0 && ballDirection <= maxRightAngle;
-		boolean ballDirection2 = ballDirection < 360 && ballDirection >= minLeftAngle;
+		boolean ballDirection1 = ballDirection >= 0 && ballDirection <= maxRightAngle;
+		boolean ballDirection2 = ballDirection <= 360 && ballDirection >= minLeftAngle;
 		assert ballDirection1 || ballDirection2 : "BallDirection out of specified bounds. Was " + ballDirection;
 
 		return ballDirection;
