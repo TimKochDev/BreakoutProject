@@ -22,7 +22,7 @@ import project.breakout.view.BrickType;
  * 
  * 2x ... 
  * 2y...
->>>>>>> branch 'master' of https://github.com/TiKo98/BreakoutProject
+ * test
  */
 public class BricksConfig {
 	private static int brickWidth = 40;
@@ -97,7 +97,7 @@ public class BricksConfig {
 			double brickY = Double.parseDouble(getString(brickNumber + YCOORD));
 			brick.setLocation(brickX, brickY);
 		} catch (Exception e) {
-			System.out.println("BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + "has no x- or y-coordinate");
+			System.out.println("BrickNr " + brickNumber + " in resource " + BUNDLE_NAME + " has no x- or y-coordinate");
 			return null;
 		}
 
@@ -108,7 +108,7 @@ public class BricksConfig {
 			brick.setSize(brickWidth, brickHeight);
 		} catch (Exception e) {
 			System.out.println(
-					"BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + " was initialized with standard size");
+					"BrickNr " + brickNumber + " in resource " + BUNDLE_NAME + " was initialized with standard size");
 			brick.setSize(brickWidth, brickHeight);
 		}
 
@@ -120,7 +120,7 @@ public class BricksConfig {
 			brick.setFillColor(color);
 		} catch (Exception e) {
 			System.out.println(
-					"BrickNr " + brickNumber + "in resource " + BUNDLE_NAME + " was initialized with standard color");
+					"BrickNr " + brickNumber + " in resource " + BUNDLE_NAME + " was initialized with standard color");
 			brick.setColor(Color.BLACK);
 		}
 

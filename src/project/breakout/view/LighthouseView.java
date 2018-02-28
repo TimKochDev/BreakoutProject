@@ -32,11 +32,10 @@ public class LighthouseView {
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
 	private final static int BRICK_HEIGHT = 2;
-	
-	
 
 	public static void setBrick(int brickX, int brickY) {
-		// exception brickX >= WINDOWS_PER_FLOOR - BRICK_LENGTH, brickY >= FLOORS - BRICK_HEIGHT
+		// exception brickX >= WINDOWS_PER_FLOOR - BRICK_LENGTH, brickY >= FLOORS -
+		// BRICK_HEIGHT
 
 		// red
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
@@ -63,15 +62,18 @@ public class LighthouseView {
 	}
 
 	public static void setBallsPosition(double ballX, double ballY) {
-		// exception ballX >= WINDOWS_PER_FLOOR - BALL_LENGTH, ballY >= FLOORS - BALL_HEIGHT
-		for (int i = 0; i < BALL_LENGTH; i++) {
-			data[(int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
-		}
+		assert ballX >= 0 && ballX <= WINDOWS_PER_FLOOR - BALL_LENGTH: "LighhouseView: ballX < 0";
+		assert ballY >= 0 && ballY <= FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > ";
+			//if (ballX <= WINDOWS_PER_FLOOR - BALL_LENGTH && ballY <= FLOORS - BALL_HEIGHT) {
+				for (int i = 0; i < BALL_LENGTH; i++) {
+					data[(int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
+				}
 		updateLighthouseView();
 	}
 
 	public static void setPaddlePosition(double paddleX, double paddleY) {
-		// exception paddleX >= WINDOWS_PER_FLOOR - PADDEL_LENGTH || paddleY != FLOORS - PADDEL_HEIGHT
+		// exception paddleX >= WINDOWS_PER_FLOOR - PADDEL_LENGTH || paddleY != FLOORS -
+		// PADDEL_HEIGHT
 
 		// red
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
@@ -114,7 +116,7 @@ public class LighthouseView {
 		}
 		System.out.println(display.isConnected());
 	}
-	
+
 	/**
 	 * Sets up the connection of this class to the lighthouse.
 	 * 

@@ -1,5 +1,6 @@
 package project.breakout.model;
 
+import java.awt.List;
 import java.awt.Point;
 import java.util.Timer;
 
@@ -12,7 +13,8 @@ import project.breakout.controller.CollisionWith;
 import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
-import project.breakout.view.TestLightHouseView;
+
+
 
 // TODO think about static or non-static use of this class!
 
@@ -58,7 +60,7 @@ public class BreakoutModel extends GraphicsProgram {
 		initView();
 		initController();
 		initLighthouse();
-		//TestLightHouseView.initTestLighthouse();
+
 	}
 
 	// ------------------initializing methods----------------------------
@@ -135,7 +137,7 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 
-		LighthouseView.setBallsPosition(13,12);
+		LighthouseView.setBallsPosition(13,14);
 		LighthouseView.setPaddlePosition(10,13);
 		LighthouseView.setBrick(0,0);
 		
@@ -299,8 +301,8 @@ public class BreakoutModel extends GraphicsProgram {
 		ballDirection = (ballDirection <= minLeftAngle && ballDirection >= 180) ? minLeftAngle : ballDirection;
 
 		// assertions
-		boolean ballDirection1 = ballDirection > 0 && ballDirection <= maxRightAngle;
-		boolean ballDirection2 = ballDirection < 360 && ballDirection >= minLeftAngle;
+		boolean ballDirection1 = ballDirection >= 0 && ballDirection <= maxRightAngle;
+		boolean ballDirection2 = ballDirection <= 360 && ballDirection >= minLeftAngle;
 		assert ballDirection1 || ballDirection2 : "BallDirection out of specified bounds. Was " + ballDirection;
 
 		return ballDirection;
@@ -410,8 +412,12 @@ public class BreakoutModel extends GraphicsProgram {
 
 	// ---------After game methods---------------
 	public static void playersNameTyped(String text) {
-		System.out.println("say hi");
-
+		HighscoreOperator hio = new HighscoreOperator();
+		if (hio.readingSuccessful()) {
+			List highscorersNames = hio.getNamesList();
+			List highscorersValue = hio.getHighscoreValues();
+			view.showHighscoreRanking(highscorersNames, highscorersValue);
+		}
 	}
 
 	// ---------Getters-------------------------
