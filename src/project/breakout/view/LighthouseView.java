@@ -6,7 +6,7 @@ import java.util.Arrays;
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
 /**
- * Ligthhouse View class
+ * Lighthouse View class
  * 
  *
  */
