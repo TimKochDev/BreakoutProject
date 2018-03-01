@@ -90,10 +90,15 @@ public class LighthouseView {
 		int windowX = (int) (27 * relativeX);
 		int windowY = (int) (13 * relativeY);
 
-		assert windowX >= 0 && windowX < WINDOWS_PER_FLOOR
-				- BALL_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
-		assert windowY >= 0 && windowY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
+		// exception handling
+		if (windowX >= 0 && windowX < WINDOWS_PER_FLOOR - BALL_LENGTH) {
+			throw new IllegalArgumentException("X-Coordinate of the ball out of range.");
+		}
+		if (windowY >= 0 && windowY < FLOORS - BALL_HEIGHT) {
+			throw new IllegalArgumentException("Y-Coordinate of the ball out of range.");
+		}
 
+		// insert ball in array
 		for (int i = 0; i < BALL_LENGTH; i++) {
 			int index = (int) (((windowX + i) + windowY * WINDOWS_PER_FLOOR) * RGB);
 			data[index] = (byte) 255;
