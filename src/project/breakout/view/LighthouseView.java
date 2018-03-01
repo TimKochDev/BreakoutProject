@@ -27,6 +27,10 @@ public class LighthouseView {
 	// ball size 2*1
 	private final static int BALL_LENGTH = 2;
 	private final static int BALL_HEIGHT = 1;
+	
+	private static int ballX;
+	private static int ballY;
+
 
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
@@ -87,20 +91,20 @@ public class LighthouseView {
 	 */
 	public static void setBallPosition(double relativeX, double relativeY) {
 		// Convert from relative position to window position
-		int windowX = (int) (27 * relativeX);
-		int windowY = (int) (13 * relativeY);
+		ballX = (int) (27 * relativeX);
+		ballY = (int) (13 * relativeY);
 
 		// exception handling
-		if (windowX < 0 || windowX + BALL_LENGTH >= WINDOWS_PER_FLOOR) {
+		if (ballX < 0 || ballX + BALL_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the ball out of range.");
 		}
-		if (windowY < 0 || windowY + BALL_HEIGHT >= FLOORS) {
+		if (ballY < 0 || ballY + BALL_HEIGHT >= FLOORS) {
 			throw new IllegalArgumentException("Y-Coordinate of the ball out of range.");
 		}
 
 		// insert ball in array
 		for (int i = 0; i < BALL_LENGTH; i++) {
-			int index = (int) (((windowX + i) + windowY * WINDOWS_PER_FLOOR) * RGB);
+			int index = (int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB);
 			data[index] = (byte) 255;
 		}
 		updateLighthouseView();
@@ -193,11 +197,18 @@ public class LighthouseView {
 			return false;
 		}
 	}
-	private static int getBallPosition() {
-		return 0;
-		
+	
+	private static int getBallXPosition() {
+		return ballX;
 	}
+	
+	private static int getBallYPosition() {
+		return ballY;	
+	}
+	
 	private static void removeBall() {
+		getBallXPosition();
+		getBallYPosition();
 		
 		updateLighthouseView();
 
