@@ -1,7 +1,6 @@
 package project.breakout.view;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
@@ -36,6 +35,10 @@ public class LighthouseView {
 	public static void setBrick(int brickX, int brickY) {
 		// exception brickX >= WINDOWS_PER_FLOOR - BRICK_LENGTH, brickY >= FLOORS -
 		// BRICK_HEIGHT
+		assert brickX >= 0 && brickX <= WINDOWS_PER_FLOOR
+				- BRICK_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BRICK_LENGTH";
+		assert brickY >= 0 && brickY <= FLOORS - BRICK_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BRICK_HEIGHT";
+
 
 		// red
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
@@ -67,9 +70,9 @@ public class LighthouseView {
 	 * @param ballY
 	 */
 	public static void setBallsPosition(double ballX, double ballY) {
-		assert ballX >= 0 && ballX <= WINDOWS_PER_FLOOR
+		assert ballX >= 0 && ballX < WINDOWS_PER_FLOOR
 				- BALL_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
-		assert ballY >= 0 && ballY <= FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
+		assert ballY >= 0 && ballY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
 
 		for (int i = 0; i < BALL_LENGTH; i++) {
 			data[(int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
@@ -83,7 +86,7 @@ public class LighthouseView {
 	 * @param paddleY
 	 */
 	public static void setPaddlePosition(double paddleX, double paddleY) {
-		assert paddleX <= WINDOWS_PER_FLOOR - BALL_LENGTH : "LighhouseView: paddleX < 0";
+		assert paddleX < WINDOWS_PER_FLOOR - BALL_LENGTH : "LighhouseView: paddleX < 0";
 		assert paddleY == FLOORS - 1 : "LighhouseView: paddleY != FLOORS";
 
 		// red
