@@ -38,9 +38,9 @@ public class LighthouseView {
 	 * windows per floor.
 	 * 
 	 * @param brickX
-	 *            The X-position of the brick in the game.
+	 *            The X-position of the brick in the array.
 	 * @param brickY
-	 *            The Y-position of the brick in the game.
+	 *            The Y-position of the brick in the array.
 	 */
 	public static void setBrick(int brickX, int brickY) {
 
