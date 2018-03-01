@@ -138,11 +138,37 @@ public class LighthouseView {
 		updateLighthouseView();
 	}
 
+	/**
+	 * Sets all windows of the lighthouse dark.
+	 */
 	public static void setAllDark() {
+		// TODO remove after testing
+		setWindowDark(13, 13);
+		updateLighthouseView();
+
 		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) 0;
 		}
 		updateLighthouseView();
+	}
+
+	/**
+	 * Sets the window dark.
+	 * 
+	 * @param windowX
+	 *            The x-th window in a Lighthouse-floor.
+	 * 
+	 * @param windowY
+	 *            The floor in which the window is set.
+	 */
+	private static void setWindowDark(int windowX, int windowY) {
+		// compute index in array
+		int index = (int) ((windowX + windowY * WINDOWS_PER_FLOOR) * RGB);
+
+		// Set red, green and blue to zero
+		for (int i = 0; i < RGB; i++) {
+			data[index + i] = (byte) 0;
+		}
 	}
 
 	/**
@@ -193,12 +219,14 @@ public class LighthouseView {
 			return false;
 		}
 	}
+
 	private static int getBallPosition() {
 		return 0;
-		
+
 	}
+
 	private static void removeBall() {
-		
+
 		updateLighthouseView();
 
 	}

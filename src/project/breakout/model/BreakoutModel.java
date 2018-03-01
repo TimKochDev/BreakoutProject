@@ -38,7 +38,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 40;
-	private static int pixelsPerSecond = 20;
+	private static int pixelsPerSecond = 200;
 	private static long lastFrameAtTime;
 
 	private static BreakoutView view;
