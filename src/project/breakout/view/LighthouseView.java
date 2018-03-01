@@ -5,9 +5,9 @@ import java.io.IOException;
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
 /**
- * Lighthouse View class
- * 
- *
+ * Lighthouse View class. This class handles the connection between the
+ * BreakoutModel and the LighthouseDisplay. The username and token for the
+ * connection is in a properties-file for safety reasons.
  */
 public class LighthouseView {
 	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
