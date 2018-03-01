@@ -51,21 +51,24 @@ public class LighthouseView {
 		// red
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
-				data[(int) (((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB)] = (byte) 0;
+				int index = (int) (((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB);
+				data[index] = (byte) 0;
 			}
 		}
 
 		// green
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
-				data[(int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 1)] = (byte) 205;
+				int index = (int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 1);
+				data[index] = (byte) 205;
 			}
 		}
 
 		// blue
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
-				data[(int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 2)] = (byte) 255;
+				int index = (int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 2);
+				data[index] = (byte) 255;
 			}
 		}
 		updateLighthouseView();
@@ -92,7 +95,8 @@ public class LighthouseView {
 		assert windowY >= 0 && windowY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
 
 		for (int i = 0; i < BALL_LENGTH; i++) {
-			data[(int) (((windowX + i) + windowY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
+			int index = (int) (((windowX + i) + windowY * WINDOWS_PER_FLOOR) * RGB);
+			data[index] = (byte) 255;
 		}
 		updateLighthouseView();
 	}
@@ -113,15 +117,18 @@ public class LighthouseView {
 
 		// red
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
-			data[(int) (((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
+			int index = (int) (((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB);
+			data[index] = (byte) 255;
 		}
 		// green
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
-			data[(int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 1)] = (byte) 100;
+			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 1);
+			data[index] = (byte) 100;
 		}
 		// blue
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
-			data[(int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 2)] = (byte) 200;
+			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 2);
+			data[index] = (byte) 200;
 		}
 		updateLighthouseView();
 	}
