@@ -31,7 +31,7 @@ public class LighthouseView {
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
 	private final static int BRICK_HEIGHT = 2;
-	
+
 	/**
 	 * Sets the position of the brick at a certain position in the data array. The
 	 * brick position shouldn't be higher/smaller than the amount of floors and
@@ -43,7 +43,7 @@ public class LighthouseView {
 	 *            The Y-position of the brick in the array.
 	 */
 	public static void setBrick(int brickX, int brickY) {
-	
+
 		assert brickX >= 0 && brickX < WINDOWS_PER_FLOOR
 				- BRICK_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BRICK_LENGTH";
 		assert brickY >= 0 && brickY < FLOORS - BRICK_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BRICK_HEIGHT";
@@ -82,13 +82,17 @@ public class LighthouseView {
 	 * @param ballY
 	 *            The Y-position of the ball in the array.
 	 */
-	public static void setBallPosition(double ballX, double ballY) {
-		assert ballX >= 0 && ballX < WINDOWS_PER_FLOOR
+	public static void setBallPosition(double relativeX, double relativeY) {
+		// Convert from relative position to window position
+		int windowX = (int) (27 * relativeX);
+		int windowY = (int) (13 * relativeY);
+
+		assert windowX >= 0 && windowX < WINDOWS_PER_FLOOR
 				- BALL_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
-		assert ballY >= 0 && ballY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
+		assert windowY >= 0 && windowY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
 
 		for (int i = 0; i < BALL_LENGTH; i++) {
-			data[(int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
+			data[(int) (((windowX + i) + windowY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
 		}
 		updateLighthouseView();
 	}
