@@ -14,9 +14,7 @@ import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
 
-
 // TODO think about static or non-static use of this class!
-
 
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
@@ -120,8 +118,6 @@ public class BreakoutModel extends GraphicsProgram {
 			view.updateBricks(brickArray);
 		}
 	}
-	
-	
 
 	/**
 	 * Initializes the connection to the lighthouse.
@@ -139,13 +135,12 @@ public class BreakoutModel extends GraphicsProgram {
 		}
 
 		LighthouseView.setBallPosition(0.5, 0.5);
-		LighthouseView.setPaddlePosition(10, 13);
+		LighthouseView.setPaddlePosition(10);
 		LighthouseView.setBrick(1, 1);
 
-		if (LighthouseView.display.isConnected()) {
-			view.setInfoText("connected");
+		if (LighthouseView.isConnected()) {
+			System.out.println("connected");
 		}
-
 	}
 
 	// -------------methods for controller-----------
@@ -153,13 +148,20 @@ public class BreakoutModel extends GraphicsProgram {
 	 * This method is called by the controller when the mouse was moved.
 	 * 
 	 * @param point
+	 *            The point where the mouse pointer is.
 	 */
 	public void updateMouseLocation(Point point) {
 		int mouseX = (int) point.getX();
 		int paddleHalf = paddleWidth / 2;
+
+		// Check if paddle would be still in the view after moving it
 		if (mouseX > paddleHalf && mouseX < view.getWidth() - paddleHalf) {
 			paddleX = mouseX - paddleHalf;
 			view.setPaddleLocation(paddleX, paddleY);
+
+			// move paddle in LighthouseView
+			double relativeX = (double) mouseX / getWidth();
+			LighthouseView.setPaddlePosition(relativeX);
 
 			// move ball over paddle if game not started yet
 			if (!gameStarted) {
@@ -197,9 +199,9 @@ public class BreakoutModel extends GraphicsProgram {
 		// view.setInfoText(String.valueOf(frameTime));
 		frameTime /= 1000.0;
 		lastFrameAtTime = System.currentTimeMillis();
-		
+
 		// TODO comment out when not debugging
-		//frameTime = 0.3;
+		// frameTime = 0.3;
 
 		// move ball in last known direction
 		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
@@ -246,9 +248,10 @@ public class BreakoutModel extends GraphicsProgram {
 		view.setBallsPosition(ballX, ballY);
 		view.setInfoText("Balldirection: " + ballDirection);
 
-		// TODO setAllDark is just needed while the setBallPosition does not remove the last position of the ball!!!
-		//LighthouseView.setAllDark();
-		
+		// TODO setAllDark is just needed while the setBallPosition does not remove the
+		// last position of the ball!!!
+		// LighthouseView.setAllDark();
+
 		double relativeX = (ballX / getWidth());
 		double relativeY = (ballY / getHeight());
 
@@ -256,7 +259,7 @@ public class BreakoutModel extends GraphicsProgram {
 			LighthouseView.setBallPosition(relativeX, relativeY);
 			// System.out.println("Set ball to window " + relativeX + "/" + relativeY);
 		} catch (Exception e) {
-			// System.out.println("failes to set ball to " + relativeX + "/" +  relativeY);
+			// System.out.println("failes to set ball to " + relativeX + "/" + relativeY);
 		}
 	}
 

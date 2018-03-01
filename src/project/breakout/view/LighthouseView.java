@@ -121,16 +121,16 @@ public class LighthouseView {
 	 * 
 	 * @param paddleX
 	 *            The X-position of the paddle in the game.
-	 * @param paddleY
-	 *            The Y-position of the paddle in the game.
 	 */
-	public static void setPaddlePosition(double paddleX, double paddleY) {
+	
+		public static void setPaddlePosition(double relativeX) {
+		// Convert from relative position to window position
+		double paddleX = (int) (27 * relativeX);
+		double paddleY = FLOORS-1;
+		
 		// exception handling
 		if (paddleX < 0 || paddleX + PADDEL_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the paddle out of range.");
-		}
-		if (paddleY == FLOORS - 1) {
-			throw new IllegalArgumentException("The paddle is not in the groundfloor.");
 		}
 
 		// red
@@ -138,11 +138,13 @@ public class LighthouseView {
 			int index = (int) (((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB);
 			data[index] = (byte) 255;
 		}
+
 		// green
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 1);
 			data[index] = (byte) 100;
 		}
+		
 		// blue
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 2);
@@ -155,10 +157,6 @@ public class LighthouseView {
 	 * Sets all windows of the lighthouse dark.
 	 */
 	public static void setAllDark() {
-		// TODO remove after testing
-		setWindowDark(13, 13);
-		updateLighthouseView();
-
 		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) 0;
 		}
