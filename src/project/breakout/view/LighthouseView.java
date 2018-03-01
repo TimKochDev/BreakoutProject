@@ -21,12 +21,11 @@ public class LighthouseView {
 	private static byte[] data = new byte[FLOORS * WINDOWS_PER_FLOOR * RGB];
 
 	// paddle size 8*1
-	private final static int PADDEL_LENGTH = 8;
-	private final static int PADDEL_HEIGHT = 1;
-	
-	private static int paddleX;
-	private static final int paddleY = FLOORS -1;
+	private static int PADDEL_LENGTH = 8;
+	private static int PADDEL_HEIGHT = 1;
 
+	private static int paddleX;
+	private static final int paddleY = FLOORS - 1;
 
 	// ball size 2*1
 	private final static int BALL_LENGTH = 2;
@@ -38,10 +37,9 @@ public class LighthouseView {
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
 	private final static int BRICK_HEIGHT = 2;
-	
+
 	private static int brickX;
 	private static int brickY;
-
 
 	/**
 	 * Sets the position of the brick at a certain position in the data array. The
@@ -126,13 +124,15 @@ public class LighthouseView {
 	 * Sets the position of the paddle at a certain position in the data array. The
 	 * paddle X-position shouldn't be higher/smaller than the amount of windows per
 	 * floor. The Y-position of the paddle should be in the lowest row of windows.
+	 * @param relativePaddleWidth 
 	 * 
 	 * @param paddleX
 	 *            The X-position of the paddle in the game.
 	 */
-	public static void setPaddlePosition(double relativeX) throws IllegalArgumentException {
+	public static void setPaddlePosition(double relativeX, double relativePaddleWidth) throws IllegalArgumentException {
 		// Convert from relative position to window position
 		paddleX = (int) (27 * relativeX);
+		PADDEL_LENGTH = (int) (27 * relativePaddleWidth);
 
 		// exception handling
 		if (paddleX < 0 || paddleX + PADDEL_LENGTH >= WINDOWS_PER_FLOOR) {
@@ -186,7 +186,7 @@ public class LighthouseView {
 		if (windowY < 0 || windowY >= FLOORS) {
 			throw new IllegalArgumentException("Y-Coordinate of the window out of range.");
 		}
-		
+
 		// compute index in array
 		int index = (int) ((windowX + windowY * WINDOWS_PER_FLOOR) * RGB);
 
@@ -252,7 +252,7 @@ public class LighthouseView {
 	private static int getBallYPosition() {
 		return ballY;
 	}
-	
+
 	private static int getBrickXPosition() {
 		return brickX;
 	}
@@ -260,7 +260,7 @@ public class LighthouseView {
 	private static int getBrickYPosition() {
 		return brickY;
 	}
-	
+
 	private static int getPaddleXPosition() {
 		return paddleX;
 	}
@@ -292,7 +292,7 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
-	
+
 	private static void removePaddle() {
 		for (int h = 0; h <= PADDEL_HEIGHT; h++) {
 			for (int i = 0; i <= PADDEL_LENGTH; i++) {
