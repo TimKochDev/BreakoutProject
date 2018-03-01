@@ -24,7 +24,6 @@ public class LighthouseView {
 	private static int paddleWidth = 8;
 	private static int paddleHeight = 1;
 
-
 	private static int paddleX;
 	private static final int PADDLE_Y = FLOORS - 1;
 
@@ -125,7 +124,8 @@ public class LighthouseView {
 	 * Sets the position of the paddle at a certain position in the data array. The
 	 * paddle X-position shouldn't be higher/smaller than the amount of windows per
 	 * floor. The Y-position of the paddle should be in the lowest row of windows.
-	 * @param relativePaddleWidth 
+	 * 
+	 * @param relativePaddleWidth
 	 * 
 	 * @param paddleX
 	 *            The X-position of the paddle in the game.
@@ -230,14 +230,17 @@ public class LighthouseView {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Deletes the ball.
 	 */
 	private static void removeBall() {
 		for (int h = 0; h <= BALL_HEIGHT; h++) {
 			for (int i = 0; i <= BALL_LENGTH; i++) {
-				setWindowDark(getBallXPosition() + i, getBallYPosition() + h);
+				try {
+					setWindowDark(getBallXPosition() + i, getBallYPosition() + h);
+				} catch (Exception e) {				
+				}
 			}
 		}
 		updateLighthouseView();
