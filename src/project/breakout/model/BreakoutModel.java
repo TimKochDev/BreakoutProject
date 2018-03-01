@@ -199,7 +199,7 @@ public class BreakoutModel extends GraphicsProgram {
 		lastFrameAtTime = System.currentTimeMillis();
 		
 		// TODO comment out when not debugging
-		frameTime = 0.3;
+		// frameTime = 0.3;
 
 		// move ball in last known direction
 		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
@@ -253,9 +253,9 @@ public class BreakoutModel extends GraphicsProgram {
 
 		try {
 			LighthouseView.setBallPosition(relativeX, relativeY);
-			System.out.println("Set ball to window " + relativeX + "/" + relativeY);
+			// System.out.println("Set ball to window " + relativeX + "/" + relativeY);
 		} catch (Exception e) {
-			System.out.println("failes to set ball to " + relativeX + "/" +  relativeY);
+			// System.out.println("failes to set ball to " + relativeX + "/" +  relativeY);
 		}
 	}
 
