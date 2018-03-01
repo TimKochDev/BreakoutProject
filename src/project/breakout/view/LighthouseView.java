@@ -80,10 +80,10 @@ public class LighthouseView {
 	 * ball position shouldn't be higher/smaller than the amount of floors and
 	 * windows per floor.
 	 * 
-	 * @param ballX
-	 *            The X-position of the ball in the array.
-	 * @param ballY
-	 *            The Y-position of the ball in the array.
+	 * @param relativeX
+	 *            The X-position of the ball in the game.
+	 * @param relativeY
+	 *            The Y-position of the ball in the game.
 	 */
 	public static void setBallPosition(double relativeX, double relativeY) {
 		// Convert from relative position to window position
@@ -108,13 +108,13 @@ public class LighthouseView {
 
 	/**
 	 * Sets the position of the paddle at a certain position in the data array. The
-	 * paddle position shouldn't be higher/smaller than the amount of floors and
-	 * windows per floor.
+	 * paddle X-position shouldn't be higher/smaller than the amount of windows per
+	 * floor. The Y-position of the paddle should be in the lowest row of windows.
 	 * 
 	 * @param paddleX
-	 *            The X-position of the paddle in the array.
+	 *            The X-position of the paddle in the game.
 	 * @param paddleY
-	 *            The Y-position of the paddle in the array.
+	 *            The Y-position of the paddle in the game.
 	 */
 	public static void setPaddlePosition(double paddleX, double paddleY) {
 		assert paddleX < WINDOWS_PER_FLOOR - BALL_LENGTH : "LighhouseView: paddleX < 0";
@@ -144,17 +144,6 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
-
-	/**
-	 * Removes a brick from the view.
-	 * 
-	 * @param brick
-	 *            The {@code BreakoutBrick} to be removed.
-	 */
-	// public void removeBrick( brick) {
-	// remove(brick);
-	// }
-	//
 
 	/**
 	 * This method updates the lightHouseView and sends the new data-array to it.
@@ -203,5 +192,14 @@ public class LighthouseView {
 		} else {
 			return false;
 		}
+	}
+	private static int getBallPosition() {
+		return 0;
+		
+	}
+	private static void removeBall() {
+		
+		updateLighthouseView();
+
 	}
 }
