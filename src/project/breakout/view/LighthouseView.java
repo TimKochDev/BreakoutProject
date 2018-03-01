@@ -140,7 +140,6 @@ public class LighthouseView {
 		// Convert from relative position to window position
 		paddleX = (int) (27 * relativeX);
 		paddleWidth = (int) (27 * relativePaddleWidth);
-		
 
 		// exception handling
 		if (paddleX < 0 || paddleX + paddleWidth >= WINDOWS_PER_FLOOR) {
@@ -278,17 +277,17 @@ public class LighthouseView {
 	 * Deletes the paddle.
 	 */
 	private static void removePaddle() {
-//		for (int h = 0; h <= paddleHeight; h++) {
-//			for (int i = 0; i <= paddleWidth; i++) {
-//				setWindowDark(getPaddleXPosition() + i, getPaddleYPosition() + h);
-//				//System.out.println("XPaddle " + (getPaddleXPosition() + i));
-//				//System.out.println("YPaddle " + (getPaddleYPosition() + h));
-//			}
-//			
-//		}
+		// for (int h = 0; h <= paddleHeight; h++) {
+		// for (int i = 0; i <= paddleWidth; i++) {
+		// setWindowDark(getPaddleXPosition() + i, getPaddleYPosition() + h);
+		// //System.out.println("XPaddle " + (getPaddleXPosition() + i));
+		// //System.out.println("YPaddle " + (getPaddleYPosition() + h));
+		// }
+		//
+		// }
 		for (int i = 0; i < WINDOWS_PER_FLOOR; i++) {
-				setWindowDark(getPaddleXPosition() + i, getPaddleYPosition());
-			}
+			setWindowDark(i, FLOORS - 1);
+		}
 		updateLighthouseView();
 	}
 
