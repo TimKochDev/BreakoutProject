@@ -46,12 +46,16 @@ public class LighthouseView {
 	 * brick position shouldn't be higher/smaller than the amount of floors and
 	 * windows per floor.
 	 * 
-	 * @param brickX
-	 *            The X-position of the brick in the array.
-	 * @param brickY
-	 *            The Y-position of the brick in the array.
+	 * @param relativeBrickX
+	 *            The relative X-position of the brick in the view.
+	 * @param relativeBrickY
+	 *            The relative Y-position of the brick in the view.
 	 */
-	public static void setBrick(int brickX, int brickY) throws IllegalArgumentException {
+	public static void setBrick(double relativeBrickX, double relativeBrickY) throws IllegalArgumentException {
+		// Convert from relative position to window position
+		int brickX = (int) (27 * relativeBrickX);
+		int brickY = (int) (13 * relativeBrickY);
+
 		// exception handling
 		if (brickX < 0 || brickX + BRICK_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the brick out of range.");
@@ -84,7 +88,6 @@ public class LighthouseView {
 			}
 		}
 		updateLighthouseView();
-
 	}
 
 	/**
@@ -239,7 +242,7 @@ public class LighthouseView {
 			for (int i = 0; i <= BALL_LENGTH; i++) {
 				try {
 					setWindowDark(getBallXPosition() + i, getBallYPosition() + h);
-				} catch (Exception e) {				
+				} catch (Exception e) {
 				}
 			}
 		}
@@ -247,12 +250,21 @@ public class LighthouseView {
 	}
 
 	/**
-	 * Deletes a single brick.
+	 * Removes the specified brick.
+	 * 
+	 * @param relativeBrickX
+	 *            The relative x-coordinate of the brick.
+	 * @param relativeBrickY
+	 *            The relative y-coordinate of the brick.
 	 */
-	private static void removeBrick() {
-		for (int h = 0; h <= BRICK_HEIGHT; h++) {
-			for (int i = 0; i <= BRICK_LENGTH; i++) {
-				setWindowDark(getBrickXPosition() + i, getBrickYPosition() + h);
+	public static void removeBrick(double relativeBrickX, double relativeBrickY) {
+		// compute the windows on the lighthouse the brick is blocking
+		int brickX = (int) (relativeBrickX * WINDOWS_PER_FLOOR);
+		int brickY = (int) (relativeBrickY * FLOORS);
+
+		for (int y = 0; y <= BRICK_HEIGHT; y++) {
+			for (int x = 0; x <= BRICK_LENGTH; x++) {
+				setWindowDark(brickX + x, brickY + y);
 			}
 		}
 		updateLighthouseView();
