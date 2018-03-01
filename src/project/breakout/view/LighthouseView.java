@@ -21,12 +21,11 @@ public class LighthouseView {
 	private static byte[] data = new byte[FLOORS * WINDOWS_PER_FLOOR * RGB];
 
 	// paddle size 8*1
-	private final static int PADDEL_LENGTH = 8;
-	private final static int PADDEL_HEIGHT = 1;
-	
-	private static int paddleX;
-	private static final int paddleY = FLOORS -1;
+	private final static int PADDLE_LENGTH = 8;
+	private final static int PADDLE_HEIGHT = 1;
 
+	private static int paddleX;
+	private static final int paddleY = FLOORS - 1;
 
 	// ball size 2*1
 	private final static int BALL_LENGTH = 2;
@@ -38,10 +37,9 @@ public class LighthouseView {
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
 	private final static int BRICK_HEIGHT = 2;
-	
+
 	private static int brickX;
 	private static int brickY;
-
 
 	/**
 	 * Sets the position of the brick at a certain position in the data array. The
@@ -135,24 +133,24 @@ public class LighthouseView {
 		paddleX = (int) (27 * relativeX);
 
 		// exception handling
-		if (paddleX < 0 || paddleX + PADDEL_LENGTH >= WINDOWS_PER_FLOOR) {
+		if (paddleX < 0 || paddleX + PADDLE_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the paddle out of range.");
 		}
 
 		// red
-		for (int i = 0; i < PADDEL_LENGTH; i++) {
+		for (int i = 0; i < PADDLE_LENGTH; i++) {
 			int index = (int) (((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB);
 			data[index] = (byte) 255;
 		}
 
 		// green
-		for (int i = 0; i < PADDEL_LENGTH; i++) {
+		for (int i = 0; i < PADDLE_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 1);
 			data[index] = (byte) 100;
 		}
 
 		// blue
-		for (int i = 0; i < PADDEL_LENGTH; i++) {
+		for (int i = 0; i < PADDLE_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 2);
 			data[index] = (byte) 200;
 		}
@@ -186,7 +184,7 @@ public class LighthouseView {
 		if (windowY < 0 || windowY >= FLOORS) {
 			throw new IllegalArgumentException("Y-Coordinate of the window out of range.");
 		}
-		
+
 		// compute index in array
 		int index = (int) ((windowX + windowY * WINDOWS_PER_FLOOR) * RGB);
 
@@ -229,46 +227,7 @@ public class LighthouseView {
 			return false;
 		}
 	}
-
-	// ---------Getter-------------------------------------
-
-	/**
-	 * Checks if there in a connection to the lighthouse.
-	 * 
-	 * @return {@code true} if LighthouseView is connected, {@code false} if not.
-	 */
-	public static boolean isConnected() {
-		if (display != null) {
-			return display.isConnected();
-		} else {
-			return false;
-		}
-	}
-
-	private static int getBallXPosition() {
-		return ballX;
-	}
-
-	private static int getBallYPosition() {
-		return ballY;
-	}
 	
-	private static int getBrickXPosition() {
-		return brickX;
-	}
-
-	private static int getBrickYPosition() {
-		return brickY;
-	}
-	
-	private static int getPaddleXPosition() {
-		return paddleX;
-	}
-
-	private static int getPaddleYPosition() {
-		return paddleY;
-	}
-
 	/**
 	 * Deletes the ball.
 	 */
@@ -292,14 +251,85 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
-	
+
+	/**
+	 * Deletes the paddle.
+	 */
 	private static void removePaddle() {
-		for (int h = 0; h <= PADDEL_HEIGHT; h++) {
-			for (int i = 0; i <= PADDEL_LENGTH; i++) {
+		for (int h = 0; h <= PADDLE_HEIGHT; h++) {
+			for (int i = 0; i <= PADDLE_LENGTH; i++) {
 				setWindowDark(getPaddleXPosition() + i, getPaddleYPosition() + h);
 			}
 		}
 		updateLighthouseView();
 	}
 
+	// ---------Getter-------------------------------------
+
+	/**
+	 * Checks if there in a connection to the lighthouse.
+	 * 
+	 * @return {@code true} if LighthouseView is connected, {@code false} if not.
+	 */
+	public static boolean isConnected() {
+		if (display != null) {
+			return display.isConnected();
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Get the x-position of the ball.
+	 * 
+	 * @return ballX.
+	 */
+	private static int getBallXPosition() {
+		return ballX;
+	}
+
+	/**
+	 * Get the y-position of the ball.
+	 * 
+	 * @return ballY.
+	 */
+	private static int getBallYPosition() {
+		return ballY;
+	}
+
+	/**
+	 * Get the x-position of the brick.
+	 * 
+	 * @return brickX.
+	 */
+	private static int getBrickXPosition() {
+		return brickX;
+	}
+
+	/**
+	 * Get the y-position of the brick.
+	 * 
+	 * @return brickY.
+	 */
+	private static int getBrickYPosition() {
+		return brickY;
+	}
+
+	/**
+	 * Get the x-position of the paddle.
+	 * 
+	 * @return paddleX.
+	 */
+	private static int getPaddleXPosition() {
+		return paddleX;
+	}
+
+	/**
+	 * Get the y-position of the paddle.
+	 * 
+	 * @return paddleY.
+	 */
+	private static int getPaddleYPosition() {
+		return paddleY;
+	}
 }
