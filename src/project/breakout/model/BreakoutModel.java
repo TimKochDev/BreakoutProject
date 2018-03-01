@@ -134,9 +134,13 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 
-		LighthouseView.setBallPosition(0.5, 0.5);
-		LighthouseView.setPaddlePosition(10);
-		LighthouseView.setBrick(1, 1);
+		try {
+			LighthouseView.setBallPosition(0.5, 0.5);
+			LighthouseView.setPaddlePosition(0.5);
+			LighthouseView.setBrick(0, 0);
+		} catch (Exception e) {
+			System.out.println("initital push to LighthouseView didn't work");
+		}
 
 		if (LighthouseView.isConnected()) {
 			System.out.println("connected");
@@ -164,7 +168,7 @@ public class BreakoutModel extends GraphicsProgram {
 			try {
 				LighthouseView.setPaddlePosition(relativeX);
 			} catch (Exception e) {
-				
+
 			}
 
 			// move ball over paddle if game not started yet

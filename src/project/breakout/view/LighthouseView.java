@@ -172,7 +172,7 @@ public class LighthouseView {
 	 * @param windowY
 	 *            The floor in which the window is set.
 	 */
-	private static void setWindowDark(int windowX, int windowY) {
+	private static void setWindowDark(int windowX, int windowY) throws IllegalArgumentException {
 		// exception handling
 		if (windowX < 0 || windowX >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the window out of range.");
@@ -180,7 +180,7 @@ public class LighthouseView {
 		if (windowY < 0 || windowY >= FLOORS) {
 			throw new IllegalArgumentException("Y-Coordinate of the window out of range.");
 		}
-
+		
 		// compute index in array
 		int index = (int) ((windowX + windowY * WINDOWS_PER_FLOOR) * RGB);
 
