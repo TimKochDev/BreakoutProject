@@ -49,7 +49,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static boolean lighthouseEnabled = false;
 	private static boolean gameStarted = false;
 	private static boolean gamePaused = false;
-	private static int currentLevel = 2;
+	private static int currentLevel = 0;
 
 	/**
 	 * RUN METHOD - HERE STARTS EVERYTHING!!!
@@ -103,6 +103,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 * Initializes the brick array with the standard configuration.
 	 */
 	private void initBricks() {
+		// bricks for view
 		brickArray = BricksConfig.getTestBrickArray();
 		assert brickArray != null : "Test-brickarray is null!";
 		view.updateBricks(brickArray);
@@ -116,6 +117,15 @@ public class BreakoutModel extends GraphicsProgram {
 		brickArray = BricksConfig.getBrickArray(levelNumber);
 		if (brickArray != null) {
 			view.updateBricks(brickArray);
+		}
+		
+		if (LighthouseView.isConnected()) {
+			
+			for (BreakoutBrick brick : brickArray) {
+				double relativeBrickX = brick.getX() / getWidth();
+				double relativeBrickY = brick.getY() / getHeight();
+				LighthouseView.setBrick(relativeBrickX, relativeBrickY);
+			}
 		}
 	}
 
@@ -137,7 +147,6 @@ public class BreakoutModel extends GraphicsProgram {
 		try {
 			LighthouseView.setBallPosition(0.5, 0.5);
 			LighthouseView.setPaddlePosition(0.5, 0.1);
-			LighthouseView.setBrick(0, 0);
 		} catch (Exception e) {
 			System.out.println("initital push to LighthouseView didn't work");
 		}
@@ -268,7 +277,8 @@ public class BreakoutModel extends GraphicsProgram {
 			LighthouseView.setBallPosition(relativeX, relativeY);
 			// System.out.println("Set ball to window " + relativeX + "/" + relativeY);
 		} catch (Exception e) {
-			// System.out.println("failes to set ball to " + relativeX + "/" + relativeY);
+			System.out.println("failes to set ball to " + relativeX + "/" + relativeY);
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -346,6 +356,11 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 		view.removeBrick(lastBrickCollided);
+		
+		// remove brick on Lighthouse
+		double relativeBrickX = lastBrickCollided.getX() / getWidth();
+		double relativeBrickY = lastBrickCollided.getY() / getHeight();
+		LighthouseView.removeBrick(relativeBrickX, relativeBrickY);
 	}
 
 	// ----------------game states methods------------------
