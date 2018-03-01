@@ -10,6 +10,6 @@
 	<classpathentry kind="lib" path="lib/websocket-api-9.4.8.v20171121.jar"/>
 	<classpathentry kind="lib" path="lib/websocket-client-9.4.8.v20171121.jar"/>
 	<classpathentry kind="lib" path="lib/websocket-common-9.4.8.v20171121.jar"/>
-	<classpathentry kind="lib" path="/Users/cecile/acm.jar" sourcepath="/Users/cecile/Downloads/acm.zip"/>
+	<classpathentry kind="lib" path="C:/Users/kogli/Downloads/acm.jar" sourcepath="C:/Users/kogli/Downloads/acm.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
