@@ -89,11 +89,7 @@ public class LighthouseView {
 	 *            The Y-position of the ball in the game.
 	 */
 	public static void setBallPosition(double relativeX, double relativeY) {
-		for (int h = 0; h <= BALL_HEIGHT; h++) {
-			for (int i = 0; i <= BALL_LENGTH; i++) {
-				setWindowDark(getBallXPosition() + i, getBallYPosition() + i);
-			}
-		}
+		removeBall();
 		
 		// Convert from relative position to window position
 		ballX = (int) (27 * relativeX);
@@ -238,7 +234,11 @@ public class LighthouseView {
 	}
 
 	private static void removeBall() {
-		setWindowDark(getBallXPosition(), getBallYPosition());
+		for (int h = 0; h <= BALL_HEIGHT; h++) {
+			for (int i = 0; i <= BALL_LENGTH; i++) {
+				setWindowDark(getBallXPosition() + i, getBallYPosition() + h);
+			}
+		}
 		updateLighthouseView();
 	}
 

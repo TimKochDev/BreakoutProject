@@ -199,7 +199,7 @@ public class BreakoutModel extends GraphicsProgram {
 		lastFrameAtTime = System.currentTimeMillis();
 		
 		// TODO comment out when not debugging
-		// frameTime = 0.3;
+		//frameTime = 0.3;
 
 		// move ball in last known direction
 		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
