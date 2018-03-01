@@ -142,10 +142,9 @@ public class BreakoutModel extends GraphicsProgram {
 		LighthouseView.setPaddlePosition(10, 13);
 		LighthouseView.setBrick(1, 1);
 
-		if (LighthouseView.display.isConnected()) {
-			view.setInfoText("connected");
+		if (LighthouseView.isConnected()) {
+			System.out.println("connected");
 		}
-
 	}
 
 	// -------------methods for controller-----------
