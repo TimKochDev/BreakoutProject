@@ -45,7 +45,7 @@ public class LighthouseView {
 	 * @param brickY
 	 *            The Y-position of the brick in the array.
 	 */
-	public static void setBrick(int brickX, int brickY) {
+	public static void setBrick(int brickX, int brickY) throws IllegalArgumentException {
 		// exception handling
 		if (brickX < 0 || brickX + BRICK_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the brick out of range.");
@@ -91,7 +91,7 @@ public class LighthouseView {
 	 * @param relativeY
 	 *            The Y-position of the ball in the game.
 	 */
-	public static void setBallPosition(double relativeX, double relativeY) {
+	public static void setBallPosition(double relativeX, double relativeY) throws IllegalArgumentException {
 		removeBall();
 
 		// Convert from relative position to window position
@@ -122,12 +122,12 @@ public class LighthouseView {
 	 * @param paddleX
 	 *            The X-position of the paddle in the game.
 	 */
-	
-		public static void setPaddlePosition(double relativeX) throws IllegalArgumentException{
+
+	public static void setPaddlePosition(double relativeX) throws IllegalArgumentException {
 		// Convert from relative position to window position
 		double paddleX = (int) (27 * relativeX);
-		double paddleY = FLOORS-1;
-		
+		double paddleY = FLOORS - 1;
+
 		// exception handling
 		if (paddleX < 0 || paddleX + PADDEL_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the paddle out of range.");
@@ -144,7 +144,7 @@ public class LighthouseView {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 1);
 			data[index] = (byte) 100;
 		}
-		
+
 		// blue
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 2);
@@ -173,6 +173,14 @@ public class LighthouseView {
 	 *            The floor in which the window is set.
 	 */
 	private static void setWindowDark(int windowX, int windowY) {
+		// exception handling
+		if (windowX < 0 || windowX >= WINDOWS_PER_FLOOR) {
+			throw new IllegalArgumentException("X-Coordinate of the window out of range.");
+		}
+		if (windowY < 0 || windowY >= FLOORS) {
+			throw new IllegalArgumentException("Y-Coordinate of the window out of range.");
+		}
+
 		// compute index in array
 		int index = (int) ((windowX + windowY * WINDOWS_PER_FLOOR) * RGB);
 
@@ -250,7 +258,7 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
-	
+
 	/**
 	 * Deletes a single brick.
 	 */
@@ -262,6 +270,5 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
-
 
 }
