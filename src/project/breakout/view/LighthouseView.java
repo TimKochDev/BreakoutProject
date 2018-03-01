@@ -91,10 +91,10 @@ public class LighthouseView {
 		int windowY = (int) (13 * relativeY);
 
 		// exception handling
-		if (windowX >= 0 && windowX < WINDOWS_PER_FLOOR - BALL_LENGTH) {
+		if (windowX < 0 || windowX + BALL_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the ball out of range.");
 		}
-		if (windowY >= 0 && windowY < FLOORS - BALL_HEIGHT) {
+		if (windowY < 0 || windowY + BALL_HEIGHT >= FLOORS) {
 			throw new IllegalArgumentException("Y-Coordinate of the ball out of range.");
 		}
 
