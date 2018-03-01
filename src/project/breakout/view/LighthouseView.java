@@ -36,7 +36,7 @@ public class LighthouseView {
 
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
-	private final static int BRICK_HEIGHT = 2;
+	private final static int BRICK_HEIGHT = 1;
 
 	private static int brickX;
 	private static int brickY;

@@ -114,13 +114,14 @@ public class BreakoutModel extends GraphicsProgram {
 	 * {@code levelNumber}.
 	 */
 	private void initBricksForLevel(int levelNumber) {
+		// init bricks in view
 		brickArray = BricksConfig.getBrickArray(levelNumber);
 		if (brickArray != null) {
 			view.updateBricks(brickArray);
 		}
-		
+
+		// init bricks on lighthouse
 		if (LighthouseView.isConnected()) {
-			
 			for (BreakoutBrick brick : brickArray) {
 				double relativeBrickX = brick.getX() / getWidth();
 				double relativeBrickY = brick.getY() / getHeight();
@@ -147,6 +148,14 @@ public class BreakoutModel extends GraphicsProgram {
 		try {
 			LighthouseView.setBallPosition(0.5, 0.5);
 			LighthouseView.setPaddlePosition(0.5, 0.1);
+
+			// init bricks on lighthouse
+			for (BreakoutBrick brick : brickArray) {
+				double relativeBrickX = brick.getX() / getWidth();
+				double relativeBrickY = brick.getY() / getHeight();
+				LighthouseView.setBrick(relativeBrickX, relativeBrickY);
+			}
+
 		} catch (Exception e) {
 			System.out.println("initital push to LighthouseView didn't work");
 		}
@@ -356,7 +365,7 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 		view.removeBrick(lastBrickCollided);
-		
+
 		// remove brick on Lighthouse
 		double relativeBrickX = lastBrickCollided.getX() / getWidth();
 		double relativeBrickY = lastBrickCollided.getY() / getHeight();
