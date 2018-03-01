@@ -147,10 +147,6 @@ public class LighthouseView {
 	 * Sets all windows of the lighthouse dark.
 	 */
 	public static void setAllDark() {
-		// TODO remove after testing
-		setWindowDark(13, 13);
-		updateLighthouseView();
-
 		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) 0;
 		}
