@@ -134,7 +134,7 @@ public class LighthouseView {
 	 *            The X-position of the paddle in the game.
 	 */
 	public static void setPaddlePosition(double relativeX, double relativePaddleWidth) throws IllegalArgumentException {
-		//removePaddle();
+		removePaddle();
 		System.out.println(getPaddleXPosition());
 		System.out.println(getPaddleYPosition());
 		// Convert from relative position to window position
@@ -278,14 +278,17 @@ public class LighthouseView {
 	 * Deletes the paddle.
 	 */
 	private static void removePaddle() {
-		for (int h = 0; h <= paddleHeight; h++) {
-			for (int i = 0; i <= paddleWidth; i++) {
-				setWindowDark(getPaddleXPosition() + i, getPaddleYPosition() + h);
-				//System.out.println("XPaddle " + (getPaddleXPosition() + i));
-				//System.out.println("YPaddle " + (getPaddleYPosition() + h));
-
+//		for (int h = 0; h <= paddleHeight; h++) {
+//			for (int i = 0; i <= paddleWidth; i++) {
+//				setWindowDark(getPaddleXPosition() + i, getPaddleYPosition() + h);
+//				//System.out.println("XPaddle " + (getPaddleXPosition() + i));
+//				//System.out.println("YPaddle " + (getPaddleYPosition() + h));
+//			}
+//			
+//		}
+		for (int i = 0; i < WINDOWS_PER_FLOOR; i++) {
+				setWindowDark(getPaddleXPosition() + i, getPaddleYPosition());
 			}
-		}
 		updateLighthouseView();
 	}
 
