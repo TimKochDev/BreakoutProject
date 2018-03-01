@@ -155,35 +155,6 @@ public class BreakoutView extends GCanvas {
 		}
 	}
 
-	/**
-	 * Asks the user for his name and returns it as a String.
-	 * 
-	 */
-	public void showPlayersNameDialog() {
-		removeAll();
-
-		// Show textfield
-		JTextField txtField = new JTextField();
-		txtField.setSize(getWidth() / 2, txtField.getHeight());
-		txtField.setLocation(getWidth() / 2 - txtField.getWidth() / 2, (int) (getHeight() * 0.65));
-		add(txtField);
-
-		// Add OK Button
-		JButton okButton = new JButton("OK");
-		okButton.setText("OK");
-		okButton.setSize(100, txtField.getHeight() + 10);
-		okButton.setLocation(txtField.getX() + txtField.getWidth() / 2 - okButton.getWidth() / 2, txtField.getY() + 20);
-		okButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BreakoutModel.playersNameTyped(txtField.getText());
-
-			}
-		});
-		add(okButton);
-	}
-
 	// ----------infoLabel methods--------------------
 	/**
 	 * Sets a new information text in the view.

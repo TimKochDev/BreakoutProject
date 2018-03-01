@@ -1,6 +1,5 @@
 package project.breakout.model;
 
-import java.awt.List;
 import java.awt.Point;
 import java.util.Timer;
 
@@ -13,8 +12,6 @@ import project.breakout.controller.CollisionWith;
 import project.breakout.view.BreakoutBrick;
 import project.breakout.view.BreakoutView;
 import project.breakout.view.LighthouseView;
-
-// TODO think about static or non-static use of this class!
 
 /**
  * This class represents the main class of the breakout game. It takes a Canvas
@@ -150,11 +147,7 @@ public class BreakoutModel extends GraphicsProgram {
 			LighthouseView.setPaddlePosition(0.5, 0.1);
 
 			// init bricks on lighthouse
-			for (BreakoutBrick brick : brickArray) {
-				double relativeBrickX = brick.getX() / getWidth();
-				double relativeBrickY = brick.getY() / getHeight();
-				LighthouseView.setBrick(relativeBrickX, relativeBrickY);
-			}
+			LighthouseView.updateBricks(brickArray, getWidth(), getHeight());
 
 		} catch (Exception e) {
 			System.out.println("initital push to LighthouseView didn't work");
@@ -424,14 +417,17 @@ public class BreakoutModel extends GraphicsProgram {
 		gameStarted = false;
 		timer.cancel();
 
-		// start next level if there is one
+		// start next level or begin again at the first
 		if (BricksConfig.getBrickArray(currentLevel + 1) != null) {
-			currentLevel++;
-			brickArray = BricksConfig.getBrickArray(currentLevel);
-			view.updateBricks(brickArray);
+			currentLevel++;			
 		} else {
-			view.showPlayersNameDialog();
+			currentLevel = 0;
 		}
+		
+		brickArray = BricksConfig.getBrickArray(currentLevel);
+		view.updateBricks(brickArray);
+		LighthouseView.setAllDark();
+		LighthouseView.updateBricks(brickArray, getWidth(), getHeight());
 	}
 
 	/**
@@ -457,16 +453,6 @@ public class BreakoutModel extends GraphicsProgram {
 		timer.schedule(timerTask, 0, frameTime);
 		gamePaused = false;
 		gameStarted = true;
-	}
-
-	// ---------After game methods---------------
-	public static void playersNameTyped(String text) {
-		HighscoreOperator hio = new HighscoreOperator();
-		if (hio.readingSuccessful()) {
-			List highscorersNames = hio.getNamesList();
-			List highscorersValue = hio.getHighscoreValues();
-			view.showHighscoreRanking(highscorersNames, highscorersValue);
-		}
 	}
 
 	// ---------Getters-------------------------

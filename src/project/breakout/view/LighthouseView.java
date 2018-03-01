@@ -91,6 +91,29 @@ public class LighthouseView {
 	}
 
 	/**
+	 * This method takes an array of {@code BreakoutBrick}s and puts it on the
+	 * lighthouse display.
+	 * 
+	 * @param brickArray
+	 *            The array of {@code BreakoutBrick}s to put on the screen.
+	 * @param screenWidth
+	 *            The width of the screen in the {@code BreakoutView}.
+	 * @param screenHeight
+	 *            The height of the screen in the {@code BreakoutView}.
+	 */
+	public static void updateBricks(BreakoutBrick[] brickArray, int screenWidth, int screenHeight) {
+		for (BreakoutBrick brick : brickArray) {
+			try {
+				double relativeBrickX = brick.getX() / screenWidth;
+				double relativeBrickY = brick.getY() / screenHeight;
+				LighthouseView.setBrick(relativeBrickX, relativeBrickY);
+			} catch (Exception e) {
+				System.out.println("Could not put brick on lighthouse");
+			}
+		}
+	}
+
+	/**
 	 * Sets the position of the ball at a certain position in the data array. The
 	 * ball position shouldn't be higher/smaller than the amount of floors and
 	 * windows per floor.
@@ -135,8 +158,9 @@ public class LighthouseView {
 	 */
 	public static void setPaddlePosition(double relativeX, double relativePaddleWidth) throws IllegalArgumentException {
 		removePaddle();
-		System.out.println(getPaddleXPosition());
-		System.out.println(getPaddleYPosition());
+		// System.out.println(getPaddleXPosition());
+		// System.out.println(getPaddleYPosition());
+
 		// Convert from relative position to window position
 		paddleX = (int) (27 * relativeX);
 		paddleWidth = (int) (27 * relativePaddleWidth);
@@ -277,14 +301,6 @@ public class LighthouseView {
 	 * Deletes the paddle.
 	 */
 	private static void removePaddle() {
-		// for (int h = 0; h <= paddleHeight; h++) {
-		// for (int i = 0; i <= paddleWidth; i++) {
-		// setWindowDark(getPaddleXPosition() + i, getPaddleYPosition() + h);
-		// //System.out.println("XPaddle " + (getPaddleXPosition() + i));
-		// //System.out.println("YPaddle " + (getPaddleYPosition() + h));
-		// }
-		//
-		// }
 		for (int i = 0; i < WINDOWS_PER_FLOOR; i++) {
 			setWindowDark(i, FLOORS - 1);
 		}
