@@ -49,7 +49,7 @@ public class LighthouseView {
 
 		assert brickX >= 0 && brickX < WINDOWS_PER_FLOOR
 				- BRICK_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BRICK_LENGTH";
-		assert brickY >= 0 && brickY < FLOORS - BRICK_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BRICK_HEIGHT";
+		assert brickY >= 0 && brickY < FLOORS - BRICK_HEIGHT : "LighthouseView: ballY < 0 or > FLOORS - BRICK_HEIGHT";
 
 		// red
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
