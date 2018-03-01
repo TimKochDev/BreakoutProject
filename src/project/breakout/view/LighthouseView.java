@@ -90,7 +90,7 @@ public class LighthouseView {
 	 */
 	public static void setBallPosition(double relativeX, double relativeY) {
 		removeBall();
-		
+
 		// Convert from relative position to window position
 		ballX = (int) (27 * relativeX);
 		ballY = (int) (13 * relativeY);
@@ -118,23 +118,26 @@ public class LighthouseView {
 	 * 
 	 * @param paddleX
 	 *            The X-position of the paddle in the game.
-	 * @param paddleY
-	 *            The Y-position of the paddle in the game.
 	 */
-	public static void setPaddlePosition(double paddleX, double paddleY) {
+	public static void setPaddlePosition(double relativeX) {
+		// Convert from relative position to window position
+		double paddleX = (int) (27 * relativeX);
+
 		assert paddleX < WINDOWS_PER_FLOOR - BALL_LENGTH : "LighhouseView: paddleX < 0";
-		assert paddleY == FLOORS - 1 : "LighhouseView: paddleY != FLOORS";
+		double paddleY = FLOORS - 1;
 
 		// red
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			int index = (int) (((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB);
 			data[index] = (byte) 255;
 		}
+
 		// green
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 1);
 			data[index] = (byte) 100;
 		}
+		
 		// blue
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 2);
