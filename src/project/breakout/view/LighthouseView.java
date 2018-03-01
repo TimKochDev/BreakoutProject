@@ -23,6 +23,10 @@ public class LighthouseView {
 	// paddle size 8*1
 	private final static int PADDEL_LENGTH = 8;
 	private final static int PADDEL_HEIGHT = 1;
+	
+	private static int paddleX;
+	private static int paddleY;
+
 
 	// ball size 2*1
 	private final static int BALL_LENGTH = 2;
@@ -34,6 +38,10 @@ public class LighthouseView {
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
 	private final static int BRICK_HEIGHT = 2;
+	
+	private static int brickX;
+	private static int brickY;
+
 
 	/**
 	 * Sets the position of the brick at a certain position in the data array. The
@@ -122,12 +130,11 @@ public class LighthouseView {
 	 * @param paddleX
 	 *            The X-position of the paddle in the game.
 	 */
-	
-		public static void setPaddlePosition(double relativeX) {
+	public static void setPaddlePosition(double relativeX) {
 		// Convert from relative position to window position
-		double paddleX = (int) (27 * relativeX);
-		double paddleY = FLOORS-1;
-		
+		paddleX = (int) (27 * relativeX);
+		paddleY = FLOORS - 1;
+
 		// exception handling
 		if (paddleX < 0 || paddleX + PADDEL_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the paddle out of range.");
@@ -144,7 +151,7 @@ public class LighthouseView {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 1);
 			data[index] = (byte) 100;
 		}
-		
+
 		// blue
 		for (int i = 0; i < PADDEL_LENGTH; i++) {
 			int index = (int) ((((paddleX + i) + paddleY * WINDOWS_PER_FLOOR) * RGB) + 2);
@@ -238,6 +245,22 @@ public class LighthouseView {
 	private static int getBallYPosition() {
 		return ballY;
 	}
+	
+	private static int getBrickXPosition() {
+		return brickX;
+	}
+
+	private static int getBrickYPosition() {
+		return brickY;
+	}
+	
+	private static int getPaddleXPosition() {
+		return paddleX;
+	}
+
+	private static int getPaddleYPosition() {
+		return paddleY;
+	}
 
 	/**
 	 * Deletes the ball.
@@ -250,18 +273,26 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
-	
+
 	/**
 	 * Deletes a single brick.
 	 */
 	private static void removeBrick() {
 		for (int h = 0; h <= BRICK_HEIGHT; h++) {
 			for (int i = 0; i <= BRICK_LENGTH; i++) {
-				setWindowDark(getBallXPosition() + i, getBallYPosition() + h);
+				setWindowDark(getBrickXPosition() + i, getBrickYPosition() + h);
 			}
 		}
 		updateLighthouseView();
 	}
-
+	
+	private static void removePaddle() {
+		for (int h = 0; h <= PADDEL_HEIGHT; h++) {
+			for (int i = 0; i <= PADDEL_LENGTH; i++) {
+				setWindowDark(getPaddleXPosition() + i, getPaddleYPosition() + h);
+			}
+		}
+		updateLighthouseView();
+	}
 
 }
