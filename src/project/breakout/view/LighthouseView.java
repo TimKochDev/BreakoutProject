@@ -123,7 +123,7 @@ public class LighthouseView {
 	 *            The X-position of the paddle in the game.
 	 */
 	
-		public static void setPaddlePosition(double relativeX) {
+		public static void setPaddlePosition(double relativeX) throws IllegalArgumentException{
 		// Convert from relative position to window position
 		double paddleX = (int) (27 * relativeX);
 		double paddleY = FLOORS-1;

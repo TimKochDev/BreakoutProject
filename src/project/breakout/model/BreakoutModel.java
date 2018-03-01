@@ -161,7 +161,11 @@ public class BreakoutModel extends GraphicsProgram {
 
 			// move paddle in LighthouseView
 			double relativeX = (double) mouseX / getWidth();
-			LighthouseView.setPaddlePosition(relativeX);
+			try {
+				LighthouseView.setPaddlePosition(relativeX);
+			} catch (Exception e) {
+				
+			}
 
 			// move ball over paddle if game not started yet
 			if (!gameStarted) {
