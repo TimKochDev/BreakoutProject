@@ -31,14 +31,22 @@ public class LighthouseView {
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
 	private final static int BRICK_HEIGHT = 2;
-
+	
+	/**
+	 * Sets the position of the brick at a certain position in the data array. The
+	 * brick position shouldn't be higher/smaller than the amount of floors and
+	 * windows per floor.
+	 * 
+	 * @param brickX
+	 *            The X-position of the brick in the array.
+	 * @param brickY
+	 *            The Y-position of the brick in the array.
+	 */
 	public static void setBrick(int brickX, int brickY) {
-		// exception brickX >= WINDOWS_PER_FLOOR - BRICK_LENGTH, brickY >= FLOORS -
-		// BRICK_HEIGHT
-		assert brickX >= 0 && brickX <= WINDOWS_PER_FLOOR
+	
+		assert brickX >= 0 && brickX < WINDOWS_PER_FLOOR
 				- BRICK_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BRICK_LENGTH";
-		assert brickY >= 0 && brickY <= FLOORS - BRICK_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BRICK_HEIGHT";
-
+		assert brickY >= 0 && brickY < FLOORS - BRICK_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BRICK_HEIGHT";
 
 		// red
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
@@ -65,11 +73,16 @@ public class LighthouseView {
 	}
 
 	/**
+	 * Sets the position of the ball at a certain position in the data array. The
+	 * ball position shouldn't be higher/smaller than the amount of floors and
+	 * windows per floor.
 	 * 
 	 * @param ballX
+	 *            The X-position of the ball in the array.
 	 * @param ballY
+	 *            The Y-position of the ball in the array.
 	 */
-	public static void setBallsPosition(double ballX, double ballY) {
+	public static void setBallPosition(double ballX, double ballY) {
 		assert ballX >= 0 && ballX < WINDOWS_PER_FLOOR
 				- BALL_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
 		assert ballY >= 0 && ballY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
@@ -81,9 +94,14 @@ public class LighthouseView {
 	}
 
 	/**
+	 * Sets the position of the paddle at a certain position in the data array. The
+	 * paddle position shouldn't be higher/smaller than the amount of floors and
+	 * windows per floor.
 	 * 
 	 * @param paddleX
+	 *            The X-position of the paddle in the array.
 	 * @param paddleY
+	 *            The Y-position of the paddle in the array.
 	 */
 	public static void setPaddlePosition(double paddleX, double paddleY) {
 		assert paddleX < WINDOWS_PER_FLOOR - BALL_LENGTH : "LighhouseView: paddleX < 0";
@@ -103,9 +121,9 @@ public class LighthouseView {
 		}
 		updateLighthouseView();
 	}
-	
+
 	public static void setAllDark() {
-		for (int i = 0; i< data.length; i++) {
+		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) 0;
 		}
 		updateLighthouseView();

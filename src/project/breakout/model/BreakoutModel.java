@@ -138,7 +138,7 @@ public class BreakoutModel extends GraphicsProgram {
 			}
 		}
 
-		LighthouseView.setBallsPosition(13, 12);
+		LighthouseView.setBallPosition(13, 12);
 		LighthouseView.setPaddlePosition(10, 13);
 		LighthouseView.setBrick(1, 1);
 
@@ -254,7 +254,7 @@ public class BreakoutModel extends GraphicsProgram {
 		int windowY = (int) (13 * relativeY);
 
 		try {
-			LighthouseView.setBallsPosition(windowX, windowY);
+			LighthouseView.setBallPosition(windowX, windowY);
 			System.out.println("Set ball to window" + windowX + "/" + windowY);
 		} catch (Exception e) {
 			System.out.println("failes to set ball to " + windowX + "/" +  windowY);
