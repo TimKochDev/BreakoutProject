@@ -1,6 +1,5 @@
 package project.breakout.controller;
 
-import java.awt.Color;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
