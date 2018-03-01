@@ -5,9 +5,9 @@ import java.io.IOException;
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
 
 /**
- * Lighthouse View class
- * 
- *
+ * Lighthouse View class. This class handles the connection between the
+ * BreakoutModel and the LighthouseDisplay. The username and token for the
+ * connection is in a properties-file for safety reasons.
  */
 public class LighthouseView {
 	private static final String USERNAME = Messages.getString("LighthouseView.0"); //$NON-NLS-1$
@@ -27,10 +27,9 @@ public class LighthouseView {
 	// ball size 2*1
 	private final static int BALL_LENGTH = 2;
 	private final static int BALL_HEIGHT = 1;
-	
+
 	private static int ballX;
 	private static int ballY;
-
 
 	// brick size 7*2
 	private final static int BRICK_LENGTH = 7;
@@ -90,6 +89,9 @@ public class LighthouseView {
 	 *            The Y-position of the ball in the game.
 	 */
 	public static void setBallPosition(double relativeX, double relativeY) {
+		for (int i = 0; i < BALL_LENGTH; i++) {
+			setWindowDark(getBallXPosition() + i, getBallYPosition() + i);
+		}
 		// Convert from relative position to window position
 		ballX = (int) (27 * relativeX);
 		ballY = (int) (13 * relativeY);
@@ -142,11 +144,37 @@ public class LighthouseView {
 		updateLighthouseView();
 	}
 
+	/**
+	 * Sets all windows of the lighthouse dark.
+	 */
 	public static void setAllDark() {
+		// TODO remove after testing
+		setWindowDark(13, 13);
+		updateLighthouseView();
+
 		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) 0;
 		}
 		updateLighthouseView();
+	}
+
+	/**
+	 * Sets the window dark.
+	 * 
+	 * @param windowX
+	 *            The x-th window in a Lighthouse-floor.
+	 * 
+	 * @param windowY
+	 *            The floor in which the window is set.
+	 */
+	private static void setWindowDark(int windowX, int windowY) {
+		// compute index in array
+		int index = (int) ((windowX + windowY * WINDOWS_PER_FLOOR) * RGB);
+
+		// Set red, green and blue to zero
+		for (int i = 0; i < RGB; i++) {
+			data[index + i] = (byte) 0;
+		}
 	}
 
 	/**
@@ -197,20 +225,23 @@ public class LighthouseView {
 			return false;
 		}
 	}
-	
+
 	private static int getBallXPosition() {
 		return ballX;
 	}
-	
+
 	private static int getBallYPosition() {
-		return ballY;	
+		return ballY;
 	}
-	
+
 	private static void removeBall() {
-		getBallXPosition();
-		getBallYPosition();
-		
+		setWindowDark(getBallXPosition(), getBallYPosition());
 		updateLighthouseView();
+	}
+
+	private static int getBallPosition() {
+		return 0;
 
 	}
+
 }
