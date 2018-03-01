@@ -1,7 +1,6 @@
 package project.breakout.view;
 
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.List;
 import java.awt.event.ActionEvent;
