@@ -246,18 +246,16 @@ public class BreakoutModel extends GraphicsProgram {
 		view.setBallsPosition(ballX, ballY);
 		view.setInfoText("Balldirection: " + ballDirection);
 
-		// TODO remove change from relative coordinates to window coordinates!
+		// TODO setAllDark is just needed while the setBallPosition does not remove the last position of the ball!!!
 		LighthouseView.setAllDark();
 		double relativeX = (ballX / getWidth());
 		double relativeY = (ballY / getHeight());
-		int windowX = (int) (27 * relativeX);
-		int windowY = (int) (13 * relativeY);
 
 		try {
-			LighthouseView.setBallsPosition(windowX, windowY);
-			System.out.println("Set ball to window" + windowX + "/" + windowY);
+			LighthouseView.setBallsPosition(relativeX, relativeY);
+			System.out.println("Set ball to window" + relativeX + "/" + relativeY);
 		} catch (Exception e) {
-			System.out.println("failes to set ball to " + windowX + "/" +  windowY);
+			System.out.println("failes to set ball to " + relativeX + "/" +  relativeY);
 		}
 	}
 

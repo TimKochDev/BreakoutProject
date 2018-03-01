@@ -69,13 +69,17 @@ public class LighthouseView {
 	 * @param ballX
 	 * @param ballY
 	 */
-	public static void setBallsPosition(double ballX, double ballY) {
-		assert ballX >= 0 && ballX < WINDOWS_PER_FLOOR
+	public static void setBallsPosition(double relativeX, double relativeY) {
+		// Convert from relative position to window position
+		int windowX = (int) (27 * relativeX);
+		int windowY = (int) (13 * relativeY);
+		
+		assert windowX >= 0 && windowX < WINDOWS_PER_FLOOR
 				- BALL_LENGTH : "LighhouseView: ballX < 0 or > WINDOWS_PER_FLOOR - BALL_LENGTH";
-		assert ballY >= 0 && ballY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
+		assert windowY >= 0 && windowY < FLOORS - BALL_HEIGHT : "LighhouseView: ballY < 0 or > FLOORS - BALL_HEIGHT";
 
 		for (int i = 0; i < BALL_LENGTH; i++) {
-			data[(int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
+			data[(int) (((windowX + i) + windowY * WINDOWS_PER_FLOOR) * RGB)] = (byte) 255;
 		}
 		updateLighthouseView();
 	}
