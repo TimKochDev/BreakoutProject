@@ -33,7 +33,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 40;
-	private static int pixelsPerSecond = 20;
+	private static int pixelsPerSecond = 200;
 	private static long lastFrameAtTime;
 
 	private static BreakoutView view;
@@ -143,7 +143,6 @@ public class BreakoutModel extends GraphicsProgram {
 		}
 
 		try {
-			LighthouseView.setBallPosition(0.5, 0.5);
 			LighthouseView.setPaddlePosition(0.5, 0.1);
 
 			// init bricks on lighthouse
@@ -221,7 +220,7 @@ public class BreakoutModel extends GraphicsProgram {
 		lastFrameAtTime = System.currentTimeMillis();
 
 		// TODO comment out when not debugging
-		frameTime = 0.3;
+		// frameTime = 0.3;
 
 		// move ball in last known direction
 		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
