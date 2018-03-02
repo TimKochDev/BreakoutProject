@@ -68,8 +68,7 @@ public class LighthouseView {
 		// red
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
-				int index = (int) (((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB);
-				index = indexInDataArray(brickX + l, brickY + h);
+				int index = indexInDataArray(brickX + l, brickY + h, Color.RED);
 				data[index] = (byte) 0;
 			}
 		}
@@ -77,9 +76,7 @@ public class LighthouseView {
 		// green
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
-				int index = (int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 1);
-				index = indexInDataArray(brickX + l, brickY + h);
-				index += 1; // for green value +1
+				int index = indexInDataArray(brickX + l, brickY + h, Color.GREEN);
 				data[index] = (byte) 205;
 			}
 		}
@@ -87,10 +84,7 @@ public class LighthouseView {
 		// blue
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
-				int index = (int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 2);
-				index = indexInDataArray(brickX + l, brickY + h);
-
-				index += 2; // for green value +1 // for blue value +2
+				int index = indexInDataArray(brickX + l, brickY + h, Color.BLUE);
 				data[index] = (byte) 255;
 			}
 		}
@@ -147,7 +141,7 @@ public class LighthouseView {
 
 		// insert ball in array
 		for (int i = 0; i < BALL_LENGTH; i++) {
-			int index = (int) (((ballX + i) + ballY * WINDOWS_PER_FLOOR) * RGB);
+			int index = indexInDataArray(ballX + i, ballY, Color.RED);
 			data[index] = (byte) 255;
 		}
 		updateLighthouseView();
@@ -179,19 +173,19 @@ public class LighthouseView {
 
 		// red
 		for (int i = 0; i < paddleWidth; i++) {
-			int index = (int) (((paddleX + i) + PADDLE_Y * WINDOWS_PER_FLOOR) * RGB);
+			int index = indexInDataArray(paddleX + i, PADDLE_Y, Color.RED);
 			data[index] = (byte) 255;
 		}
 
 		// green
 		for (int i = 0; i < paddleWidth; i++) {
-			int index = (int) ((((paddleX + i) + PADDLE_Y * WINDOWS_PER_FLOOR) * RGB) + 1);
+			int index = indexInDataArray(paddleX + i, PADDLE_Y, Color.GREEN);
 			data[index] = (byte) 100;
 		}
 
 		// blue
 		for (int i = 0; i < paddleWidth; i++) {
-			int index = (int) ((((paddleX + i) + PADDLE_Y * WINDOWS_PER_FLOOR) * RGB) + 2);
+			int index = indexInDataArray(paddleX + i, PADDLE_Y, Color.BLUE);
 			data[index] = (byte) 200;
 		}
 		updateLighthouseView();
