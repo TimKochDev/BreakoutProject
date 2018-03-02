@@ -219,7 +219,7 @@ public class LighthouseView {
 		}
 
 		// compute index in array
-		int index = (int) ((windowX + windowY * WINDOWS_PER_FLOOR) * RGB);
+		int index = indexInArray(windowX, windowY);
 
 		// Set red, green and blue to zero
 		for (int i = 0; i < RGB; i++) {
@@ -305,6 +305,21 @@ public class LighthouseView {
 			setWindowDark(i, FLOORS - 1);
 		}
 		updateLighthouseView();
+	}
+
+	/**
+	 * Computes the index of the array representing the red-value of the given
+	 * window.
+	 * 
+	 * @param windowX
+	 *            The column in which the window is on the lighthouse.
+	 * @param windowY
+	 *            The floor in which the window is on the lighthouse.
+	 * @return The first index in the {@code data}-array representing the given
+	 *         window, means the red-value.
+	 */
+	private static int indexInArray(int windowX, int windowY) {
+		return (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
 	}
 
 	// ---------Getter-------------------------------------
