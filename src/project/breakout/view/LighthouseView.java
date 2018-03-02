@@ -3,6 +3,7 @@ package project.breakout.view;
 import java.io.IOException;
 
 import de.cau.infprogoo.lighthouse.LighthouseDisplay;
+import javafx.scene.paint.Color;
 
 /**
  * Lighthouse View class. This class handles the connection between the
@@ -68,6 +69,7 @@ public class LighthouseView {
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
 				int index = (int) (((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB);
+				index = indexInDataArray(brickX + l, brickY + h);
 				data[index] = (byte) 0;
 			}
 		}
@@ -76,6 +78,8 @@ public class LighthouseView {
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
 				int index = (int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 1);
+				index = indexInDataArray(brickX + l, brickY + h);
+				index += 1; // for green value +1
 				data[index] = (byte) 205;
 			}
 		}
@@ -84,6 +88,9 @@ public class LighthouseView {
 		for (int h = 0; h < BRICK_HEIGHT; h++) {
 			for (int l = 0; l < BRICK_LENGTH; l++) {
 				int index = (int) ((((brickX + l) + (brickY + h) * WINDOWS_PER_FLOOR) * RGB) + 2);
+				index = indexInDataArray(brickX + l, brickY + h);
+
+				index += 2; // for green value +1 // for blue value +2
 				data[index] = (byte) 255;
 			}
 		}
@@ -320,6 +327,37 @@ public class LighthouseView {
 	 */
 	private static int indexInDataArray(int windowX, int windowY) {
 		return (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
+	}
+
+	/**
+	 * Computes the index of the array representing the given color in the given
+	 * window.
+	 * 
+	 * @param windowX
+	 *            The column in which the window is on the lighthouse.
+	 * @param windowY
+	 *            The floor in which the window is on the lighthouse.
+	 * @param color
+	 *            The color which the index is wanted of.
+	 * @return The index of the {@code data}-array representing the given window and
+	 *         the given color.
+	 */
+	private static int indexInDataArray(int windowX, int windowY, Color color) {
+		if (color.equals(Color.RED)) {
+			int index = (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
+			return index;
+		} else if (color.equals(Color.GREEN)) {
+			int index = (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
+			index += 1; // for green value
+			return index;
+
+		} else if (color.equals(Color.BLUE)) {
+			int index = (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
+			index += 2; // for blue value
+			return index;
+		} else {
+			throw new IllegalArgumentException("color must be of Color.RED, Color.GREEN or Color.BLUE!");
+		}
 	}
 
 	// ---------Getter-------------------------------------
