@@ -219,7 +219,7 @@ public class LighthouseView {
 		}
 
 		// compute index in array
-		int index = indexInArray(windowX, windowY);
+		int index = indexInDataArray(windowX, windowY);
 
 		// Set red, green and blue to zero
 		for (int i = 0; i < RGB; i++) {
@@ -318,7 +318,7 @@ public class LighthouseView {
 	 * @return The first index in the {@code data}-array representing the given
 	 *         window, means the red-value.
 	 */
-	private static int indexInArray(int windowX, int windowY) {
+	private static int indexInDataArray(int windowX, int windowY) {
 		return (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
 	}
 
