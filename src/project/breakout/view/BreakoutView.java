@@ -21,6 +21,14 @@ public class BreakoutView extends GCanvas {
 	private GLabel infoLabel = new GLabel("", 0, 10);
 	private GLabel winnerLabel;
 
+	/**
+	 * Constructor for the BreakoutView.
+	 * 
+	 * @param canvasWidth
+	 *            The desired width of the BreakoutView canvas.
+	 * @param canvasHeight
+	 *            The desired height of the BreakoutView canvas.
+	 */
 	public BreakoutView(int canvasWidth, int canvasHeight) {
 		paddle.setFilled(true);
 		paddle.setFillColor(Color.red);
@@ -143,7 +151,7 @@ public class BreakoutView extends GCanvas {
 
 			name.setLocation(10, 10 + 15 * i);
 			value.setLocation(name.getX() + name.getWidth() + 20, 10 + 15 * i);
-			
+
 			add(name);
 			add(value);
 		}
