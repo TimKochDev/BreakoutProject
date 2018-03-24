@@ -7,6 +7,7 @@ import java.awt.List;
 import acm.graphics.GCanvas;
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
+import project.breakout.model.BallModel;
 
 /**
  * This class represents the {@code BreakoutModel} as a game view. It provides a
@@ -89,6 +90,10 @@ public class BreakoutView extends GCanvas {
 	 */
 	public void setBallsPosition(double x, double y) {
 		ball.setLocation((int) x, (int) y);
+	}
+	
+	public void updateBallsPosition(BallModel ballModel) {
+		ball.setLocation(ballModel.getX(), ballModel.getY());
 	}
 
 	// ------------Brick methods-------------------------

@@ -29,6 +29,7 @@ public class BreakoutModel extends GraphicsProgram {
 	private static int ballRadius = 3;
 	private static double ballX, ballY;
 	private static int ballDirection = 320;
+	private BallModel ball = new BallModel(3);
 
 	private static BreakoutBrick[] brickArray;
 
@@ -85,6 +86,8 @@ public class BreakoutModel extends GraphicsProgram {
 		// init ball
 		ballX = paddleX + paddleWidth / 2;
 		ballY = paddleY - 3 * ballRadius;
+		ball.setX(paddleX + paddleWidth / 2);
+		ball.setY(paddleY - 3 * ballRadius);
 		view.setBallsPosition(ballX, ballY);
 		view.setBallsRadius(ballRadius);
 
@@ -179,13 +182,14 @@ public class BreakoutModel extends GraphicsProgram {
 			try {
 				LighthouseView.setPaddlePosition(relativeX, relativePaddleWidth);
 			} catch (Exception e) {
-
 			}
 
 			// move ball over paddle if game not started yet
 			if (!gameStarted) {
 				ballX = mouseX;
 				ballY = paddleY - 3 * ballRadius;
+				ball.setX(mouseX);
+				ball.setY(paddleY - 3 * ballRadius);
 				view.setBallsPosition(ballX, ballY);
 			}
 		}
@@ -217,63 +221,22 @@ public class BreakoutModel extends GraphicsProgram {
 		double frameTime = (double) (System.currentTimeMillis() - lastFrameAtTime);
 		// view.setInfoText(String.valueOf(frameTime));
 		frameTime /= 1000.0;
-		lastFrameAtTime = System.currentTimeMillis();
+		lastFrameAtTime = System.currentTimeMillis();	
+		
 
 		// TODO comment out when not debugging
 		// frameTime = 0.3;
 
-		// move ball in last known direction
-		double xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
-		double yMovedBy = -pixelsPerSecond * frameTime * Math.cos(Math.toRadians(ballDirection));
-		ballX += xMovedBy;
-		ballY += yMovedBy;
-
-		// The distance the ball moved is a^2 + b^2 = c^2
-		double ballMoveDistance = Math.sqrt(Math.pow(xMovedBy, 2) + Math.pow(yMovedBy, 2));
-		double pixelsPerFrametime = pixelsPerSecond * frameTime;
-		assert ballMoveDistance <= pixelsPerFrametime + 0.01 : "Ball moves faster than pixelsPerSecond allows to!";
-
-		// if there's a collision in the model NOW
-		if (collisionControl.isWallCollisionInModel(this) || collisionControl.isBrickCollisionInModel(this)
-				|| collisionControl.isPaddleCollisionInModel(this)) {
-
-			// compute new direction of the ball
-			ballDirection = directionAfterCollision();
-
-			// clear up the ball direction although it works with directions > 360 and < 0.
-			ballDirection = (ballDirection > 360) ? ballDirection - 360 : ballDirection;
-			ballDirection = (ballDirection < 0) ? ballDirection + 360 : ballDirection;
-
-			// go back to non-collision-state
-			ballX -= xMovedBy;
-			ballY -= yMovedBy;
-
-			// compute new movement with now updated ballDirection
-			xMovedBy = pixelsPerSecond * frameTime * Math.sin(Math.toRadians(ballDirection));
-			yMovedBy = -pixelsPerSecond * frameTime * Math.cos(Math.toRadians(ballDirection));
-
-			// update ball's position
-			ballX += xMovedBy;
-			ballY += yMovedBy;
-
-			// show infoText
-			assert collisionControl
-					.getLastCollisionWith() != null : "lastCollisionWith is null and should be displayed -> NullPointerException";
-			// view.setInfoText("Last Thing collided: " +
-			// collisionControl.getLastCollisionWith().toString());
-		}
+		ball.updatePosition(frameTime);
+		
 
 		// apply changes
-		view.setBallsPosition(ballX, ballY);
-		view.setInfoText("Balldirection: " + ballDirection);
+		view.updateBallsPosition(ball);
+		view.setInfoText("Balldirection: " + ball.getDirection());
 
-		// TODO setAllDark is just needed while the setBallPosition does not remove the
-		// last position of the ball!!!
-		// LighthouseView.setAllDark();
-
+		// compute relative position for lighthouse use
 		double relativeX = (ballX / getWidth());
 		double relativeY = (ballY / getHeight());
-
 		try {
 			LighthouseView.setBallPosition(relativeX, relativeY);
 			// System.out.println("Set ball to window " + relativeX + "/" + relativeY);
@@ -283,66 +246,7 @@ public class BreakoutModel extends GraphicsProgram {
 		}
 	}
 
-	/**
-	 * Changes the direction of the ball after a collision with the paddle, upper,
-	 * left or right wall. When the ball hits the bottom wall the game restarts.
-	 * 
-	 * @return the new direction of the ball.
-	 */
-	private int directionAfterCollision() {
-		CollisionWith lastCollisionWith = collisionControl.getLastCollisionWith();
-		switch (lastCollisionWith) {
-		case LEFTWALL:
-		case RIGHTWALL:
-		case BRICK_Y_AXIS:
-			return 360 - ballDirection;
-		case UPPERWALL:
-		case BRICK_X_AXIS:
-			return 180 - ballDirection;
-		case BOTTOMWALL:
-			restartGame();
-			return ballDirection;
-		case PADDLE:
-			return directionAfterPaddleCollision();
-		default:
-			return ballDirection;
-		}
-	}
-
-	/**
-	 * Changes the direction of the ball after it hit the paddle. The new ball
-	 * direction depends on where the ball hits the paddle.
-	 * 
-	 * @return ballDirection, the new direction of the ball.
-	 */
-	private int directionAfterPaddleCollision() {
-		double paddleHalfX = paddleX + paddleWidth / 2;
-		double deviationFromPaddleMiddle = (ballX - paddleHalfX) / (paddleWidth / 2);
-
-		// update ball direction with normal collision and make it depend on the
-		// collision point
-		ballDirection = 180 - ballDirection;
-		ballDirection += deviationFromPaddleMiddle * 80;
-
-		// clear up the ball direction to perform the next step properly
-		ballDirection = (ballDirection > 360) ? ballDirection - 360 : ballDirection;
-		ballDirection = (ballDirection < 0) ? ballDirection + 360 : ballDirection;
-
-		// specify the angles in which the ball is allowed to bounce away
-		int maxRightAngle = 70;
-		int minLeftAngle = 290;
-
-		// make sure that the ball jumps upwards after hitting the paddle
-		ballDirection = (ballDirection >= maxRightAngle && ballDirection < 180) ? maxRightAngle : ballDirection;
-		ballDirection = (ballDirection <= minLeftAngle && ballDirection >= 180) ? minLeftAngle : ballDirection;
-
-		// assertions
-		boolean ballDirection1 = ballDirection >= 0 && ballDirection <= maxRightAngle;
-		boolean ballDirection2 = ballDirection <= 360 && ballDirection >= minLeftAngle;
-		assert ballDirection1 || ballDirection2 : "BallDirection out of specified bounds. Was " + ballDirection;
-
-		return ballDirection;
-	}
+	
 
 	/**
 	 * Deletes a brick from the brickArray and updates the view.
@@ -418,11 +322,11 @@ public class BreakoutModel extends GraphicsProgram {
 
 		// start next level or begin again at the first
 		if (BricksConfig.getBrickArray(currentLevel + 1) != null) {
-			currentLevel++;			
+			currentLevel++;
 		} else {
 			currentLevel = 0;
 		}
-		
+
 		brickArray = BricksConfig.getBrickArray(currentLevel);
 		view.updateBricks(brickArray);
 		LighthouseView.setAllDark();
