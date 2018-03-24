@@ -16,7 +16,8 @@ import acm.graphics.GRect;
 @SuppressWarnings("serial")
 public class BreakoutView extends GCanvas {
 
-	private GRect paddle = new GRect(0, 0);
+	private GRect paddleOld = new GRect(0, 0);
+	private BreakoutPaddle paddle = new BreakoutPaddle(0, 0);
 	private BreakoutBall ball = new BreakoutBall(0);
 	private GLabel infoLabel = new GLabel("", 0, 10);
 	private GLabel winnerLabel;
@@ -30,16 +31,18 @@ public class BreakoutView extends GCanvas {
 	 *            The desired height of the BreakoutView canvas.
 	 */
 	public BreakoutView(int canvasWidth, int canvasHeight) {
-		paddle.setFilled(true);
-		paddle.setFillColor(Color.red);
+		paddleOld.setFilled(true);
+		paddleOld.setFillColor(Color.red);
+		paddle.setColor(Color.red);
 		ball.setFillColor(Color.red);
 		ball.setFilled(true);
 		infoLabel.setVisible(false);
 
 		setSize(canvasWidth, canvasHeight);
-		add(paddle);
+		add(paddleOld);
 		add(ball);
 		add(infoLabel);
+		add(paddle);
 	}
 
 	// ---------paddle methods--------------------------
@@ -52,6 +55,7 @@ public class BreakoutView extends GCanvas {
 	 *            the y coordinate of the paddle.
 	 */
 	public void setPaddleLocation(int xCoord, int yCoord) {
+		paddleOld.setLocation(xCoord, yCoord);
 		paddle.setLocation(xCoord, yCoord);
 	}
 
@@ -64,7 +68,8 @@ public class BreakoutView extends GCanvas {
 	 *            the height of the paddle.
 	 */
 	public void setPaddleSize(int width, int height) {
-		paddle.setSize(width, height);
+		paddleOld.setSize(width, height);
+		
 	}
 
 	// ----------ball methods-------------------------
