@@ -21,20 +21,15 @@ import project.breakout.view.LighthouseView;
  * It can be found on GitHub via https://github.com/TiKo98/BreakoutProject
  */
 @SuppressWarnings("serial")
-public class BreakoutModel extends GraphicsProgram {
+public class BreakoutModel extends GraphicsProgram implements CollisionListener {
 	private static int paddleWidth = 100;
 	private static int paddleHeight = 10;
 	private static int paddleX, paddleY;
 
-	private static int ballRadius = 3;
-	private static double ballX, ballY;
-	private static int ballDirection = 320;
 	private BallModel ball = new BallModel(3);
-
 	private static BreakoutBrick[] brickArray;
 
 	private static int framesPerSecond = 40;
-	private static int pixelsPerSecond = 200;
 	private static long lastFrameAtTime;
 
 	private static BreakoutView view;
@@ -61,13 +56,14 @@ public class BreakoutModel extends GraphicsProgram {
 	}
 
 	// ------------------initializing methods----------------------------
-
 	/**
 	 * Initializes the controller connected with this class.
 	 */
 	private void initController() {
 		collisionControl = new CollisionController();
 		controller = new BreakoutController(this, view);
+		collisionControl.addListener(ball);
+		collisionControl.addListener(this);
 	}
 
 	/**
@@ -84,12 +80,10 @@ public class BreakoutModel extends GraphicsProgram {
 		view.setPaddleSize(paddleWidth, paddleHeight);
 
 		// init ball
-		ballX = paddleX + paddleWidth / 2;
-		ballY = paddleY - 3 * ballRadius;
 		ball.setX(paddleX + paddleWidth / 2);
-		ball.setY(paddleY - 3 * ballRadius);
-		view.setBallsPosition(ballX, ballY);
-		view.setBallsRadius(ballRadius);
+		ball.setY(paddleY - 3 * ball.getRadius());
+		view.updateBallsPosition(ball);
+		view.setBallsRadius(ball.getRadius());
 
 		// init bricks for level
 		initBricksForLevel(currentLevel);
@@ -186,11 +180,9 @@ public class BreakoutModel extends GraphicsProgram {
 
 			// move ball over paddle if game not started yet
 			if (!gameStarted) {
-				ballX = mouseX;
-				ballY = paddleY - 3 * ballRadius;
 				ball.setX(mouseX);
-				ball.setY(paddleY - 3 * ballRadius);
-				view.setBallsPosition(ballX, ballY);
+				ball.setY(paddleY - 3 * ball.getRadius());
+				view.updateBallsPosition(ball);
 			}
 		}
 	}
@@ -216,27 +208,24 @@ public class BreakoutModel extends GraphicsProgram {
 	 * Called by the timer. Updates the ball position depending on { @code
 	 * pixelsPerSecond} and the time gone by since the last frame.
 	 */
-	public void updateBallsPosition() {
+	public void updateFrame() {
 		// compute time since the last frame was created
 		double frameTime = (double) (System.currentTimeMillis() - lastFrameAtTime);
-		// view.setInfoText(String.valueOf(frameTime));
+		view.setInfoText(String.valueOf(frameTime));
 		frameTime /= 1000.0;
-		lastFrameAtTime = System.currentTimeMillis();	
-		
+		lastFrameAtTime = System.currentTimeMillis();
 
 		// TODO comment out when not debugging
-		// frameTime = 0.3;
-
+		// frameTime = 0.03;
+		collisionControl.checkForCollision(this);
 		ball.updatePosition(frameTime);
-		
 
 		// apply changes
 		view.updateBallsPosition(ball);
-		view.setInfoText("Balldirection: " + ball.getDirection());
 
 		// compute relative position for lighthouse use
-		double relativeX = (ballX / getWidth());
-		double relativeY = (ballY / getHeight());
+		double relativeX = (ball.getX() / getWidth());
+		double relativeY = (ball.getY() / getHeight());
 		try {
 			LighthouseView.setBallPosition(relativeX, relativeY);
 			// System.out.println("Set ball to window " + relativeX + "/" + relativeY);
@@ -246,7 +235,14 @@ public class BreakoutModel extends GraphicsProgram {
 		}
 	}
 
-	
+	@Override
+	public void collisionEvent(CollisionWith lastCollisionWith) {
+		if (lastCollisionWith != null && !lastCollisionWith.equals(CollisionWith.BOTTOMWALL)) {
+			updateFrame();
+		} else {
+			restartGame();
+		}
+	}
 
 	/**
 	 * Deletes a brick from the brickArray and updates the view.
@@ -309,7 +305,7 @@ public class BreakoutModel extends GraphicsProgram {
 		initView();
 		initController();
 
-		ballDirection = RandomGenerator.getInstance().nextInt(10) * 10 - 50;
+		ball.setDirection(RandomGenerator.getInstance().nextInt(10) * 10 - 50);
 	}
 
 	/**
@@ -365,7 +361,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 * @return ballRadius, the radius of the ball.
 	 */
 	public int getBallRadius() {
-		return ballRadius;
+		return ball.getRadius();
 	}
 
 	/**
@@ -374,7 +370,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 * @return ballX, the x-Position of the ball.
 	 */
 	public double getBallX() {
-		return ballX;
+		return ball.getX();
 	}
 
 	/**
@@ -383,7 +379,7 @@ public class BreakoutModel extends GraphicsProgram {
 	 * @return ballY, the y-Position of the ball.
 	 */
 	public double getBallY() {
-		return ballY;
+		return ball.getY();
 	}
 
 	/**

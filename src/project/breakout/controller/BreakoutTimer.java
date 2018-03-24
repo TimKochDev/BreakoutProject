@@ -24,6 +24,6 @@ public class BreakoutTimer extends TimerTask {
 	@Override
 	public void run() {
 		// create new frame
-		model.updateBallsPosition();
+		model.updateFrame();
 	}
 }

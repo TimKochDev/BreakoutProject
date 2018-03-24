@@ -1,7 +1,12 @@
 package project.breakout.controller;
 
+import project.breakout.model.BallModel;
 import project.breakout.model.BreakoutModel;
+import project.breakout.model.CollisionListener;
 import project.breakout.view.BreakoutBrick;
+
+import java.awt.List;
+import java.util.ArrayList;
 
 import project.breakout.controller.CollisionWith;
 
@@ -21,6 +26,31 @@ public class CollisionController {
 	 */
 	double colTolerance;
 
+	private ArrayList<CollisionListener> listeners = new ArrayList<CollisionListener>();
+
+	/**
+	 * Checks for any kind of collision in the model.
+	 * @param model
+	 * @return
+	 */
+	public boolean checkForCollision(BreakoutModel model) {
+		if (!(isWallCollisionInModel(model) || isBrickCollisionInModel(model) || isPaddleCollisionInModel(model))) {
+			return false;
+		} else {
+			// fire CollisionEvent to CollisionListeners
+			for (CollisionListener listener : listeners) {
+				listener.collisionEvent(lastCollisionWith);
+			}
+			return true;
+		}
+	}
+	
+	public void addListener(CollisionListener listener) {
+		listeners.add(listener);
+	}
+
+	// -------specific Collision Detectors------------------------------------------ 
+	
 	/**
 	 * Checks if there is a collision with a wall in the game.
 	 * 
@@ -78,7 +108,7 @@ public class CollisionController {
 		int ballRadius = model.getBallRadius();
 		double ballMiddleX = ballX + ballRadius;
 		double ballMiddleY = ballY + ballRadius;
-		
+
 		// no collision if no bricks there
 		if (bricks == null) {
 			return false;
@@ -114,14 +144,13 @@ public class CollisionController {
 					// ball has hit the brick, collision happened on the side where the relative
 					// distance of the ball to the brick middle is minimal.
 					lastBrickCollided = brick;
-			
+
 					lastCollisionWith = (relativeDistanceX < relativeDistanceY) ? CollisionWith.BRICK_X_AXIS
 							: CollisionWith.BRICK_Y_AXIS;
-					
-					
+
 					lastBrickCollided = brick;
 					model.deleteBrickAfterCollision(lastBrickCollided);
-					
+
 					// check if this was the last brick in the level
 					if (allBricksDestroyed(model.getBrickArray())) {
 						model.levelDone();

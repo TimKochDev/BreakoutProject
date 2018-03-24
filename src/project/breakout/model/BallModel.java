@@ -184,5 +184,4 @@ public class BallModel implements CollisionListener {
 	public void setDirection(int ballDirection) {
 		this.ballDirection = ballDirection;
 	}
-
 }
