@@ -3,16 +3,10 @@ package project.breakout.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import acm.graphics.GCanvas;
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
-import project.breakout.model.BreakoutModel;
 
 /**
  * This class represents the {@code BreakoutModel} as a game view. It provides a
