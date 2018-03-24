@@ -31,8 +31,6 @@ public class BreakoutView extends GCanvas {
 	 *            The desired height of the BreakoutView canvas.
 	 */
 	public BreakoutView(int canvasWidth, int canvasHeight) {
-		paddleOld.setFilled(true);
-		paddleOld.setFillColor(Color.red);
 		paddle.setColor(Color.red);
 		ball.setFillColor(Color.red);
 		ball.setFilled(true);
@@ -55,7 +53,6 @@ public class BreakoutView extends GCanvas {
 	 *            the y coordinate of the paddle.
 	 */
 	public void setPaddleLocation(int xCoord, int yCoord) {
-		paddleOld.setLocation(xCoord, yCoord);
 		paddle.setLocation(xCoord, yCoord);
 	}
 
@@ -68,8 +65,7 @@ public class BreakoutView extends GCanvas {
 	 *            the height of the paddle.
 	 */
 	public void setPaddleSize(int width, int height) {
-		paddleOld.setSize(width, height);
-		
+		paddle.setSize(width, height);
 	}
 
 	// ----------ball methods-------------------------
@@ -97,8 +93,10 @@ public class BreakoutView extends GCanvas {
 
 	// ------------Brick methods-------------------------
 	/**
+	 * Brings an array of {@code BreakoutBrick}s on the {@code BreakoutView}.
 	 * 
 	 * @param bricks
+	 *            The array of {@code BreakoutBrick}s.
 	 */
 	public void updateBricks(BreakoutBrick[] bricks) {
 		for (BreakoutBrick brick : bricks) {
@@ -141,24 +139,6 @@ public class BreakoutView extends GCanvas {
 	public void levelStarted() {
 		if (winnerLabel != null) {
 			remove(winnerLabel);
-		}
-	}
-
-	// ---------Highscore methods-------------------
-	/**
-	 * Causes the view to show a highscore Ranking
-	 */
-	public void showHighscoreRanking(List names, List values) {
-		removeAll();
-		for (int i = 0; i < 10; i++) {
-			GLabel name = new GLabel(names.getItem(i));
-			GLabel value = new GLabel(values.getItem(i));
-
-			name.setLocation(10, 10 + 15 * i);
-			value.setLocation(name.getX() + name.getWidth() + 20, 10 + 15 * i);
-
-			add(name);
-			add(value);
 		}
 	}
 
