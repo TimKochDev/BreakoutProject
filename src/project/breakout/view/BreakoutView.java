@@ -2,7 +2,6 @@ package project.breakout.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.List;
 
 import acm.graphics.GCanvas;
 import acm.graphics.GLabel;

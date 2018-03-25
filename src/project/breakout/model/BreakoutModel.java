@@ -94,16 +94,6 @@ public class BreakoutModel extends GraphicsProgram implements CollisionListener 
 	}
 
 	/**
-	 * Initializes the brick array with the standard configuration.
-	 */
-	private void initBricks() {
-		// bricks for view
-		brickArray = BricksConfig.getTestBrickArray();
-		assert brickArray != null : "Test-brickarray is null!";
-		view.updateBricks(brickArray);
-	}
-
-	/**
 	 * Initializes the brick array with the configuration for the
 	 * {@code levelNumber}.
 	 */
