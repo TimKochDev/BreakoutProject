@@ -38,9 +38,6 @@ public class BricksConfig {
 
 	private static ResourceBundle RESOURCE_BUNDLE;
 
-	// private BricksConfig() {
-	// }
-
 	/**
 	 * Returns a simple brick array for testing.
 	 * 

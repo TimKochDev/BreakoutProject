@@ -111,7 +111,7 @@ public class LighthouseView {
 				double relativeBrickY = brick.getY() / screenHeight;
 				LighthouseView.setBrick(relativeBrickX, relativeBrickY);
 			} catch (Exception e) {
-				System.out.println("Could not put brick on lighthouse");
+				System.out.println("Could not show brick on lighthouse");
 			}
 		}
 	}
@@ -130,15 +130,24 @@ public class LighthouseView {
 		removeBall();
 
 		// Convert from relative position to window position
-		ballX = (int) (27 * relativeX);
-		ballY = (int) (13 * relativeY);
+		int newBallX = (int) (27 * relativeX);
+		int newBallY = (int) (13 * relativeY);
 
 		// exception handling
-		if (ballX < 0 || ballX + BALL_LENGTH >= WINDOWS_PER_FLOOR) {
+		if (newBallX < 0 || newBallX + BALL_LENGTH >= WINDOWS_PER_FLOOR) {
 			throw new IllegalArgumentException("X-Coordinate of the ball out of range.");
 		}
-		if (ballY < 0 || ballY + BALL_HEIGHT >= FLOORS) {
+		if (newBallY < 0 || newBallY + BALL_HEIGHT >= FLOORS) {
 			throw new IllegalArgumentException("Y-Coordinate of the ball out of range.");
+		}
+		
+		// check if the ball did move at all
+		if (newBallX == ballX && newBallY == ballY) {
+			System.out.println("Lighthouse updated aborted because nothing changed");
+			return;
+		} else {
+			ballX = newBallX;
+			ballY = newBallY;
 		}
 
 		// insert ball in array

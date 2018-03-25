@@ -206,7 +206,7 @@ public class BreakoutModel extends GraphicsProgram implements CollisionListener 
 		lastFrameAtTime = System.currentTimeMillis();
 
 		// TODO comment out when not debugging
-		// frameTime = 0.03;
+		frameTime = 0.03;
 		collisionControl.checkForCollision(this);
 		ball.updatePosition(frameTime);
 

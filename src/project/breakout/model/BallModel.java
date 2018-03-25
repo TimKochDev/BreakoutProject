@@ -1,7 +1,6 @@
 package project.breakout.model;
 
 import project.breakout.controller.CollisionWith;
-import project.breakout.view.LighthouseView;
 
 public class BallModel implements CollisionListener {
 	private int ballRadius = 3;
@@ -10,8 +9,10 @@ public class BallModel implements CollisionListener {
 	private static int pixelsPerSecond = 200;
 
 	// --------Constructors-----------------
+	/**
+	 * Empty constructor.
+	 */
 	public BallModel() {
-
 	}
 
 	public BallModel(int ballRadius) {
@@ -34,10 +35,10 @@ public class BallModel implements CollisionListener {
 	 *            The distance to move in yDirection in pixels.
 	 */
 	public void move(double xDirection, double yDirection) {
-		ballX += xDirection;
-		ballY += yDirection;
+		this.setX(getX() + xDirection);
+		this.setY(getY() + yDirection);
 	}
-	
+
 	/**
 	 * Called by the timer. Updates the ball position depending on { @code
 	 * pixelsPerSecond} and the time gone by since the last frame.
