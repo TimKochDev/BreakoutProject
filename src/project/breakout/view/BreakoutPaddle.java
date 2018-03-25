@@ -7,7 +7,6 @@ import acm.graphics.GCompound;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.graphics.GRectangle;
-import jdk.nashorn.internal.ir.BreakableNode;
 
 /**
  * This class represents the paddle in the BreakoutView.

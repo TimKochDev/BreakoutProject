@@ -23,7 +23,6 @@ public class LighthouseView {
 
 	// paddle size 8*1
 	private static int paddleWidth = 8;
-	private static int paddleHeight = 1;
 
 	private static int paddleX;
 	private static final int PADDLE_Y = FLOORS - 1;
@@ -35,12 +34,9 @@ public class LighthouseView {
 	private static int ballX;
 	private static int ballY;
 
-	// brick size 7*2
+	// brick size 7*1
 	private final static int BRICK_LENGTH = 7;
 	private final static int BRICK_HEIGHT = 1;
-
-	private static int brickX;
-	private static int brickY;
 
 	/**
 	 * Sets the position of the brick at a certain position in the data array. The
@@ -171,6 +167,8 @@ public class LighthouseView {
 			throw new IllegalArgumentException("X-Coordinate of the paddle out of range.");
 		}
 
+		// insert paddle in data array
+		// implies that the height of the paddle is just 1 window
 		// red
 		for (int i = 0; i < paddleWidth; i++) {
 			int index = indexInDataArray(paddleX + i, PADDLE_Y, Color.RED);
@@ -388,28 +386,11 @@ public class LighthouseView {
 	}
 
 	/**
-	 * Get the x-position of the brick.
-	 * 
-	 * @return brickX.
-	 */
-	private static int getBrickXPosition() {
-		return brickX;
-	}
-
-	/**
-	 * Get the y-position of the brick.
-	 * 
-	 * @return brickY.
-	 */
-	private static int getBrickYPosition() {
-		return brickY;
-	}
-
-	/**
 	 * Get the y-position of the paddle.
 	 * 
 	 * @return paddleY.
 	 */
+	@SuppressWarnings("unused")
 	private static int getPaddleYPosition() {
 		return PADDLE_Y;
 	}
@@ -419,6 +400,7 @@ public class LighthouseView {
 	 * 
 	 * @return paddleX.
 	 */
+	@SuppressWarnings("unused")
 	private static int getPaddleXPosition() {
 		return paddleX;
 	}
