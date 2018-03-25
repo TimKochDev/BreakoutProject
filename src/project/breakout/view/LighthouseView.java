@@ -15,10 +15,16 @@ public class LighthouseView {
 	private static final String PASSWORD = Messages.getString("LighthouseView.1"); //$NON-NLS-1$
 	public static LighthouseDisplay display = new LighthouseDisplay(USERNAME, PASSWORD);
 
+	// data of the lighthouse
 	private final static int FLOORS = 14;
 	private final static int WINDOWS_PER_FLOOR = 28;
 	private final static int RGB = 3;
 
+	/**
+	 * ByteArray which represents the window colors of the lighthouse. Every window
+	 * is related with three bytes in a row - red, green and blue. Thus the first
+	 * three indices of the array represent the rgb value of the top left window.
+	 */
 	private static byte[] data = new byte[FLOORS * WINDOWS_PER_FLOOR * RGB];
 
 	// paddle size 8*1
