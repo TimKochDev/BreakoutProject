@@ -350,20 +350,26 @@ public class LighthouseView {
 	 *         the given color.
 	 */
 	private static int indexInDataArray(int windowX, int windowY, Color color) {
-		if (color.equals(Color.RED)) {
-			int index = (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
+		// error handling
+		assert windowX <= WINDOWS_PER_FLOOR : "It should be: 1 <= windowX <= " + WINDOWS_PER_FLOOR + " but was " + windowX;
+		assert windowY <= FLOORS : "It should be: 1 <= windowY <= " + FLOORS + " but was " + windowY;
+		assert color.equals(Color.RED) || color.equals(Color.GREEN) || color.equals(Color.BLUE) : "Color is not allowed, see javaDoc";
+		
+		// compute index for red value for the given window
+		int index = (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
+		
+		// return the index or count further on for other colors
+		if (color.equals(Color.RED)) {			
 			return index;
 		} else if (color.equals(Color.GREEN)) {
-			int index = (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
-			index += 1; // for green value
-			return index;
-
+			// for green value
+			return (index+1);
+			
 		} else if (color.equals(Color.BLUE)) {
-			int index = (int) ((windowY * WINDOWS_PER_FLOOR + windowX) * RGB);
-			index += 2; // for blue value
-			return index;
+			// for blue value
+			return (index+2);
 		} else {
-			throw new IllegalArgumentException("color must be of Color.RED, Color.GREEN or Color.BLUE!");
+			return -1;
 		}
 	}
 
